@@ -14,7 +14,7 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
-        return view('admin.dashboard');
+        return view('admin.admin_dashboard');
     }
 
     /**
@@ -22,9 +22,9 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function login()
     {
-        //
+        return view('admin.login');
     }
 
     /**
