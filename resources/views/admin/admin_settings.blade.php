@@ -34,11 +34,12 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form">
+                <form role="form" action="{{ url('/admin/update_pwd') }}" method="POST" name="updatePasswordForm" id="updatePasswordForm">
+                    @csrf
                   <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Admin Name</label>
-                        <input type="text" class="form-control" value="{{ $adminDetails->name }}" placeholder="Enter Admin/Sub Admin Name">
+                        <input type="text" class="form-control" name="admin_name" id="admin_name" value="{{ $adminDetails->name }}" placeholder="Enter Admin/Sub Admin Name">
                         </div>
                         <div class="form-group">
                         <label for="exampleInputEmail1">Admin Email</label>
@@ -50,15 +51,16 @@
                             </div>
                         <div class="form-group">
                         <label for="exampleInputPassword1">Current Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        <input type="password" class="form-control" name="current_password" id="current_password" placeholder="Password">
+                        <span id="chkCurrenntPwd"></span>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">New Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <input type="password" class="form-control" name="new_password" id="new_password" placeholder="Password">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Confirm Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Password">
                         </div>
                   </div>
                   <!-- /.card-body -->
