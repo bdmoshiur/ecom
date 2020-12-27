@@ -33,14 +33,34 @@
                   <h3 class="card-title">Update Password</h3>
                 </div>
                 <!-- /.card-header -->
+                @if (Session::has('error_message'))
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 10px">
+                    {{ Session::get('error_message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
+                @if (Session::has('success_message'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px">
+                    {{ Session::get('success_message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 <!-- form start -->
-                <form role="form" action="{{ url('/admin/update_pwd') }}" method="POST" name="updatePasswordForm" id="updatePasswordForm">
+                <form role="form" action="{{ route('admin.update.current.password') }}" method="POST" name="updatePasswordForm" id="updatePasswordForm">
                     @csrf
                   <div class="card-body">
-                    <div class="form-group">
+                       <?php /*
+                        <div class="form-group">
                         <label for="exampleInputEmail1">Admin Name</label>
                         <input type="text" class="form-control" name="admin_name" id="admin_name" value="{{ $adminDetails->name }}" placeholder="Enter Admin/Sub Admin Name">
                         </div>
+                        */ ?>
+
                         <div class="form-group">
                         <label for="exampleInputEmail1">Admin Email</label>
                         <input type="email" class="form-control" value="{{ $adminDetails->email }}" readonly>
