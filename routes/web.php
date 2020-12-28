@@ -24,6 +24,9 @@ Route::group(['prefix' => 'admin','namespace' => 'admin'], function () {
         Route::post('check-current-password','AdminController@checkCurrentPassword')->name('admin.check.current.password');
         Route::post('update-current-password','AdminController@updateCurrentPassword')->name('admin.update.current.password');
         Route::match(['get','post'],'update-admin-details','AdminController@updateAdminDetails')->name('admin.update.admin.details');
+
+        //Sections
+        Route::get('sections','SectionController@sections')->name('admin.sections');
     });
 
 });
