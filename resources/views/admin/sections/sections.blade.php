@@ -44,7 +44,13 @@
                     <tr>
                       <td>{{ $section->id }}</td>
                       <td>{{ $section->name }}</td>
-                      <td>{{ $section->status }}</td>
+                      <td>
+                          @if ($section->status == 1)
+                            Active
+                          @else
+                            Inactive
+                          @endif
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
