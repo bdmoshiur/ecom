@@ -27,7 +27,7 @@ $(document).ready(function(){
             url:'/admin/update-section-status',
             data:{status:status,section_id:section_id},
             success: function(resp){
-                alert('ok');
+                alert(resp);
             },error:function(){
                 alert('error');
             }

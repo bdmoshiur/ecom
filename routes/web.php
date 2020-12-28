@@ -27,8 +27,8 @@ Route::group(['prefix' => 'admin','namespace' => 'admin'], function () {
 
         //Sections
         Route::get('sections','SectionController@sections')->name('admin.sections');
+        Route::get('update-section-status','SectionController@updateSectionStatus')->name('admin.update.section.status');
+
     });
-
 });
-
 

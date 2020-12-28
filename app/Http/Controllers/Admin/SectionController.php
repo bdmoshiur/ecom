@@ -13,4 +13,12 @@ class SectionController extends Controller
         $sections = Section::get();
         return view('admin.sections.sections',compact('sections'));
     }
+
+    public function updateSectionStatus(Request $request)
+    {
+        if($request->ajax()){
+            $data = $request->all();
+            echo "<pre>"; print_r($data); die;
+        }
+    }
 }
