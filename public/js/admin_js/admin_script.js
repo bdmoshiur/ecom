@@ -14,9 +14,25 @@ $(document).ready(function(){
                 }
             },
             error: function(){
-                
             }
         });
-
     });
+
+
+    $(".updateSectionStatus").click(function(){
+        var status = $(this).text();
+        var section_id = $(this).attr("section_id");
+        $.ajax({
+            type:'post',
+            url:'/admin/update-section-status',
+            data:{status:status,section_id:section_id},
+            success: function(resp){
+                alert('ok');
+            },error:function(){
+                alert('error');
+            }
+        });
+    });
+
+
 });

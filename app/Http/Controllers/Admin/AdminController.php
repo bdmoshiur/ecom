@@ -117,7 +117,7 @@ class AdminController extends Controller
                     $extention = $image_tmp->getClientOriginalExtension();
                     $imageName = rand(111,99999).'.'.$extention;
                     $imagePath = 'images/admin_images/admin_photos/'.$imageName;
-                    Image::make($image_tmp)->save($imagePath);
+                    Image::make($image_tmp)->resize(300,400)->save($imagePath);
                 }else if(!empty($data['current_admin_image'])){
                     $imageName = $data['current_admin_image'];
                 }else{
