@@ -1,4 +1,5 @@
 
+
 $(document).ready(function(){
     $("#current_password").keyup(function(){
         var current_password = $("#current_password").val();

@@ -28,4 +28,7 @@ class SectionController extends Controller
             return response()->jeson(['status'=>$status,'section_id'=>$data['section_id']]);
         }
     }
+
+
+    
 }
