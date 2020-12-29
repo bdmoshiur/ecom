@@ -16,7 +16,6 @@ class CategoryController extends Controller
         return view('admin.categories.categories',compact('categories'));
     }
 
-
     public function updateCategoryStatus(Request $request)
     {
         if($request->ajax()){
@@ -35,6 +34,6 @@ class CategoryController extends Controller
 
 
 
-
+    
 
 }
