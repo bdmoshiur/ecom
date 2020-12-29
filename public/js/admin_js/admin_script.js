@@ -29,13 +29,36 @@ $(document).ready(function(){
             url:'/admin/update-section-status',
             data:{status:status,section_id:section_id},
             success: function(resp){
-                alert(resp['status']);
-                alert(resp['section_id']);
+                if(resp['status']==0){
+                    $("#section_"+section_id).html('<a href="javascript:void(0)" class="updateSectionStatus">Inactive</a>');
+                }else if(resp['status']==1){
+                    $("#section_"+section_id).html('<a href="javascript:void(0)" class="updateSectionStatus">Active</a>');
+                }
             },error:function(){
                 alert('error');
             }
         });
     });
+
+    $(".updateCategoryStatus").click(function(){
+        var status = $(this).text();
+        var category_id = $(this).attr("category_id");
+        $.ajax({
+            type:'post',
+            url:'/admin/update-section-status',
+            data:{status:status,category_id:category_id},
+            success: function(resp){
+                if(resp['status']==0){
+                    $("#category_"+category_id).html('<a href="javascript:void(0)" class="updateCategoryStatus">Active</a>');
+                }else if(resp['status']==1){
+                    $("#category_"+category_id).html('<a href="javascript:void(0)" class="updateCategoryStatus">Active</a>');
+                }
+            },error:function(){
+                alert('error');
+            }
+        });
+    });
+
 
 
 });

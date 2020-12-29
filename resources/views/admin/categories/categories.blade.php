@@ -15,7 +15,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Sections</li>
+              <li class="breadcrumb-item active">Categories</li>
             </ol>
           </div>
         </div>
@@ -32,11 +32,12 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="sections" class="table table-bordered table-striped">
+              <table id="Categories" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>Id</th>
                   <th>Name</th>
+                  <th>Url</th>
                   <th>Status</th>
                 </tr>
                 </thead>
@@ -45,11 +46,12 @@
                     <tr>
                       <td>{{ $category->id }}</td>
                       <td>{{ $category->category_name }}</td>
+                      <td>{{ $category->url }}</td>
                       <td>
                           @if ($category->status == 1)
-                            <a href="javascript:void(0)" class="updateSectionStatus" id="section-{{ $category->id }}" section_id="{{ $category->id }}">Active</a>
+                            <a href="javascript:void(0)" class="updateCategoryStatus" id="category-{{ $category->id }}" category_id="{{ $category->id }}">Active</a>
                           @else
-                          <a href="javascript:void(0)" class="updateSectionStatus" id="section-{{ $category->id }}" section_id="{{ $category->id }}">Inactive</a>
+                          <a href="javascript:void(0)" class="updateCategoryStatus" id="category-{{ $category->id }}" category_id="{{ $category->id }}">Inactive</a>
                           @endif
                         </td>
                     </tr>
