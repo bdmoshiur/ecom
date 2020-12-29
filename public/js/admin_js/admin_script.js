@@ -14,6 +14,7 @@ $(document).ready(function(){
                 }
             },
             error: function(){
+                alert('error');
             }
         });
     });
@@ -27,7 +28,8 @@ $(document).ready(function(){
             url:'/admin/update-section-status',
             data:{status:status,section_id:section_id},
             success: function(resp){
-                alert(resp);
+                alert(resp['status']);
+                alert(resp['section_id']);
             },error:function(){
                 alert('error');
             }

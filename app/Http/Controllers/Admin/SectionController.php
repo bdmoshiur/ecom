@@ -18,7 +18,14 @@ class SectionController extends Controller
     {
         if($request->ajax()){
             $data = $request->all();
-            echo "<pre>"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
+            if($data['status'] == "Active"){
+                $status = 0;
+            }else{
+                $status = 1;
+            }
+            Section::where('id','section_id')->update(['status'=>$status]);
+            return response()->jeson(['status'=>$status,'section_id'=>$data['section_id']]);
         }
     }
 }

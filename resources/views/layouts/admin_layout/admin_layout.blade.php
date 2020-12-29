@@ -91,7 +91,6 @@
 <script src="{{ url('js/admin_js/demo.js') }}"></script>
 <!-- Custom Admin Js -->
 <script src="{{ url('js/admin_js/admin_script.js') }}"></script>
-<script src="{{ url('js/admin_js/jquery-3.5.1.js') }}"></script>
 
 </body>
 </html>
