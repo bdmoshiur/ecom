@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Section;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class SectionController extends Controller
 {
     public function sections()
     {
+        Session::put('page',"sections");
         $sections = Section::get();
         return view('admin.sections.sections',compact('sections'));
     }
@@ -30,5 +32,5 @@ class SectionController extends Controller
     }
 
 
-    
+
 }
