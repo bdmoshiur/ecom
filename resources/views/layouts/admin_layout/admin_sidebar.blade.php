@@ -37,6 +37,7 @@
                 </a>
               </li>
 
+         <!-- Setting -->
             @if (Session::get('page')=="settings" || Session::get('page')=="update-admin-details")
               <?php $active = "active"; ?>
             @else
@@ -76,6 +77,7 @@
             </ul>
           </li>
 
+          <!-- Categories -->
 
           @if (Session::get('page')=="sections" || Session::get('page')=="categories")
               <?php $active = "active"; ?>

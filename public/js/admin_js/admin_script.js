@@ -45,7 +45,7 @@ $(document).ready(function(){
         var category_id = $(this).attr("category_id");
         $.ajax({
             type:'post',
-            url:'/admin/update-section-status',
+            url:'/admin/update-category-status',
             data:{status:status,category_id:category_id},
             success: function(resp){
                 if(resp['status']==0){

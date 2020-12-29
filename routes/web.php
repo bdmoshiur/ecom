@@ -31,6 +31,7 @@ Route::group(['prefix' => 'admin','namespace' => 'admin'], function () {
 
         // Categories
         Route::get('categories','CategoryController@categories')->name('admin.categories');
+        Route::get('update-category-status','CategoryController@updateCategoryStatus')->name('admin.update.category.status');
 
     });
 });
