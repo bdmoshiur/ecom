@@ -18,7 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->integer('parent_id');
             $table->integer('section_id');
             $table->string('category_name');
-            $table->string('category_image');
+            $table->string('category_image')->nullable();
             $table->float('category_discount');
             $table->text('discription');
             $table->string('url');

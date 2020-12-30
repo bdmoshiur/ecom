@@ -110,7 +110,7 @@ class AdminController extends Controller
             ];
             $this->validate($request,$rules,$customMessage);
 
-
+            //Upload Admin Iamge
             if($request->hasFile('admin_image')){
                 $image_tmp = $request->file('admin_image');
                 if($image_tmp->isValid()){

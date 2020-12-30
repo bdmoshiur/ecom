@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Section;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Section;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
@@ -45,6 +46,16 @@ class CategoryController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
+            // Upload Category Image
+            if($request->hasFile('category_image')){
+                $image_tmp = $request->file('category_image');
+                if($image_tmp->isValid()){
+                    $extention = $image_tmp->getClientOriginalExtension();
+                    $imageName = rand(111,99999).'.'.$extention;
+                    $imagePath = 'images/category_images/'.$imageName;
+                    Image::make($image_tmp)->resize(300,400)->save($imagePath);
+                    $category->category_image = $imageName;
+                }
 
             $category->parent_id = $data['parent_id'];
             $category->section_id = $data['section_id'];
