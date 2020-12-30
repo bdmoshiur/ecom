@@ -98,7 +98,7 @@
                   <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="category_name">Meta Discription</label>
-                        <textarea class="form-control" name="meta_discription" id="meta_discription" rows="3" placeholder="Enter ..."></textarea>
+                        <textarea class="form-control" name="meta_description" id="meta_description" rows="3" placeholder="Enter ..."></textarea>
                     </div>
                   </div>
                   <div class="col-12 col-sm-6">

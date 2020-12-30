@@ -53,8 +53,9 @@ class CategoryController extends Controller
             $category->discription = $data['discription'];
             $category->url = $data['url'];
             $category->meta_title = $data['meta_title'];
-            $category->meta_discription = $data['meta_discription'];
+            $category->meta_description = $data['meta_description'];
             $category->meta_keywords = $data['meta_keywords'];
+            $category->status = 1;
             $category->save();
         }
 
