@@ -23,6 +23,16 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
+        @if ($errors->any())
+            <div class="alert alert-danger" style="margin-top: 10px">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('admin.add.edit.categories') }}" name="categoryForm" id="categoryForm" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card card-default">
