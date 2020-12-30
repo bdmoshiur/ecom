@@ -81,8 +81,8 @@
                         <input type="text" class="form-control" name="category_discount" id="category_discount" placeholder="Enter Category Discount">
                     </div>
                     <div class="form-group">
-                        <label for="category_name">Category Discription</label>
-                        <textarea class="form-control" name="discription" id="discription" rows="3" placeholder="Enter Discription ..."></textarea>
+                        <label for="category_name">Category Description</label>
+                        <textarea class="form-control" name="description" id="description" rows="3" placeholder="Enter Discription ..."></textarea>
                       </div>
                   </div>
                   <div class="col-12 col-sm-6">
@@ -97,7 +97,7 @@
                   </div>
                   <div class="col-12 col-sm-6">
                     <div class="form-group">
-                        <label for="category_name">Meta Discription</label>
+                        <label for="category_name">Meta Description</label>
                         <textarea class="form-control" name="meta_description" id="meta_description" rows="3" placeholder="Enter ..."></textarea>
                     </div>
                   </div>
