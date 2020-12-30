@@ -5,7 +5,7 @@ $(document).ready(function(){
         var current_password = $("#current_password").val();
         $.ajax({
             url:'/admin/check-current-password',
-            type:'post',
+            type:'POST',
             data:{current_password:current_password},
             success: function(resp){
                 if(resp =="false"){
@@ -20,12 +20,12 @@ $(document).ready(function(){
         });
     });
 
-
+    //Update Section Status
     $(".updateSectionStatus").click(function(){
         var status = $(this).text();
         var section_id = $(this).attr("section_id");
         $.ajax({
-            type:'post',
+            type:'POST',
             url:'/admin/update-section-status',
             data:{status:status,section_id:section_id},
             success: function(resp){
@@ -40,11 +40,12 @@ $(document).ready(function(){
         });
     });
 
+    // Update Category Status
     $(".updateCategoryStatus").click(function(){
         var status = $(this).text();
         var category_id = $(this).attr("category_id");
         $.ajax({
-            type:'post',
+            type:'POST',
             url:'/admin/update-category-status',
             data:{status:status,category_id:category_id},
             success: function(resp){
@@ -53,6 +54,21 @@ $(document).ready(function(){
                 }else if(resp['status']==1){
                     $("#category_"+category_id).html('<a href="javascript:void(0)" class="updateCategoryStatus">Active</a>');
                 }
+            },error:function(){
+                alert('error');
+            }
+        });
+    });
+
+
+    $('#section_id').change(function(){
+        var section_id = $(this).val();
+        $.ajax({
+            type:"POST",
+            url:"/admin/append-categories-lavel",
+            data:{section_id:section_id},
+            success: function(data){
+                alert(data);
             },error:function(){
                 alert('error');
             }
