@@ -10,7 +10,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Categories</h1>
+            <h1>Catelogues</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -29,10 +29,11 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Categories</h3>
+              <a href="{{ route('admin.add.edit.categories') }}" class="btn btn-success btn-block" style="max-width:150px; float:right; display:inline-block;">Add Category</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="Categories" class="table table-bordered table-striped">
+              <table id="categories" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>Id</th>
