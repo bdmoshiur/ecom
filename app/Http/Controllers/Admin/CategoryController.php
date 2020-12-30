@@ -37,13 +37,25 @@ class CategoryController extends Controller
     {
         if($id ==""){
             $title = "add category";
+            $category = new Category();
         }else{
             $title = "edit Category";
         }
 
         if($request->isMethod('post')){
             $data = $request->all();
-            echo "<pre>"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
+
+            $category->parent_id = $data['parent_id'];
+            $category->section_id = $data['section_id'];
+            $category->category_name = $data['category_name'];
+            $category->category_discount = $data['category_discount'];
+            $category->discription = $data['discription'];
+            $category->url = $data['url'];
+            $category->meta_title = $data['meta_title'];
+            $category->meta_discription = $data['meta_discription'];
+            $category->meta_keywords = $data['meta_keywords'];
+            $category->save();
         }
 
 
