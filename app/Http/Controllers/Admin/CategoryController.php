@@ -102,6 +102,8 @@ class CategoryController extends Controller
                     $category->meta_keywords = $data['meta_keywords'];
                     $category->status = 1;
                     $category->save();
+                    Session::flash('success_message','Category Added Successfully');
+                    return redirect()->route('admin.categories');
                 }
 
                 //get all sections
