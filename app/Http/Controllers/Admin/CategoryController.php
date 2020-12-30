@@ -40,6 +40,15 @@ class CategoryController extends Controller
         }else{
             $title = "edit Category";
         }
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            echo "<pre>"; print_r($data); die;
+        }
+
+
+
+        //get all sections
         $getSections = Section::get();
         return view('admin.categories.add_edit_category',compact('title','getSections'));
     }
