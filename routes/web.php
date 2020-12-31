@@ -27,12 +27,21 @@ Route::group(['prefix' => 'admin','namespace' => 'admin'], function () {
 
         //Sections
         Route::get('sections','SectionController@sections')->name('admin.sections');
-        Route::get('update-section-status','SectionController@updateSectionStatus')->name('admin.update.section.status');
+        Route::post('update-section-status','SectionController@updateSectionStatus')->name('admin.update.section.status');
 
         // Categories
         Route::get('categories','CategoryController@categories')->name('admin.categories');
-        Route::get('update-category-status','CategoryController@updateCategoryStatus')->name('admin.update.category.status');
+        Route::post('update-category-status','CategoryController@updateCategoryStatus')->name('admin.update.category.status');
         Route::match(['get','post'],'add-edit-category/{id?}','CategoryController@addEditCategory')->name('admin.add.edit.categories');
+
+        Route::post('append-categories-level','CategoryController@appendCategoryLevel')->name('admin.append.category.level');
+
+
+
+
+
+
+
     });
 });
 

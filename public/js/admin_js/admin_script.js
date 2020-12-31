@@ -60,7 +60,7 @@ $(document).ready(function(){
         });
     });
 
-
+// Append Category Level
     $('#section_id').change(function(){
         var section_id = $(this).val();
         $.ajax({
