@@ -15,7 +15,7 @@ $(document).ready(function(){
                 }
             },
             error: function(){
-                alert('error');
+                // alert('error');
             }
         });
     });
@@ -35,7 +35,7 @@ $(document).ready(function(){
                     $("#section_"+section_id).html('<a href="javascript:void(0)" class="updateSectionStatus">Active</a>');
                 }
             },error:function(){
-                alert('error');
+                // alert('error');
             }
         });
     });
@@ -55,7 +55,7 @@ $(document).ready(function(){
                     $("#category_"+category_id).html('<a href="javascript:void(0)" class="updateCategoryStatus">Active</a>');
                 }
             },error:function(){
-                alert('error');
+                // alert('error');
             }
         });
     });
@@ -68,9 +68,9 @@ $(document).ready(function(){
             url:"/admin/append-categories-lavel",
             data:{section_id:section_id},
             success: function(data){
-                alert(data);
+                $("#appendCategoriesLevel").html(data);
             },error:function(){
-                alert('error');
+                // alert('error');
             }
         });
     });
