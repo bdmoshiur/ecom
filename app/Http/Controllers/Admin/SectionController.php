@@ -11,26 +11,23 @@ class SectionController extends Controller
 {
     public function sections()
     {
-        Session::put('page',"sections");
+        Session::put('page', "sections");
         $sections = Section::get();
-        return view('admin.sections.sections',compact('sections'));
+        return view('admin.sections.sections', compact('sections'));
     }
 
     public function updateSectionStatus(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
-            if($data['status'] == "Active"){
+            if ($data['status'] == "Active") {
                 $status = 0;
-            }else{
+            } else {
                 $status = 1;
             }
-            Section::where('id','section_id')->update(['status'=>$status]);
-            return response()->jeson(['status'=>$status,'section_id'=>$data['section_id']]);
+            Section::where('id', 'section_id')->update(['status' => $status]);
+            return response()->jeson(['status' => $status, 'section_id' => $data['section_id']]);
         }
     }
-
-
-
 }
