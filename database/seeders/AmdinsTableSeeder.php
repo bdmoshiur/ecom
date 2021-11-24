@@ -64,9 +64,5 @@ class AmdinsTableSeeder extends Seeder
         //     \App\Admin::create($record);
         // }
 
-
-
-
-
     }
 }
