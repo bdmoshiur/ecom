@@ -22,7 +22,6 @@ class CategoryController extends Controller
     {
         if ($request->ajax()) {
             $data = $request->all();
-            // echo "<pre>"; print_r($data); die;
             if ($data['status'] == "Active") {
                 $status = 0;
             } else {
@@ -45,13 +44,12 @@ class CategoryController extends Controller
 
         if ($request->isMethod('post')) {
             $data = $request->all();
-            // echo "<pre>"; print_r($data); die;
 
             $rules = [
                 'category_name' => 'required|regex:/^[\pL\s\-]+$/u',
                 'section_id' => 'required',
                 'url' => 'required',
-                'category_image' => 'image',
+                'category_image' => 'required|image',
             ];
             $customMessage = [
                 'category_name.required' => 'Category Name is Required',
@@ -119,7 +117,6 @@ class CategoryController extends Controller
 
             $getCategories = Category::where(['section_id' => $data['section_id'], 'parent_id' => 0, 'status' => 1])->get();
             $getCategories = json_decode(json_encode($getCategories), true);
-            // echo "<pre>"; print_r($getCategories); die;
             return view('admin.categories.append_categories_level', compact('getCategories'));
         }
     }

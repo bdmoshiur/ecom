@@ -59,7 +59,6 @@
                                         @include('admin.categories.append_categories_level')
                                     </div>
                                 </div>
-                                <!-- /.col -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Select Section</label>
