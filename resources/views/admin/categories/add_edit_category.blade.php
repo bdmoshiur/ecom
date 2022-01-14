@@ -89,7 +89,7 @@
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="category_name">Category Discount</label>
-                                        <input type="text" class="form-control" name="category_discount"
+                                        <input type="number" class="form-control" name="category_discount"
                                             id="category_discount" placeholder="Enter Category Discount">
                                     </div>
                                     <div class="form-group">
