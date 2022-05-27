@@ -42,7 +42,7 @@ $(document).ready(function () {
                 }
             },
             error: function () {
-                alert("error");
+                // alert("error");
             },
         });
     });
@@ -83,7 +83,7 @@ $(document).ready(function () {
                 $("#appendCategoriesLevel").html(data);
             },
             error: function () {
-                // alert('error');
+                alert('error');
             },
         });
     });

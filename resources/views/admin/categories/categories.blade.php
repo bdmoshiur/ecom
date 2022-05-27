@@ -1,7 +1,5 @@
 @extends('layouts.admin_layout.admin_layout')
 @section('content')
-
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -47,16 +45,30 @@
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Parent Category</th>
+                                        <th>Section</th>
                                         <th>Url</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     @foreach ($categories as $key => $category)
+                                        @if (!isset($category->parentcategory->category_name))
+                                            @php
+                                                $parentcategory = 'Root';
+                                            @endphp
+                                        @else
+                                            @php
+                                                $parentcategory = $category->parentcategory->category_name;
+                                            @endphp
+                                        @endif
                                         <tr>
                                             <td>{{ $category->id }}</td>
                                             <td>{{ $category->category_name }}</td>
+                                            <td>{{ $parentcategory }}</td>
+                                            <td>{{ $category->section->name }}</td>
                                             <td>{{ $category->url }}</td>
                                             <td>
                                                 @if ($category->status == 1)
@@ -84,6 +96,4 @@
         </section>
         <!-- /.content -->
     </div>
-
-
 @endsection
