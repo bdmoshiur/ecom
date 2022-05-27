@@ -37,10 +37,14 @@ class CategoryController extends Controller
     public function addEditCategory(Request $request, $id = null)
     {
         if ($id == "") {
-            $title = "add category";
+            //Add Category Functionality
+            $title = "Add category";
             $category = new Category();
         } else {
-            $title = "edit Category";
+            //Edit Category Functionality
+            $title = "Edit Category";
+            $categorydata = Category::where('id', $id)->first();
+            $categorydata = json_decode(json_encode($categorydata), true);
         }
 
         if ($request->isMethod('post')) {
@@ -108,7 +112,7 @@ class CategoryController extends Controller
 
         //get all sections
         $getSections = Section::get();
-        return view('admin.categories.add_edit_category', compact('title', 'getSections'));
+        return view('admin.categories.add_edit_category', compact('title', 'getSections', 'categorydata'));
     }
 
 

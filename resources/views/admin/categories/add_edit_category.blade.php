@@ -33,12 +33,15 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.add.edit.categories') }}" name="categoryForm" id="categoryForm"
-                    method="POST" enctype="multipart/form-data">
+                <form
+                    @if (empty($categorydata['id'])) action="{{ route('admin.add.edit.categories') }}"
+                    @else
+                        action="{{ route('admin.add.edit.categories', $categorydata['id']) }}" @endif
+                    name="categoryForm" id="categoryForm" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card card-default">
                         <div class="card-header">
-                            <h3 class="card-title">Add Category</h3>
+                            <h3 class="card-title">{{ $title }}</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
                                         class="fas fa-minus"></i></button>
@@ -53,6 +56,9 @@
                                     <div class="form-group">
                                         <label for="category_name">Category Name</label>
                                         <input type="text" class="form-control" name="category_name" id="category_name"
+                                            @if (!empty($categorydata['category_name'])) value="{{ $categorydata['category_name'] }}"
+                                        @else
+                                        value="{{ old('category_name') }}" @endif
                                             placeholder="Enter Category Name">
                                     </div>
                                     <div id="appendCategoriesLevel">
@@ -106,22 +112,20 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="category_name">Meta Title</label>
-                                        <textarea class="form-control" name="meta_title" id="meta_title" rows="3"
-                                            placeholder="Enter ..."></textarea>
+                                        <textarea class="form-control" name="meta_title" id="meta_title" rows="3" placeholder="Enter ..."></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="category_name">Meta Description</label>
-                                        <textarea class="form-control" name="meta_description" id="meta_description"
-                                            rows="3" placeholder="Enter ..."></textarea>
+                                        <textarea class="form-control" name="meta_description" id="meta_description" rows="3"
+                                            placeholder="Enter ..."></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="category_name">Meta Keywords</label>
-                                        <textarea class="form-control" name="meta_keywords" id="meta_keywords" rows="3"
-                                            placeholder="Enter ..."></textarea>
+                                        <textarea class="form-control" name="meta_keywords" id="meta_keywords" rows="3" placeholder="Enter ..."></textarea>
                                     </div>
                                 </div>
                             </div>

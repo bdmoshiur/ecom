@@ -50,6 +50,7 @@
                                         <th>Section</th>
                                         <th>Url</th>
                                         <th>Status</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -81,6 +82,7 @@
                                                         category_id="{{ $category->id }}">Inactive</a>
                                                 @endif
                                             </td>
+                                            <td><a href="{{ route('admin.add.edit.categories',$category->id ) }}">Edit</a></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
