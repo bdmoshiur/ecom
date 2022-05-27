@@ -40,6 +40,7 @@ class CategoryController extends Controller
             //Add Category Functionality
             $title = "Add category";
             $category = new Category();
+            $categorydata = array();
         } else {
             //Edit Category Functionality
             $title = "Edit Category";
@@ -55,7 +56,7 @@ class CategoryController extends Controller
                 'category_name' => 'required|regex:/^[\pL\s\-]+$/u',
                 'section_id' => 'required',
                 'url' => 'required',
-                'category_image' => 'required|image',
+                'category_image' => 'image',
             ];
             $customMessage = [
                 'category_name.required' => 'Category Name is Required',
