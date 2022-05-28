@@ -41,11 +41,20 @@ class CategoryController extends Controller
             $title = "Add category";
             $category = new Category();
             $categorydata = array();
+            $getCategories = array();
+            $message = "Category added successfully";
         } else {
             //Edit Category Functionality
             $title = "Edit Category";
             $categorydata = Category::where('id', $id)->first();
             $categorydata = json_decode(json_encode($categorydata), true);
+
+            $getCategories = Category::with('subcategories')->where(['parent_id'=> 0, 'section_id' => $categorydata['section_id']])->get();
+            $getCategories = json_decode(json_encode($getCategories), true);
+
+            $category = Category::find($id);
+
+            $message = "Category updated successfully";
         }
 
         if ($request->isMethod('post')) {
@@ -107,13 +116,14 @@ class CategoryController extends Controller
             $category->meta_keywords = $data['meta_keywords'];
             $category->status = 1;
             $category->save();
-            Session::flash('success_message', 'Category Added Successfully');
+            Session::flash('success_message', $message);
             return redirect()->route('admin.categories');
         }
 
         //get all sections
         $getSections = Section::get();
-        return view('admin.categories.add_edit_category', compact('title', 'getSections', 'categorydata'));
+        
+        return view('admin.categories.add_edit_category', compact('title', 'getSections', 'categorydata', 'getCategories'));
     }
 
 

@@ -72,7 +72,7 @@
                                             style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach ($getSections as $section)
-                                                <option value="{{ $section->id }}" @if (!empty($categorydata['section_id']) && $categorydata['section_id'] == $section->id) selected @endif>{{ $section->section_name }}</option>
+                                                <option value="{{ $section->id }}" @if (!empty($categorydata['section_id']) && $categorydata['section_id'] == $section->id) selected @endif>{{ $section->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
