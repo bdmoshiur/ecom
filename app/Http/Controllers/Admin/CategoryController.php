@@ -122,7 +122,7 @@ class CategoryController extends Controller
 
         //get all sections
         $getSections = Section::get();
-        
+
         return view('admin.categories.add_edit_category', compact('title', 'getSections', 'categorydata', 'getCategories'));
     }
 
@@ -136,5 +136,23 @@ class CategoryController extends Controller
 
             return view('admin.categories.append_categories_level', compact('getCategories'));
         }
+    }
+
+    public function deleteCategoryImage($id)
+    {
+        $category = Category::find($id);
+        if (file_exists('images/category_images/' . $category->category_image)) {
+            unlink('images/category_images/' . $category->category_image);
+        }
+        $category->category_image = "";
+        $category->save();
+        return redirect()->back()->with('success_message', 'Category Image Deleted Successfully');
+    }
+
+    public function deleteCategories($id)
+    {
+        $deleteCategories = Category::find($id)->delete();
+        Session::flash('success_message', 'Category Deleted Successfully');
+        return redirect()->back();
     }
 }

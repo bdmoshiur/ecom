@@ -82,7 +82,12 @@
                                                         category_id="{{ $category->id }}">Inactive</a>
                                                 @endif
                                             </td>
-                                            <td><a href="{{ route('admin.add.edit.categories',$category->id ) }}">Edit</a></td>
+                                            <td><a
+                                                    href="{{ route('admin.add.edit.categories', $category->id) }}">Edit</a>
+                                                &nbsp;
+                                                <a
+                                                    href="{{ route('admin.delete.categories', $category->id) }}">Delete</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

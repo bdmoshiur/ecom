@@ -32,6 +32,14 @@
                         </ul>
                     </div>
                 @endif
+                @if (Session::has('success_message'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px">
+                    {{ Session::get('success_message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
 
                 <form
                     @if (empty($categorydata['id'])) action="{{ route('admin.add.edit.categories') }}"
@@ -72,7 +80,9 @@
                                             style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach ($getSections as $section)
-                                                <option value="{{ $section->id }}" @if (!empty($categorydata['section_id']) && $categorydata['section_id'] == $section->id) selected @endif>{{ $section->name }}</option>
+                                                <option value="{{ $section->id }}"
+                                                    @if (!empty($categorydata['section_id']) && $categorydata['section_id'] == $section->id) selected @endif>{{ $section->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -88,6 +98,13 @@
                                                 <span class="input-group-text" id="">Upload</span>
                                             </div>
                                         </div>
+                                        @if (!empty($categorydata['category_image']))
+                                            <div>
+                                                <img style="width: 60px; margin:5x" src="{{ asset('images/category_images/'. $categorydata['category_image'] )}}"
+                                                    alt="Category Image"> &nbsp; <a href="{{ route('admin.delete.category.image', $categorydata['id']) }}">Delete Image</a>
+                                            </div>
+                                        @endif
+
                                     </div>
                                 </div>
                             </div>
@@ -96,48 +113,63 @@
                                     <div class="form-group">
                                         <label for="category_discount">Category Discount</label>
                                         <input type="number" class="form-control" name="category_discount"
-                                            id="category_discount" placeholder="Enter Category Discount" @if (!empty($categorydata['category_discount'])) value="{{ $categorydata['category_discount'] }}"
+                                            id="category_discount" placeholder="Enter Category Discount"
+                                            @if (!empty($categorydata['category_discount'])) value="{{ $categorydata['category_discount'] }}"
                                             @else
                                             value="{{ old('category_discount') }}" @endif>
                                     </div>
                                     <div class="form-group">
                                         <label for="description">Category Description</label>
-                                        <textarea class="form-control" name="description" id="description" rows="3"
-                                            placeholder="Enter Discription ...">@if (!empty($categorydata['description'])) {{ $categorydata['description'] }}
-                                            @else
-                                            {{ old('description') }} @endif</textarea>
+                                        <textarea class="form-control" name="description" id="description" rows="3" placeholder="Enter Discription ...">
+@if (!empty($categorydata['description']))
+{{ $categorydata['description'] }}
+@else
+{{ old('description') }}
+@endif
+</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="url">Category Url</label>
                                         <input type="text" class="form-control" name="url" id="url"
-                                            placeholder="Enter Category Url" @if (!empty($categorydata['url'])) value="{{ $categorydata['url'] }}"
+                                            placeholder="Enter Category Url"
+                                            @if (!empty($categorydata['url'])) value="{{ $categorydata['url'] }}"
                                             @else
                                             value="{{ old('url') }}" @endif>
                                     </div>
                                     <div class="form-group">
                                         <label for="meta_title">Meta Title</label>
-                                        <textarea class="form-control" name="meta_title" id="meta_title" rows="3" placeholder="Enter ..." >@if (!empty($categorydata['meta_title'])) {{ $categorydata['meta_title'] }}
-                                            @else
-                                            {{ old('meta_title') }} @endif</textarea>
+                                        <textarea class="form-control" name="meta_title" id="meta_title" rows="3" placeholder="Enter ...">
+@if (!empty($categorydata['meta_title']))
+{{ $categorydata['meta_title'] }}
+@else
+{{ old('meta_title') }}
+@endif
+</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="meta_description">Meta Description</label>
-                                        <textarea class="form-control" name="meta_description" id="meta_description" rows="3"
-                                            placeholder="Enter ..." >@if (!empty($categorydata['meta_description'])) {{ $categorydata['meta_description'] }}
-                                            @else
-                                            {{ old('meta_description') }} @endif</textarea>
+                                        <textarea class="form-control" name="meta_description" id="meta_description" rows="3" placeholder="Enter ...">
+@if (!empty($categorydata['meta_description']))
+{{ $categorydata['meta_description'] }}
+@else
+{{ old('meta_description') }}
+@endif
+</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="meta_keywords">Meta Keywords</label>
-                                        <textarea class="form-control" name="meta_keywords" id="meta_keywords" rows="3" placeholder="Enter ..."> @if (!empty($categorydata['meta_keywords'])) {{ $categorydata['meta_keywords'] }}
-                                            @else
-                                            {{ old('meta_keywords') }} @endif</textarea>
+                                        <textarea class="form-control" name="meta_keywords" id="meta_keywords" rows="3" placeholder="Enter ..."> @if (!empty($categorydata['meta_keywords']))
+{{ $categorydata['meta_keywords'] }}
+@else
+{{ old('meta_keywords') }}
+@endif
+</textarea>
                                     </div>
                                 </div>
                             </div>
