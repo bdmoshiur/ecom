@@ -85,8 +85,8 @@
                                             <td><a
                                                     href="{{ route('admin.add.edit.categories', $category->id) }}">Edit</a>
                                                 &nbsp;
-                                                <a
-                                                    href="{{ route('admin.delete.categories', $category->id) }}">Delete</a>
+                                                {{--  <a href="{{ route('admin.delete.category', $category->id) }}">Delete</a>  --}}
+                                                <a href="javascript:void(0)" class="confirmDelete" record="category" recordid="{{ $category->id }}">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach

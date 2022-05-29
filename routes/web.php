@@ -35,6 +35,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 
         Route::post('append-categories-lavel', 'CategoryController@appendCategoryLevel')->name('admin.append.category.level');
         Route::get('delete_category_image/{id}', 'CategoryController@deleteCategoryImage')->name('admin.delete.category.image');
-        Route::get('delete_categories/{id}', 'CategoryController@deleteCategories')->name('admin.delete.categories');
+        Route::get('delete_category/{id}', 'CategoryController@deleteCategories')->name('admin.delete.category');
     });
 });

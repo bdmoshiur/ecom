@@ -101,7 +101,9 @@
                                         @if (!empty($categorydata['category_image']))
                                             <div>
                                                 <img style="width: 60px; margin:5x" src="{{ asset('images/category_images/'. $categorydata['category_image'] )}}"
-                                                    alt="Category Image"> &nbsp; <a href="{{ route('admin.delete.category.image', $categorydata['id']) }}">Delete Image</a>
+                                                    alt="Category Image"> &nbsp;
+                                                     {{--  <a href="{{ route('admin.delete.category.image', $categorydata['id']) }}">Delete Image</a>  --}}
+                                                     <a href="javascript:void(0)" class="confirmDelete" record="category_image" recordid="{{ $categorydata['id'] }}" >Delete Image</a>
                                             </div>
                                         @endif
 

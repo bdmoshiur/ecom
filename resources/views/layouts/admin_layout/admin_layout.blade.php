@@ -101,6 +101,9 @@
     <!-- Custom Admin Js -->
     <script src="{{ url('js/admin_js/admin_script.js') }}"></script>
 
+    <!--sweetalert2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 </html>
