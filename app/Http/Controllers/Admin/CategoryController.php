@@ -38,7 +38,7 @@ class CategoryController extends Controller
     {
         if ($id == "") {
             //Add Category Functionality
-            $title = "Add category";
+            $title = "Add Category";
             $category = new Category();
             $categorydata = array();
             $getCategories = array();

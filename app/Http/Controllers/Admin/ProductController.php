@@ -46,10 +46,10 @@ class ProductController extends Controller
     {
         if ($id == "") {
             //Add Product Functionality
-            $title = "Add category";
+            $title = "Add Product";
         } else {
             //Edit Product Functionality
-            $title = "Edit Category";
+            $title = "Edit Product";
 
         }
         $fabricArray = array('Coton', 'Polyester', 'Wool');
