@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Product;
+use App\Section;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
@@ -52,12 +53,15 @@ class ProductController extends Controller
 
         }
         $fabricArray = array('Coton', 'Polyester', 'Wool');
-        $SleeveArray = array('Full Sleeve', 'Half Sleeve', 'Short Sleeve', 'Sleeveless');
+        $sleeveArray = array('Full Sleeve', 'Half Sleeve', 'Short Sleeve', 'Sleeveless');
         $patternArray = array('Checked', 'Plain', 'Printed','Self','Solid');
         $fitArray = array('Regular', 'Slim');
-        $occassionArray = array('Casual', 'Formal');
+        $occasionArray = array('Casual', 'Formal');
+        $categories = Section::with('categories')->get();
+        $categories = json_decode(json_encode($categories), true);
+        // echo "<pre>"; print_r($categories); die;
 
-        return view('admin.products.add_edit_product', compact('title', 'fabricArray', 'SleeveArray', 'patternArray', 'fitArray', 'occassionArray'));
+        return view('admin.products.add_edit_product', compact('title', 'fabricArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'categories'));
     }
 
 
