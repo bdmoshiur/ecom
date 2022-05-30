@@ -36,5 +36,15 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::post('append-categories-lavel', 'CategoryController@appendCategoryLevel')->name('admin.append.category.level');
         Route::get('delete_category_image/{id}', 'CategoryController@deleteCategoryImage')->name('admin.delete.category.image');
         Route::get('delete_category/{id}', 'CategoryController@deleteCategories')->name('admin.delete.category');
+
+        // products
+        Route::get('products', 'ProductController@products')->name('admin.products');
+        Route::post('update-product-status', 'ProductController@updateProductStatus');
+        Route::match(['get', 'post'], 'add-edit-product/{id?}', 'ProductController@addEditProduct')->name('admin.add.edit.products');
+
+        Route::post('append-products-lavel', 'ProductController@appendProductLevel')->name('admin.append.product.level');
+        Route::get('delete_product_image/{id}', 'ProductController@deleteProductImage')->name('admin.delete.product.image');
+        Route::get('delete_product/{id}', 'ProductController@deleteProduct')->name('admin.delete.product');
+
     });
 });
