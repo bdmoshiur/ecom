@@ -76,21 +76,8 @@ class CategoryController extends Controller
             ];
             $this->validate($request, $rules, $customMessage);
 
-
-            // Upload Category Image
-            if ($request->hasFile('category_image')) {
-                $image_tmp = $request->file('category_image');
-                if ($image_tmp->isValid()) {
-                    $extention = $image_tmp->getClientOriginalExtension();
-                    $imageName = rand(111, 99999) . '.' . $extention;
-                    $imagePath = 'images/category_images/' . $imageName;
-                    Image::make($image_tmp)->resize(300, 400)->save($imagePath);
-                    $category->category_image = $imageName;
-                }
-            }
-
             if (empty($data['category_discount'])) {
-                $data['category_discount'] = "";
+                $data['category_discount'] = 0;
             }
             if (empty($data['description'])) {
                 $data['description'] = "";
@@ -104,6 +91,21 @@ class CategoryController extends Controller
             if (empty($data['meta_keywords'])) {
                 $data['meta_keywords'] = "";
             }
+
+
+            // Upload Category Image
+            if ($request->hasFile('category_image')) {
+                $image_tmp = $request->file('category_image');
+                if ($image_tmp->isValid()) {
+                    $extention = $image_tmp->getClientOriginalExtension();
+                    $imageName = rand(111, 99999) . '.' . $extention;
+                    $imagePath = 'images/category_images/' . $imageName;
+                    Image::make($image_tmp)->resize(300, 400)->save($imagePath);
+                    $category->category_image = $imageName;
+                }
+            }
+
+
 
             $category->parent_id = $data['parent_id'];
             $category->section_id = $data['section_id'];

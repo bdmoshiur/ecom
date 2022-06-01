@@ -69,9 +69,9 @@
                                             @foreach ($categories as $section)
                                             <optgroup label="{{ $section['name'] }}"></optgroup>
                                             @foreach ($section['categories'] as $category)
-                                                <option value="{{ $category['id'] }}">&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;{{ $category['category_name'] }}</option>
+                                                <option value="{{ $category['id'] }}" @if(!empty(@old('category_id')) && $category['id'] = @old('category_id')) selected @endif >&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;{{ $category['category_name'] }}</option>
                                                 @foreach ($category['subcategories'] as $subcategory)
-                                                    <option value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{ $subcategory['category_name'] }}</option>
+                                                    <option value="{{ $subcategory['id'] }}" @if(!empty(@old('category_id')) && $subcategory['id'] = @old('category_id')) selected @endif >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{ $subcategory['category_name'] }}</option>
                                                 @endforeach
                                             @endforeach
                                             @endforeach
@@ -107,7 +107,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_price">Product Price</label>
-                                        <input type="text" class="form-control" name="product_price" id="product_price"
+                                        <input type="number" class="form-control" name="product_price" id="product_price"
                                             @if (!empty($productdata['product_price'])) value="{{ $productdata['product_price'] }}"
                                         @else
                                         value="{{ old('product_price') }}" @endif
@@ -185,7 +185,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Select Fabric</label>
-                                        <select name="fabric_id" id="fabric_id" class="form-control select2"
+                                        <select name="fabric" id="fabric_id" class="form-control select2"
                                             style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach ($fabricArray as $fabric)
@@ -197,7 +197,7 @@
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label>Select Sleeve</label>
-                                        <select name="sleeve_id" id="sleeve_id" class="form-control select2"
+                                        <select name="sleeve" id="sleeve_id" class="form-control select2"
                                             style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach ($sleeveArray as $sleeve)
@@ -207,7 +207,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Select Pattern</label>
-                                        <select name="pattern_id" id="pattern_id" class="form-control select2"
+                                        <select name="pattern" id="pattern_id" class="form-control select2"
                                             style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach ($patternArray as $pattern)
@@ -219,7 +219,7 @@
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label>Select Fit</label>
-                                        <select name="fit_id" id="fit_id" class="form-control select2"
+                                        <select name="fit_id" id="fit" class="form-control select2"
                                             style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach ($fitArray as $fit)
@@ -229,7 +229,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Select Occasion</label>
-                                        <select name="occasion_id" id="occasion_id" class="form-control select2"
+                                        <select name="occasion_id" id="occasion" class="form-control select2"
                                             style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach ($occasionArray as $occasion)
@@ -274,7 +274,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="meta_keywords">Featured Item</label>
-                                        <input type="checkbox" name="is_featured" id="is_featured" value="1">
+                                        <input type="checkbox" name="is_featured" id="is_featured" value="Yes">
 
                                     </div>
                                 </div>
