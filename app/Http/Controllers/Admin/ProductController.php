@@ -8,6 +8,7 @@ use App\Section;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -45,6 +46,7 @@ class ProductController extends Controller
 
     public function addEditProduct(Request $request, $id = null)
     {
+        // dd($request->all());
         if ($id == "") {
             //Add Product Functionality
             $title = "Add Product";
@@ -56,8 +58,6 @@ class ProductController extends Controller
 
         if ($request->isMethod('post')) {
             $data = $request->all();
-
-
             $rules = [
                 'category_id' => 'required',
                 'product_name' => 'required|regex:/^[\pL\s\-]+$/u',
@@ -132,18 +132,35 @@ class ProductController extends Controller
                 $data['description'] = "";
             }
 
-            if (empty($data['main_image'])) {
-                $data['main_image'] = "";
+             // Upload Product Image
+             if ($request->hasFile('main_image')) {
+                $image_tmp = $request->file('main_image');
+                if ($image_tmp->isValid()) {
+                    $image_name = $image_tmp->getClientOriginalName();
+                    $extention = $image_tmp->getClientOriginalExtension();
+                    $imageName = $image_name .'-'.rand(111, 99999) . '.' . $extention;
+                    $large_image_path = 'images/product_images/large/' . $imageName;
+                    $medium_image_path = 'images/product_images/medium/' . $imageName;
+                    $small_image_path = 'images/product_images/small/' . $imageName;
+                    Image::make($image_tmp)->save($large_image_path);
+                    Image::make($image_tmp)->resize(520, 600)->save($medium_image_path);
+                    Image::make($image_tmp)->resize(260, 300)->save($small_image_path);
+                    $product->main_image = $imageName;
+                }
             }
 
-            if (empty($data['product_video'])) {
-                $data['product_video'] = "";
+            // Upload Product Video
+            if ($request->hasFile('product_video')) {
+                $video_tmp = $request->file('product_video');
+                if ($video_tmp->isValid()) {
+                    $video_name = $video_tmp->getClientOriginalName();
+                    $extention = $video_tmp->getClientOriginalExtension();
+                    $VideoName = $video_name .'-'.rand() . '.' . $extention;
+                    $video_path = 'videos/product_videos/';
+                    $video_tmp->move($video_path, $VideoName);
+                    $product->product_video = $VideoName;
+                }
             }
-
-
-
-
-
 
             $categoriesDetails = Category::find($data['category_id']);
 
@@ -154,8 +171,6 @@ class ProductController extends Controller
             $product->product_color = $data['product_color'];
             $product->product_price = $data['product_price'];
             $product->product_discount = $data['product_discount'];
-            $product->main_image = $data['main_image'];
-            $product->product_video = $data['product_video'];
             $product->product_weight = $data['product_weight'];
             $product->description = $data['description'];
             $product->wash_care = $data['wash_care'];
