@@ -143,7 +143,7 @@
                                                 <span class="input-group-text" id="">Upload</span>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> Recomended Image Size: Width: 1040px, Height: 120px
                                 </div>
                             </div>
                             <div class="row">
@@ -229,7 +229,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Select Occasion</label>
-                                        <select name="occasion_id" id="occasion" class="form-control select2"
+                                        <select name="occasion" id="occasion" class="form-control select2"
                                             style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach ($occasionArray as $occasion)

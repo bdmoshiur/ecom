@@ -48,6 +48,7 @@
                                         <th>Products Name</th>
                                         <th>Products Code</th>
                                         <th>Products Color</th>
+                                        <th>Products Image</th>
                                         <th>Category</th>
                                         <th>Section</th>
                                         <th>Status</th>
@@ -63,6 +64,16 @@
                                             <td>{{ $product->product_name }}</td>
                                             <td>{{ $product->product_code }}</td>
                                             <td>{{ $product->product_color }}</td>
+                                            <td>
+                                                @php
+                                                $small_image_path = 'images/product_images/small/' . $product->main_image;
+                                                @endphp
+                                                @if (!empty($product->main_image && file_exists($small_image_path)))
+                                                    <img style="width: 100%" src="{{ asset('images/product_images/small/'.$product->main_image) }}" alt="Image">
+                                                @else
+                                                <img style="width: 100%" src="{{ asset('images/product_images/small/no_image.png') }}" alt="Image">
+                                                @endif
+                                            </td>
                                             <td>{{ $product->category->category_name }}</td>
                                             <td>{{ $product->section->name }}</td>
                                             <td>
