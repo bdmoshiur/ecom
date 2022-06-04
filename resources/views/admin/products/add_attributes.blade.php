@@ -41,6 +41,15 @@
                     </div>
                 @endif
 
+                @if (Session::has('error_message'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px">
+                        {{ Session::get('error_message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
                 <form name="attributeForm" id="attributeForm" method="POST" action="{{ route('admin.add_attributes', $productdata['id'] ) }}">
                     @csrf
                     <div class="card card-default">
@@ -61,10 +70,10 @@
                                         <label for="product_name">Product Name:</label>&nbsp;{{ $productdata['product_name'] }}
                                     </div>
                                     <div class="form-group">
-                                        <label for="product_price">Product Price:</label>&nbsp;{{ $productdata['product_price'] }}
+                                        <label for="product_code">Product Code:</label>&nbsp;{{ $productdata['product_code'] }}
                                     </div>
                                     <div class="form-group">
-                                        <label for="product_code">Product Code:</label>&nbsp;{{ $productdata['product_code'] }}
+                                        <label for="product_price">Product Color:</label>&nbsp;{{ $productdata['product_color'] }}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -78,10 +87,10 @@
                                     <div class="form-group">
                                         <div class="field_wrapper">
                                             <div>
-                                                <input type="text" name="size[]" id="size" value="" placeholder="Size" style="width: 120px"/>
-                                                <input type="text" name="sku[]" id="sku" value="" placeholder="SKU" style="width: 120px"/>
-                                                <input type="text" name="price[]" id="price" value="" placeholder="Price" style="width: 120px"/>
-                                                <input type="text" name="stock[]" id="stock" value="" placeholder="Stock" style="width: 120px"/>
+                                                <input type="text" name="size[]" id="size" value="" placeholder="Size" style="width: 120px" required/>
+                                                <input type="text" name="sku[]" id="sku" value="" placeholder="SKU" style="width: 120px" required/>
+                                                <input type="number" name="price[]" id="price" value="" placeholder="Price" style="width: 120px" required/>
+                                                <input type="number" name="stock[]" id="stock" value="" placeholder="Stock" style="width: 120px" required/>
                                                 <a href="javascript:void(0);" class="add_button" title="Add field">Add</a>
                                             </div>
                                         </div>
@@ -97,6 +106,44 @@
                     </div>
 
                 </form>
+
+                 <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Added Product Attributes</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="products" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Size</th>
+                                        <th>SKU</th>
+                                        <th>Price</th>
+                                        <th>Stock</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach ($productdata['attributes'] as $key => $attribute)
+                                        <tr>
+                                            <td>{{ $attribute['id'] }}</td>
+                                            <td>{{ $attribute['size'] }}</td>
+                                            <td>{{ $attribute['sku'] }}</td>
+                                            <td>{{ $attribute['price'] }}</td>
+                                            <td>{{ $attribute['stock'] }}</td>
+                                            <td>
+                                                <a href="" class="btn btn-primary">Edit</a>
+                                                <a href="" class="btn btn-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
             </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->
