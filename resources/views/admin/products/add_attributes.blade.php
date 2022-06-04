@@ -41,11 +41,7 @@
                     </div>
                 @endif
 
-                <form
-                    @if (empty($productdata['id'])) action="{{ route('admin.add.edit.products') }}"
-                    @else
-                        action="{{ route('admin.add.edit.products', $productdata['id']) }}" @endif
-                    name="productForm" id="productForm" method="POST" enctype="multipart/form-data">
+                <form name="attributeForm" id="attributeForm" method="POST" action="{{ route('admin.add_attributes', $productdata['id'] ) }}">
                     @csrf
                     <div class="card card-default">
                         <div class="card-header">

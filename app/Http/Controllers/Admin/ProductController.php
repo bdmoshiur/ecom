@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Category;
 use App\Product;
 use App\Section;
+use App\Category;
+use App\ProductsAttribute;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -242,13 +243,29 @@ class ProductController extends Controller
         return redirect()->back()->with('success_message', 'Product Video Deleted Successfully');
     }
 
-    function add_attributes($id)
+    function add_attributes(Request $request, $id)
     {
-       $productdata = Product::find($id);
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            foreach($data['sku'] as $key => $val) {
+                if(!empty($val)) {
+                    $attribute = new ProductsAttribute;
+                    $attribute->product_id = $id;
+                    $attribute->sku = $val;
+                    $attribute->size = $data['size'][$key];
+                    $attribute->price = $data['price'][$key];
+                    $attribute->stock = $data['stock'][$key];
+                    $attribute->status = 1;
+                    $attribute->save();
+                }
+            }
+        }
 
+       $productdata = Product::find($id);
        $productdata = json_decode(json_encode($productdata), true);
 
        $title = "Product Attributes";
+
        return view('admin.products.add_attributes', compact('productdata', 'title'));
       
     }
