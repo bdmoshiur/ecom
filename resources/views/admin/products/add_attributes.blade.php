@@ -117,6 +117,7 @@
                 </form>
 
                 <form name="updateAttributeForm" id="updateAttributeForm" method="POST" action="{{ route('admin.edit_attributes', $productdata['id']) }}">
+                    @csrf
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Added Product Attributes</h3>

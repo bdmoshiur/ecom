@@ -292,7 +292,17 @@ class ProductController extends Controller
     public function editAttributes( Request $request, $id)
     {
         if($request->isMethod('post')) {
-            
+            $data = $request->all();
+
+            foreach($data['attrId'] as $key => $val) {
+                if(!empty($val)) {
+                    ProductsAttribute::where(['id'=>$data['attrId'][$key]])->update(['price' => $data['price'][$key],'stock' => $data['stock'][$key]]);
+                }
+            }
+
+            $success_message = 'Product Attributes updated successfully.';
+            Session::flash('success_message', $success_message);
+            return redirect()->back();
         }
     }
 

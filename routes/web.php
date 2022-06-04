@@ -48,8 +48,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('delete_product/{id}', 'ProductController@deleteProduct')->name('admin.delete.product');
 
         // Products Attributes
-        Route::match(['get', 'post'], 'add-attributes/{id?}', 'ProductController@addAttributes')->name('admin.add_attributes');
-        Route::post('edit_attributes/{id?}', 'ProductController@editAttributes')->name('admin.edit_attributes');
+        Route::match(['get', 'post'], 'add-attributes/{id}', 'ProductController@addAttributes')->name('admin.add_attributes');
+        Route::post('edit_attributes/{id}', 'ProductController@editAttributes')->name('admin.edit_attributes');
 
     });
 });
