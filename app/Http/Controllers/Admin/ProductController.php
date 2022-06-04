@@ -243,7 +243,7 @@ class ProductController extends Controller
         return redirect()->back()->with('success_message', 'Product Video Deleted Successfully');
     }
 
-    function add_attributes(Request $request, $id)
+    function addAttributes(Request $request, $id)
     {
         if($request->isMethod('post')) {
             $data = $request->all();
@@ -287,6 +287,14 @@ class ProductController extends Controller
        $title = "Product Attributes";
 
        return view('admin.products.add_attributes', compact('productdata', 'title'));
-
     }
+
+    public function editAttributes( Request $request, $id)
+    {
+        if($request->isMethod('post')) {
+            
+        }
+    }
+
+
 }
