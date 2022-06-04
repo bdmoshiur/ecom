@@ -208,4 +208,37 @@ class ProductController extends Controller
 
         return view('admin.products.add_edit_product', compact('title', 'fabricArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'categories', 'productdata'));
     }
+
+    public function deleteProductImage($id)
+    {
+        $product = Product::find($id);
+
+        $small_image_path = 'images/product_images/small/';
+        $medium_image_path = 'images/product_images/medium/';
+        $large_image_path = 'images/product_images/large/';
+
+        if (file_exists( $small_image_path . $product->main_image)) {
+            unlink($small_image_path . $product->main_image);
+        }
+        if (file_exists( $medium_image_path . $product->main_image)) {
+            unlink($medium_image_path. $product->main_image);
+        }
+        if (file_exists( $large_image_path . $product->main_image)) {
+            unlink($large_image_path . $product->main_image);
+        }
+        $product->main_image = "";
+        $product->save();
+        return redirect()->back()->with('success_message', 'Product Image Deleted Successfully');
+    }
+
+    public function deleteProductVideo($id)
+    {
+        $product = Product::find($id);
+        if (file_exists('videos/product_videos/' . $product->product_video)) {
+            unlink('videos/product_videos/' . $product->product_video);
+        }
+        $product->product_video = "";
+        $product->save();
+        return redirect()->back()->with('success_message', 'Product Video Deleted Successfully');
+    }
 }

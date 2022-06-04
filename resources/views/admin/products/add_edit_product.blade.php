@@ -33,13 +33,13 @@
                     </div>
                 @endif
                 @if (Session::has('success_message'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px">
-                    {{ Session::get('success_message') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px">
+                        {{ Session::get('success_message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
 
                 <form
                     @if (empty($productdata['id'])) action="{{ route('admin.add.edit.products') }}"
@@ -67,13 +67,19 @@
                                             style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach ($categories as $section)
-                                            <optgroup label="{{ $section['name'] }}"></optgroup>
-                                            @foreach ($section['categories'] as $category)
-                                                <option value="{{ $category['id'] }}" @if(!empty(@old('category_id')) && $category['id'] = @old('category_id')) selected @elseif (!empty($productdata['category_id']) && $productdata['category_id'] ==  $category['id'] ) selected @endif >&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;{{ $category['category_name'] }}</option>
-                                                @foreach ($category['subcategories'] as $subcategory)
-                                                    <option value="{{ $subcategory['id'] }}" @if(!empty(@old('category_id')) && $subcategory['id'] = @old('category_id')) selected @elseif (!empty($productdata['category_id']) && $productdata['category_id'] ==  $subcategory['id'] ) selected @endif >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{ $subcategory['category_name'] }}</option>
+                                                <optgroup label="{{ $section['name'] }}"></optgroup>
+                                                @foreach ($section['categories'] as $category)
+                                                    <option value="{{ $category['id'] }}"
+                                                        @if (!empty(@old('category_id')) && ($category['id'] = @old('category_id'))) selected @elseif (!empty($productdata['category_id']) && $productdata['category_id'] == $category['id']) selected @endif>
+                                                        &nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;{{ $category['category_name'] }}
+                                                    </option>
+                                                    @foreach ($category['subcategories'] as $subcategory)
+                                                        <option value="{{ $subcategory['id'] }}"
+                                                            @if (!empty(@old('category_id')) && ($subcategory['id'] = @old('category_id'))) selected @elseif (!empty($productdata['category_id']) && $productdata['category_id'] == $subcategory['id']) selected @endif>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{ $subcategory['category_name'] }}
+                                                        </option>
+                                                    @endforeach
                                                 @endforeach
-                                            @endforeach
                                             @endforeach
                                         </select>
                                     </div>
@@ -115,7 +121,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="product_discount">Product Discount (%)</label>
-                                        <input type="text" class="form-control" name="product_discount" id="product_discount"
+                                        <input type="text" class="form-control" name="product_discount"
+                                            id="product_discount"
                                             @if (!empty($productdata['product_discount'])) value="{{ $productdata['product_discount'] }}"
                                         @else
                                         value="{{ old('product_discount') }}" @endif
@@ -143,7 +150,17 @@
                                                 <span class="input-group-text" id="">Upload</span>
                                             </div>
                                         </div>
-                                    </div> Recomended Image Size: Width: 1040px, Height: 120px
+                                        <div>Recomended Image Size: Width: 1040px, Height: 120px</div>
+                                        @if (!empty($productdata['main_image']))
+                                            <div>
+                                                <img style="width: 60px; margin:5x"
+                                                    src="{{ asset('images/product_images/small/' . $productdata['main_image']) }}"
+                                                    alt="Category Image"> &nbsp;
+                                                <a href="javascript:void(0)" class="confirmDelete" record="product_image"
+                                                    recordid="{{ $productdata['id'] }}">Delete Image</a>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -160,15 +177,22 @@
                                                 <span class="input-group-text" id="">Upload</span>
                                             </div>
                                         </div>
+                                        @if (!empty($productdata['product_video']))
+                                            <div><a
+                                                    href="{{ url('videos/product_videos/' . $productdata['product_video']) }}">Download</a>&nbsp; | &nbsp;
+                                                    <a href="javascript:void(0)" class="confirmDelete" record="product_video"
+                                                    recordid="{{ $productdata['id'] }}">Delete Video</a></div>
+
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <label for="description">product Description</label>
                                         <textarea class="form-control" name="description" id="description" rows="3" placeholder="Enter Discription ...">
                                             @if (!empty($productdata['description']))
-                                            {{ $productdata['description'] }}
-                                            @else
-                                            {{ old('description') }}
-                                            @endif
+                                                {{ $productdata['description'] }}
+                                                @else
+                                                {{ old('description') }}
+                                                @endif
                                             </textarea>
                                     </div>
                                 </div>
@@ -177,10 +201,10 @@
                                         <label for="wash_care">Wash Care</label>
                                         <textarea class="form-control" name="wash_care" id="wash_care" rows="3" placeholder="Enter Wash Care ...">
                                             @if (!empty($productdata['wash_care']))
-                                            {{ $productdata['wash_care'] }}
-                                            @else
-                                            {{ old('wash_care') }}
-                                            @endif
+{{ $productdata['wash_care'] }}
+@else
+{{ old('wash_care') }}
+@endif
                                             </textarea>
                                     </div>
                                     <div class="form-group">
@@ -189,7 +213,9 @@
                                             style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach ($fabricArray as $fabric)
-                                            <option value="{{ $fabric }}" @if (!empty($productdata['fabric']) && $productdata['fabric'] == $fabric) selected @endif>{{ $fabric }}</option>
+                                                <option value="{{ $fabric }}"
+                                                    @if (!empty($productdata['fabric']) && $productdata['fabric'] == $fabric) selected @endif>{{ $fabric }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -201,7 +227,9 @@
                                             style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach ($sleeveArray as $sleeve)
-                                            <option value="{{ $sleeve }}" @if (!empty($productdata['sleeve']) && $productdata['sleeve'] == $sleeve) selected @endif>{{ $sleeve }}</option>
+                                                <option value="{{ $sleeve }}"
+                                                    @if (!empty($productdata['sleeve']) && $productdata['sleeve'] == $sleeve) selected @endif>{{ $sleeve }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -211,7 +239,9 @@
                                             style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach ($patternArray as $pattern)
-                                            <option value="{{ $pattern }}" @if (!empty($productdata['pattern']) && $productdata['pattern'] == $pattern) selected @endif>{{ $pattern }}</option>
+                                                <option value="{{ $pattern }}"
+                                                    @if (!empty($productdata['pattern']) && $productdata['pattern'] == $pattern) selected @endif>{{ $pattern }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -219,11 +249,12 @@
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label>Select Fit</label>
-                                        <select name="fit" id="fit_id" class="form-control select2"
-                                            style="width: 100%;">
+                                        <select name="fit" id="fit_id" class="form-control select2" style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach ($fitArray as $fit)
-                                            <option value="{{ $fit }}" @if (!empty($productdata['fit']) && $productdata['fit'] == $fit) selected @endif>{{ $fit }}</option>
+                                                <option value="{{ $fit }}"
+                                                    @if (!empty($productdata['fit']) && $productdata['fit'] == $fit) selected @endif>{{ $fit }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -233,20 +264,22 @@
                                             style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach ($occasionArray as $occasion)
-                                            <option value="{{ $occasion }}" @if (!empty($productdata['occasion']) && $productdata['occasion'] == $occasion) selected @endif>{{ $occasion }}</option>
+                                                <option value="{{ $occasion }}"
+                                                    @if (!empty($productdata['occasion']) && $productdata['occasion'] == $occasion) selected @endif>{{ $occasion }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                    <div class="col-12 col-sm-6">
+                                <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="meta_title">Meta Title</label>
                                         <textarea class="form-control" name="meta_title" id="meta_title" rows="3" placeholder="Enter ...">
                                             @if (!empty($productdata['meta_title']))
-                                            {{ $productdata['meta_title'] }}
-                                            @else
-                                            {{ old('meta_title') }}
-                                            @endif
+{{ $productdata['meta_title'] }}
+@else
+{{ old('meta_title') }}
+@endif
                                             </textarea>
                                     </div>
                                 </div>
@@ -255,10 +288,10 @@
                                         <label for="meta_description">Meta Description</label>
                                         <textarea class="form-control" name="meta_description" id="meta_description" rows="3" placeholder="Enter ...">
                                             @if (!empty($productdata['meta_description']))
-                                            {{ $productdata['meta_description'] }}
-                                            @else
-                                            {{ old('meta_description') }}
-                                            @endif
+{{ $productdata['meta_description'] }}
+@else
+{{ old('meta_description') }}
+@endif
                                             </textarea>
                                     </div>
                                 </div>
@@ -266,15 +299,16 @@
                                     <div class="form-group">
                                         <label for="meta_keywords">Meta Keywords</label>
                                         <textarea class="form-control" name="meta_keywords" id="meta_keywords" rows="3" placeholder="Enter ..."> @if (!empty($productdata['meta_keywords']))
-                                            {{ $productdata['meta_keywords'] }}
-                                            @else
-                                            {{ old('meta_keywords') }}
-                                            @endif
+{{ $productdata['meta_keywords'] }}
+@else
+{{ old('meta_keywords') }}
+@endif
                                             </textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="meta_keywords">Featured Item</label>
-                                        <input type="checkbox" name="is_featured" id="is_featured" value="Yes" @if (!empty($productdata['is_featured']) && $productdata['is_featured'] == 'Yes') checked @endif>
+                                        <input type="checkbox" name="is_featured" id="is_featured" value="Yes"
+                                            @if (!empty($productdata['is_featured']) && $productdata['is_featured'] == 'Yes') checked @endif>
 
                                     </div>
                                 </div>

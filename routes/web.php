@@ -44,6 +44,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 
         Route::post('append-products-lavel', 'ProductController@appendProductLevel')->name('admin.append.product.level');
         Route::get('delete_product_image/{id}', 'ProductController@deleteProductImage')->name('admin.delete.product.image');
+        Route::get('delete_product_video/{id}', 'ProductController@deleteProductVideo')->name('admin.delete.product.vedio');
         Route::get('delete_product/{id}', 'ProductController@deleteProduct')->name('admin.delete.product');
 
     });
