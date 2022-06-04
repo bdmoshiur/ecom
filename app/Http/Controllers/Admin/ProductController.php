@@ -241,4 +241,15 @@ class ProductController extends Controller
         $product->save();
         return redirect()->back()->with('success_message', 'Product Video Deleted Successfully');
     }
+
+    function add_attributes($id)
+    {
+       $productdata = Product::find($id);
+
+       $productdata = json_decode(json_encode($productdata), true);
+
+       $title = "Product Attributes";
+       return view('admin.products.add_attributes', compact('productdata', 'title'));
+      
+    }
 }

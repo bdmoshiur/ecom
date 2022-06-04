@@ -58,7 +58,6 @@
                                 <tbody>
 
                                     @foreach ($products as $key => $product)
-
                                         <tr>
                                             <td>{{ $product->id }}</td>
                                             <td>{{ $product->product_name }}</td>
@@ -66,16 +65,20 @@
                                             <td>{{ $product->product_color }}</td>
                                             <td>
                                                 @php
-                                                $small_image_path = 'images/product_images/small/' . $product->main_image;
+                                                    $small_image_path = 'images/product_images/small/' . $product->main_image;
                                                 @endphp
                                                 @if (!empty($product->main_image && file_exists($small_image_path)))
-                                                    <img style="width: 100%" src="{{ asset('images/product_images/small/'.$product->main_image) }}" alt="Image">
+                                                    <img style="width: 100%"
+                                                        src="{{ asset('images/product_images/small/' . $product->main_image) }}"
+                                                        alt="Image">
                                                 @else
-                                                <img style="width: 100%" src="{{ asset('images/product_images/small/no_image.png') }}" alt="Image">
+                                                    <img style="width: 100%"
+                                                        src="{{ asset('images/product_images/small/no_image.png') }}"
+                                                        alt="Image">
                                                 @endif
                                             </td>
-                                            <td>{{ $product->category->category_name }}</td>
-                                            <td>{{ $product->section->name }}</td>
+                                            <td>{{ $product->category->category_name ?? '' }}</td>
+                                            <td>{{ $product->section->name ?? '' }}</td>
                                             <td>
                                                 @if ($product->status == 1)
                                                     <a href="javascript:void(0)" class="updateProductStatus"
@@ -87,11 +90,15 @@
                                                         product_id="{{ $product->id }}">Inactive</a>
                                                 @endif
                                             </td>
-                                            <td><a
-                                                    href="{{ route('admin.add.edit.products', $product->id) }}">Edit</a>
+                                            <td><a title="Add/Edit Attributes" href="{{ route('admin.add_attributes', $product->id) }}"><i
+                                                        class="fas fa-plus"></i></a>
                                                 &nbsp;
-                                                {{--  <a href="{{ route('admin.delete.category', $category->id) }}">Delete</a>  --}}
-                                                <a href="javascript:void(0)" class="confirmDelete" record="product" recordid="{{ $product->id }}">Delete</a>
+                                                <a title="Edit Product" href="{{ route('admin.add.edit.products', $product->id) }}"><i
+                                                    class="fas fa-edit"></i></a>
+                                                &nbsp;
+                                                <a title="Delete Product" href="javascript:void(0)" class="confirmDelete" record="product"
+                                                    recordid="{{ $product->id }}"><i
+                                                    class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
