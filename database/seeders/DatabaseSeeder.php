@@ -3,9 +3,10 @@
 
 use Illuminate\Database\Seeder;
 use Database\Seeders\AmdinsTableSeeder;
-use Database\Seeders\SectionsTableSeeder;
 use Database\Seeders\CategoryTableSeeder;
 use Database\Seeders\ProductsTableSeeder;
+use Database\Seeders\SectionsTableSeeder;
+use Database\Seeders\ProductsAttributesTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
         //  $this->call(AmdinsTableSeeder::class);
         //  $this->call(SectionsTableSeeder::class);
         //  $this->call(CategoryTableSeeder::class);
-         $this->call(ProductsTableSeeder::class);
+        //  $this->call(ProductsTableSeeder::class);
+         $this->call(ProductsAttributesTableSeeder::class);
     }
 }
