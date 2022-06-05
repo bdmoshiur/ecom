@@ -40,8 +40,8 @@ class ProductController extends Controller
 
     public function deleteProduct($id)
     {
-        $deleteCategories = Product::find($id)->delete();
-        Session::flash('success_message', 'Category Deleted Successfully');
+        Product::find($id)->delete();
+        Session::flash('success_message', 'Product Deleted Successfully');
         return redirect()->back();
     }
 
@@ -304,6 +304,27 @@ class ProductController extends Controller
             Session::flash('success_message', $success_message);
             return redirect()->back();
         }
+    }
+
+    public function updateAttributeStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            if ($data['status'] == "Active") {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+            ProductsAttribute::where('id', $data['attribute_id'])->update(['status' => $status]);
+            return response()->json(['status' => $status, 'attribute_id' => $data['attribute_id']]);
+        }
+    }
+
+    public function deleteAttribute($id)
+    {
+        ProductsAttribute::find($id)->delete();
+        Session::flash('success_message', 'Product Attribute Deleted Successfully');
+        return redirect()->back();
     }
 
 
