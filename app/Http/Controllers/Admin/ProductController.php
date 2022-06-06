@@ -279,5 +279,16 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
+    public function addImagess($id)
+    {
+
+        $productdata = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'main_image')->with('images')->find($id);
+        $productdata = json_decode(json_encode($productdata), true);
+
+        $title = "Product Images";
+
+        return view('admin.products.add_images', compact('productdata', 'title'));
+
+    }
 
 }
