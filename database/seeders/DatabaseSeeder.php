@@ -6,6 +6,7 @@ use Database\Seeders\AmdinsTableSeeder;
 use Database\Seeders\CategoryTableSeeder;
 use Database\Seeders\ProductsTableSeeder;
 use Database\Seeders\SectionsTableSeeder;
+use Database\Seeders\ProductsImagesTableSeeder;
 use Database\Seeders\ProductsAttributesTableSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
         //  $this->call(SectionsTableSeeder::class);
         //  $this->call(CategoryTableSeeder::class);
         //  $this->call(ProductsTableSeeder::class);
-         $this->call(ProductsAttributesTableSeeder::class);
+        //  $this->call(ProductsAttributesTableSeeder::class);
+         $this->call(ProductsImagesTableSeeder::class);
     }
 }

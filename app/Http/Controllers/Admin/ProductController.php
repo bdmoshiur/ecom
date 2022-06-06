@@ -87,58 +87,7 @@ class ProductController extends Controller
 
             $this->validate($request, $rules, $customMessage);
 
-            if(empty($data['is_featured'])){
-                $is_featured = 'No';
-            } else {
-                $is_featured = "Yes";
-            }
 
-            if (empty($data['fabric'])) {
-                $data['fabric'] = "";
-            }
-
-            if (empty($data['sleeve'])) {
-                $data['sleeve'] = "";
-            }
-
-            if (empty($data['pattern'])) {
-                $data['pattern'] = "";
-            }
-            if (empty($data['wash_care'])) {
-                $data['wash_care'] = "";
-            }
-
-            if (empty($data['fit'])) {
-                $data['fit'] = "";
-            }
-
-            if (empty($data['occasion'])) {
-                $data['occasion'] = "";
-            }
-
-            if (empty($data['meta_title'])) {
-                $data['meta_title'] = "";
-            }
-
-            if (empty($data['meta_description'])) {
-                $data['meta_description'] = "";
-            }
-
-            if (empty($data['meta_keywords'])) {
-                $data['meta_keywords'] = "";
-            }
-
-            if (empty($data['product_discount'])) {
-                $data['product_discount'] = 0;
-            }
-
-            if (empty($data['product_weight'])) {
-                $data['product_weight'] = 0;
-            }
-
-            if (empty($data['description'])) {
-                $data['description'] = "";
-            }
 
              // Upload Product Image
              if ($request->hasFile('main_image')) {
@@ -190,7 +139,10 @@ class ProductController extends Controller
             $product->meta_title = $data['meta_title'];
             $product->meta_description = $data['meta_description'];
             $product->meta_keywords = $data['meta_keywords'];
-            $product->is_featured = $is_featured;
+            if(!empty($data['is_featured'])){
+                $product->is_featured = $data['is_featured'];
+            }
+
             $product->status = 1;
             $product->save();
 
