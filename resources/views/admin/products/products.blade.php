@@ -90,7 +90,7 @@
                                                         product_id="{{ $product->id }}">Inactive</a>
                                                 @endif
                                             </td>
-                                            <td><a title="Add/Edit Attributes"
+                                            <td style="width: 120px"><a title="Add/Edit Attributes"
                                                     href="{{ route('admin.add_attributes', $product->id) }}"><i
                                                         class="fas fa-plus"></i></a>
                                                 &nbsp;

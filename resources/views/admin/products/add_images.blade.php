@@ -91,8 +91,7 @@
                                     <div class="form-group">
                                         <div class="field_wrapper">
                                             <div>
-                                                <input type="file" multiple="" name="image[]" id="image" value=""
-                                                    style="width: 120px" required />
+                                                <input type="file" multiple="" name="image[]" id="image" value="" required />
                                             </div>
                                         </div>
                                     </div>
