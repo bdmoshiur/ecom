@@ -91,7 +91,7 @@
                                     <div class="form-group">
                                         <div class="field_wrapper">
                                             <div>
-                                                <input type="text" name="size[]" id="size" value="" placeholder="Size"
+                                                <input type="file" multiple="" name="image[]" id="image" value=""
                                                     style="width: 120px" required />
                                             </div>
                                         </div>
@@ -108,7 +108,8 @@
 
                 </form>
 
-                <form name="updateImageForm" id="updateImageForm" method="POST" action="{{ route('admin.edit_images', $productdata['id']) }}">
+                <form name="updateImageForm" id="updateImageForm" method="POST"
+                    action="{{ route('admin.edit_images', $productdata['id']) }}">
                     @csrf
                     <div class="card">
                         <div class="card-header">
@@ -120,10 +121,7 @@
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Size</th>
-                                        <th>SKU</th>
-                                        <th>Price</th>
-                                        <th>Stock</th>
+                                        <th>Image</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -133,28 +131,26 @@
                                         <tr>
                                             <input type="hidden" name="attrId[]" value="{{ $image['id'] }}">
                                             <td>{{ $image['id'] }}</td>
-                                            <td>{{ $image['size'] }}</td>
-                                            <td>{{ $image['sku'] }}</td>
                                             <td>
-                                                <input type="number" name="price[]" value="{{ $image['price'] }}" required>
+                                                <img style="width: 120px"
+                                                    src="{{ asset('images/product_images/small/' . $image['image']) }}"
+                                                    alt="Category Image">
                                             </td>
+
                                             <td>
-                                                <input type="number" name="stock[]" value="{{ $image['stock'] }}" required>
-                                            </td>
-                                            <td>
-                                                @if ($image['status']== 1)
-                                                <a href="javascript:void(0)" class="updateImageStatus"
-                                                    id="image-{{ $image['id'] }}"
-                                                    image_id="{{ $image['id'] }}">Active</a>
-                                            @else
-                                                <a href="javascript:void(0)" class="updateImageStatus"
-                                                    id="image-{{ $image['id'] }}"
-                                                    image_id="{{ $image['id'] }}">Inactive</a>
-                                            @endif
-                                            &nbsp;
-                                            <a title="Delete Image" href="javascript:void(0)" class="confirmDelete" record="image"
-                                            recordid="{{ $image['id'] }}"><i
-                                            class="fas fa-trash"></i></a>
+                                                @if ($image['status'] == 1)
+                                                    <a href="javascript:void(0)" class="updateImageStatus"
+                                                        id="image-{{ $image['id'] }}"
+                                                        image_id="{{ $image['id'] }}">Active</a>
+                                                @else
+                                                    <a href="javascript:void(0)" class="updateImageStatus"
+                                                        id="image-{{ $image['id'] }}"
+                                                        image_id="{{ $image['id'] }}">Inactive</a>
+                                                @endif
+                                                &nbsp;
+                                                <a title="Delete Image" href="javascript:void(0)" class="confirmDelete"
+                                                    record="image" recordid="{{ $image['id'] }}"><i
+                                                        class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

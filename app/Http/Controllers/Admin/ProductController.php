@@ -282,7 +282,7 @@ class ProductController extends Controller
     public function addImagess($id)
     {
 
-        $productdata = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'main_image')->with('images')->find($id);
+        $productdata = Product::with('images')->select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'main_image')->find($id);
         $productdata = json_decode(json_encode($productdata), true);
 
         $title = "Product Images";
