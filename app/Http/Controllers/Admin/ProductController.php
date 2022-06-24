@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Product;
 use App\Section;
 use App\Category;
+use App\ProductsImage;
 use App\ProductsAttribute;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -54,7 +55,6 @@ class ProductController extends Controller
             $product = new Product();
             $productdata = array();
             $message = "Product Added Successfully";
-
         } else {
             //Edit Product Functionality
             $title = "Edit Product";
@@ -89,13 +89,13 @@ class ProductController extends Controller
 
 
 
-             // Upload Product Image
-             if ($request->hasFile('main_image')) {
+            // Upload Product Image
+            if ($request->hasFile('main_image')) {
                 $image_tmp = $request->file('main_image');
                 if ($image_tmp->isValid()) {
                     $image_name = $image_tmp->getClientOriginalName();
                     $extention = $image_tmp->getClientOriginalExtension();
-                    $imageName = $image_name .'-'.rand(111, 99999) . '.' . $extention;
+                    $imageName = $image_name . '-' . rand(111, 99999) . '.' . $extention;
                     $large_image_path = 'images/product_images/large/' . $imageName;
                     $medium_image_path = 'images/product_images/medium/' . $imageName;
                     $small_image_path = 'images/product_images/small/' . $imageName;
@@ -112,7 +112,7 @@ class ProductController extends Controller
                 if ($video_tmp->isValid()) {
                     $video_name = $video_tmp->getClientOriginalName();
                     $extention = $video_tmp->getClientOriginalExtension();
-                    $VideoName = $video_name .'-'.rand() . '.' . $extention;
+                    $VideoName = $video_name . '-' . rand() . '.' . $extention;
                     $video_path = 'videos/product_videos/';
                     $video_tmp->move($video_path, $VideoName);
                     $product->product_video = $VideoName;
@@ -139,7 +139,7 @@ class ProductController extends Controller
             $product->meta_title = $data['meta_title'];
             $product->meta_description = $data['meta_description'];
             $product->meta_keywords = $data['meta_keywords'];
-            if(!empty($data['is_featured'])){
+            if (!empty($data['is_featured'])) {
                 $product->is_featured = $data['is_featured'];
             }
 
@@ -170,13 +170,13 @@ class ProductController extends Controller
         $medium_image_path = 'images/product_images/medium/';
         $large_image_path = 'images/product_images/large/';
 
-        if (file_exists( $small_image_path . $product->main_image)) {
+        if (file_exists($small_image_path . $product->main_image)) {
             unlink($small_image_path . $product->main_image);
         }
-        if (file_exists( $medium_image_path . $product->main_image)) {
-            unlink($medium_image_path. $product->main_image);
+        if (file_exists($medium_image_path . $product->main_image)) {
+            unlink($medium_image_path . $product->main_image);
         }
-        if (file_exists( $large_image_path . $product->main_image)) {
+        if (file_exists($large_image_path . $product->main_image)) {
             unlink($large_image_path . $product->main_image);
         }
         $product->main_image = "";
@@ -197,13 +197,13 @@ class ProductController extends Controller
 
     function addAttributes(Request $request, $id)
     {
-        if($request->isMethod('post')) {
+        if ($request->isMethod('post')) {
             $data = $request->all();
-            foreach($data['sku'] as $key => $val) {
-                if(!empty($val)) {
+            foreach ($data['sku'] as $key => $val) {
+                if (!empty($val)) {
 
                     $attSku = ProductsAttribute::where(['sku' => $val]);
-                    if($attSku->count() > 0) {
+                    if ($attSku->count() > 0) {
                         $message = 'SKU already exists for this product. Please add another SKU.';
                         Session::flash('error_message', $message);
                         return redirect()->back();
@@ -211,7 +211,7 @@ class ProductController extends Controller
 
 
                     $attSize = ProductsAttribute::where(['product_id' => $id, 'size' => $data['size'][$key]]);
-                    if($attSize->count() > 0) {
+                    if ($attSize->count() > 0) {
                         $message = 'Size already exists for this product. Please add another Size.';
                         Session::flash('error_message', $message);
                         return redirect()->back();
@@ -233,22 +233,22 @@ class ProductController extends Controller
             return redirect()->back();
         }
 
-       $productdata = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'main_image')->with('attributes')->find($id);
-       $productdata = json_decode(json_encode($productdata), true);
+        $productdata = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'main_image')->with('attributes')->find($id);
+        $productdata = json_decode(json_encode($productdata), true);
 
-       $title = "Product Attributes";
+        $title = "Product Attributes";
 
-       return view('admin.products.add_attributes', compact('productdata', 'title'));
+        return view('admin.products.add_attributes', compact('productdata', 'title'));
     }
 
-    public function editAttributes( Request $request, $id)
+    public function editAttributes(Request $request, $id)
     {
-        if($request->isMethod('post')) {
+        if ($request->isMethod('post')) {
             $data = $request->all();
 
-            foreach($data['attrId'] as $key => $val) {
-                if(!empty($val)) {
-                    ProductsAttribute::where(['id'=>$data['attrId'][$key]])->update(['price' => $data['price'][$key],'stock' => $data['stock'][$key]]);
+            foreach ($data['attrId'] as $key => $val) {
+                if (!empty($val)) {
+                    ProductsAttribute::where(['id' => $data['attrId'][$key]])->update(['price' => $data['price'][$key], 'stock' => $data['stock'][$key]]);
                 }
             }
 
@@ -279,16 +279,76 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-    public function addImagess($id)
+    public function addImagess(Request $request, $id)
     {
+        if ($request->isMethod('post')) {
+            if ($request->hasFile('images')) {
+                $files = $request->file('images');
+                foreach ($files as $file) {
+                    $temp_image = Image::make($file);
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = rand(111, 99999) . '.' . $extension;
+                    $large_image_path = 'images/product_images/large/';
+                    $medium_image_path = 'images/product_images/medium/';
+                    $small_image_path = 'images/product_images/small/';
+                    $file->move($large_image_path, $filename);
+                    Image::make($temp_image)->save($large_image_path . $filename);
+                    Image::make($large_image_path . $filename)->resize(520, 600)->save($medium_image_path . $filename);
+                    Image::make($large_image_path . $filename)->resize(260, 300)->save($small_image_path . $filename);
+                    $product_image = new ProductsImage;
+                    $product_image->product_id = $id;
+                    $product_image->image = $filename;
+                    $product_image->status = 1;
+                    $product_image->save();
+                }
+                $message = 'Product Images added successfully.';
+                Session::flash('success_message', $message);
+                return redirect()->back();
+            }
+        }
 
-        $productdata = Product::with('images')->select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'main_image')->find($id);
+        $productdata = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'main_image')->with('images')->find($id);
         $productdata = json_decode(json_encode($productdata), true);
-
-        $title = "Product Images";
-
+        $title = "Add Images";
         return view('admin.products.add_images', compact('productdata', 'title'));
-
     }
+
+    public function updateImageStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            if ($data['status'] == "Active") {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+            ProductsImage::where('id', $data['image_id'])->update(['status' => $status]);
+            return response()->json(['status' => $status, 'image_id' => $data['image_id']]);
+        }
+    }
+
+
+    public function deleteImage($id)
+    {
+        $product_image = ProductsImage::find($id);
+
+        $small_image_path = 'images/product_images/small/';
+        $medium_image_path = 'images/product_images/medium/';
+        $large_image_path = 'images/product_images/large/';
+
+        if (file_exists($small_image_path . $product_image->image)) {
+            unlink($small_image_path . $product_image->image);
+        }
+        if (file_exists($medium_image_path . $product_image->image)) {
+            unlink($medium_image_path . $product_image->image);
+        }
+        if (file_exists($large_image_path . $product_image->image)) {
+            unlink($large_image_path . $product_image->image);
+        }
+        $product_image->delete();
+        return redirect()->back()->with('success_message', 'Product Image Deleted Successfully');
+    }
+
+
 
 }
