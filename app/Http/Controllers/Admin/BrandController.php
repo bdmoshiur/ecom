@@ -44,8 +44,6 @@ class BrandController extends Controller
         } else {
             //Edit Brand Functionality
             $title = "Edit Brand";
-            $branddata = Brand::find($id);
-            $branddata = json_decode(json_encode($branddata), true);
             $brand = Brand::find($id);
             $message = "Brand Updated Successfully";
         }
@@ -56,8 +54,8 @@ class BrandController extends Controller
                 'brand_name' => 'required|regex:/^[\pL\s\-]+$/u',
             ];
             $customMessage = [
-                'brand_name.required' => 'Category Name is Required',
-                'brand_name.regex' => 'Valid Category Name is Required',
+                'brand_name.required' => 'Brand Name is Required',
+                'brand_name.regex' => 'Valid Brand Name is Required',
             ];
             $this->validate($request, $rules, $customMessage);
 
@@ -72,7 +70,13 @@ class BrandController extends Controller
         return view('admin.brands.add_edit_brand',[
             'title' => $title,
             'brand' => $brand,
-            'branddata' => $branddata
         ]);
+    }
+
+    public function deleteBrands($id)
+    {
+        $deleteBrands = Brand::find($id)->delete();
+        Session::flash('success_message', 'Brand Deleted Successfully');
+        return redirect()->back();
     }
 }

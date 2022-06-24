@@ -1,6 +1,5 @@
 @extends('layouts.admin_layout.admin_layout')
 @section('content')
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -24,6 +23,15 @@
         <section class="content">
             <div class="row">
                 <div class="col-12">
+                    @if (Session::has('success_message'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert"
+                            style="margin-top: 10px">
+                            {{ Session::get('success_message') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Brands</h3>
@@ -46,6 +54,14 @@
                                             <td>{{ $brand->id }}</td>
                                             <td>{{ $brand->name }}</td>
                                             <td>
+                                                <a title="Edit Brand"
+                                                    href="{{ route('admin.add.edit.brands', $brand->id) }}"><i
+                                                        class="fas fa-edit"></i></a>
+                                                &nbsp; &nbsp;
+                                                <a title="Delete Brand" href="javascript:void(0)" class="confirmDelete"
+                                                    record="brand" recordid="{{ $brand->id }}"><i
+                                                        class="fas fa-trash"></i></a>
+                                                &nbsp; &nbsp;
                                                 @if ($brand->status == 1)
                                                     <a href="javascript:void(0)" class="updateBrandStatus"
                                                         id="brand-{{ $brand->id }}"
@@ -55,6 +71,7 @@
                                                         id="brand-{{ $brand->id }}"
                                                         brand_id="{{ $brand->id }}">Inactive</a>
                                                 @endif
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -71,5 +88,4 @@
         </section>
         <!-- /.content -->
     </div>
-
 @endsection

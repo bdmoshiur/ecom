@@ -42,9 +42,9 @@
             @endif
 
                 <form
-                    @if (empty($branddata['id'])) action="{{ route('admin.add.edit.brands') }}"
+                    @if (empty($brand['id'])) action="{{ route('admin.add.edit.brands') }}"
                     @else
-                        action="{{ route('admin.add.edit.brands', $branddata['id']) }}" @endif
+                        action="{{ route('admin.add.edit.brands', $brand['id']) }}" @endif
                     name="brandForm" id="brandForm" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card card-default">
@@ -64,7 +64,7 @@
                                     <div class="form-group">
                                         <label for="brand_name">Brand Name</label>
                                         <input type="text" class="form-control" name="brand_name" id="brand_name"
-                                            @if (!empty($branddata['brand_name'])) value="{{ $branddata['brand_name'] }}"
+                                            @if (!empty($brand['name'])) value="{{ $brand['name'] }}"
                                         @else
                                         value="{{ old('brand_name') }}" @endif
                                             placeholder="Enter Brand Name">
