@@ -53,5 +53,12 @@ class BrandController extends Controller
             $data = $request->all();
             dd($data);
         }
+
+        return view('admin.brands.add_edit_brand',[
+            'title' => $title,
+            'brand' => $brand,
+            'branddata' => $branddata,
+            'message' => $message,
+        ]);
     }
 }
