@@ -49,7 +49,7 @@ $(document).ready(function () {
 
     //Update Brand Status
     $(".updateBrandStatus").click(function () {
-        var status = $(this).text();
+        var status = $(this).children('i').attr('status');
         var brand_id = $(this).attr("brand_id");
         $.ajax({
             type: "post",
@@ -57,13 +57,9 @@ $(document).ready(function () {
             data: { status: status, brand_id: brand_id },
             success: function (resp) {
                 if (resp["status"] == 0) {
-                    $("#brand-" + brand_id).html(
-                        "<a class='updateBrandStatus' href='javascript:void(0)'>Inactive</a>"
-                    );
+                    $("#brand-" + brand_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>");
                 } else if (resp["status"] == 1) {
-                    $("#brand-" + brand_id).html(
-                        "<a class='updateBrandStatus' href='javascript:void(0)'>Active</a>"
-                    );
+                    $("#brand-" + brand_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>");
                 }
             },
             error: function () {

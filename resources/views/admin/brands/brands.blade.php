@@ -65,11 +65,11 @@
                                                 @if ($brand->status == 1)
                                                     <a href="javascript:void(0)" class="updateBrandStatus"
                                                         id="brand-{{ $brand->id }}"
-                                                        brand_id="{{ $brand->id }}">Active</a>
+                                                        brand_id="{{ $brand->id }}"><i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
                                                 @else
                                                     <a href="javascript:void(0)" class="updateBrandStatus"
                                                         id="brand-{{ $brand->id }}"
-                                                        brand_id="{{ $brand->id }}">Inactive</a>
+                                                        brand_id="{{ $brand->id }}"><i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
                                                 @endif
 
                                             </td>
