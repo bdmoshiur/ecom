@@ -13,7 +13,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Sections</li>
+                            <li class="breadcrumb-item active">Brands</li>
                         </ol>
                     </div>
                 </div>
@@ -26,11 +26,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Sections</h3>
+                            <h3 class="card-title">Brands</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="sections" class="table table-bordered table-striped">
+                            <table id="brands" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
@@ -39,19 +39,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($sections as $key => $section)
+                                    @foreach ($brands as $key => $brand)
                                         <tr>
-                                            <td>{{ $section->id }}</td>
-                                            <td>{{ $section->name }}</td>
+                                            <td>{{ $brand->id }}</td>
+                                            <td>{{ $brand->name }}</td>
                                             <td>
-                                                @if ($section->status == 1)
-                                                    <a href="javascript:void(0)" class="updateSectionStatus"
-                                                        id="section-{{ $section->id }}"
-                                                        section_id="{{ $section->id }}">Active</a>
+                                                @if ($brand->status == 1)
+                                                    <a href="javascript:void(0)" class="updateBrandStatus"
+                                                        id="brand-{{ $brand->id }}"
+                                                        brand_id="{{ $brand->id }}">Active</a>
                                                 @else
-                                                    <a href="javascript:void(0)" class="updateSectionStatus"
-                                                        id="section-{{ $section->id }}"
-                                                        section_id="{{ $section->id }}">Inactive</a>
+                                                    <a href="javascript:void(0)" class="updateBrandStatus"
+                                                        id="brand-{{ $brand->id }}"
+                                                        brand_id="{{ $brand->id }}">Inactive</a>
                                                 @endif
                                             </td>
                                         </tr>

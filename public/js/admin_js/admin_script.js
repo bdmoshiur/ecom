@@ -47,6 +47,31 @@ $(document).ready(function () {
         });
     });
 
+    //Update Brand Status
+    $(".updateBrandStatus").click(function () {
+        var status = $(this).text();
+        var brand_id = $(this).attr("brand_id");
+        $.ajax({
+            type: "post",
+            url: "/admin/update-brand-status",
+            data: { status: status, brand_id: brand_id },
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#brand-" + brand_id).html(
+                        "<a class='updateBrandStatus' href='javascript:void(0)'>Inactive</a>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#brand-" + brand_id).html(
+                        "<a class='updateBrandStatus' href='javascript:void(0)'>Active</a>"
+                    );
+                }
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    });
+
     // Update Category Status
     $(".updateCategoryStatus").click(function () {
         var status = $(this).text();
