@@ -31,4 +31,27 @@ class BrandController extends Controller
             return response()->json(['status' => $status, 'brand_id' => $data['brand_id']]);
         }
     }
+
+    public function addEditBrand( Request $request, $id = null)
+    {
+        if ($id == "") {
+            //Add Brand Functionality
+            $title = "Add Brand";
+            $brand = new Brand();
+            $branddata = array();
+            $message = "Brand Added Successfully";
+        } else {
+            //Edit Brand Functionality
+            $title = "Edit Brand";
+            $branddata = Brand::find($id);
+            $branddata = json_decode(json_encode($branddata), true);
+            $brand = Brand::find($id);
+            $message = "Brand Updated Successfully";
+        }
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            dd($data);
+        }
+    }
 }

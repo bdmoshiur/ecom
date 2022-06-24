@@ -31,6 +31,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         //Brands
         Route::get('brands', 'BrandController@brands')->name('admin.brands');
         Route::post('/update-brand-status', 'BrandController@updateBrandStatus');
+        Route::match(['get', 'post'], 'add-edit-brand/{id?}', 'BrandController@addEditBrand')->name('admin.add.edit.brands');
 
         // Categories
         Route::get('categories', 'CategoryController@categories')->name('admin.categories');
