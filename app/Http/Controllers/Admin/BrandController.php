@@ -34,6 +34,7 @@ class BrandController extends Controller
 
     public function addEditBrand( Request $request, $id = null)
     {
+        Session::put('page', "brands");
         if ($id == "") {
             //Add Brand Functionality
             $title = "Add Brand";
@@ -51,14 +52,27 @@ class BrandController extends Controller
 
         if($request->isMethod('post')){
             $data = $request->all();
-            dd($data);
+            $rules = [
+                'brand_name' => 'required|regex:/^[\pL\s\-]+$/u',
+            ];
+            $customMessage = [
+                'brand_name.required' => 'Category Name is Required',
+                'brand_name.regex' => 'Valid Category Name is Required',
+            ];
+            $this->validate($request, $rules, $customMessage);
+
+            $brand->name = $data['brand_name'];
+            $brand->save();
+
+            Session::flash('success_message', $message);
+            return redirect()->route('admin.brands');
+
         }
 
         return view('admin.brands.add_edit_brand',[
             'title' => $title,
             'brand' => $brand,
-            'branddata' => $branddata,
-            'message' => $message,
+            'branddata' => $branddata
         ]);
     }
 }
