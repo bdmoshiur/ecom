@@ -249,11 +249,17 @@ class ProductController extends Controller
             $data = $request->all();
             foreach($data['sku'] as $key => $val) {
                 if(!empty($val)) {
-                    $attrCountSKU = ProductsAttribute::where(['sku' => $val])->count();
+                    $attrCountSKU = ProductsAttribute::where('sku',$val)->count();
                     if($attrCountSKU > 0){
-                        Session::flash('error_message', 'SKU already Exists.Please add another SKU');
+                        Session::flash('error_message', 'SKU already exists.Please add another SKU');
                         return redirect()->back();
                     }
+                    $attrCountSize = ProductsAttribute::where(['product_id' => $id, 'size' => $data['size'][$key]])->count();
+                    if($attrCountSize > 0){
+                        Session::flash('error_message', 'Size already exists.Please add another Size');
+                        return redirect()->back();
+                    }
+
                     $attribute = new ProductsAttribute;
                     $attribute->product_id = $id;
                     $attribute->sku = $val;
@@ -264,6 +270,8 @@ class ProductController extends Controller
                     $attribute->save();
                 }
             }
+            Session::flash('success_message', 'Product attributes has been added successfully');
+            return redirect()->back();
         }
 
        $productdata = Product::find($id);
