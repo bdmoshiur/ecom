@@ -47,6 +47,27 @@ $(document).ready(function () {
         });
     });
 
+    //Update Brand Status
+    $(".updateBrandStatus").click(function () {
+        var status = $(this).children('i').attr('status');
+        var brand_id = $(this).attr("brand_id");
+        $.ajax({
+            type: "post",
+            url: "/admin/update-brand-status",
+            data: { status: status, brand_id: brand_id },
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#brand-" + brand_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>");
+                } else if (resp["status"] == 1) {
+                    $("#brand-" + brand_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>");
+                }
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    });
+
     // Update Category Status
     $(".updateCategoryStatus").click(function () {
         var status = $(this).text();
@@ -97,6 +118,57 @@ $(document).ready(function () {
         });
     });
 
+
+    // Update Product attributes Status
+    $(".updateAttributeStatus").click(function () {
+        var status = $(this).text();
+        var attribute_id = $(this).attr("attribute_id");
+        $.ajax({
+            type: "post",
+            url: "/admin/update-attribute-status",
+            data: { status: status, attribute_id: attribute_id },
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#attribute-" + attribute_id).html(
+                        "Inactive"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#attribute-" + attribute_id).html(
+                        "Active"
+                    );
+                }
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    });
+
+    // Update Product Images Status
+    $(".updateImageStatus").click(function () {
+        var status = $(this).text();
+        var image_id = $(this).attr("image_id");
+        $.ajax({
+            type: "post",
+            url: "/admin/update-image-status",
+            data: { status: status, image_id: image_id },
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#image-" + image_id).html(
+                        "Inactive"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#image-" + image_id).html(
+                        "Active"
+                    );
+                }
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    });
+
     // Append Category Level
     $("#section_id").change(function () {
         var section_id = $(this).val();
@@ -136,18 +208,18 @@ $(document).ready(function () {
         var maxField = 10; //Input fields increment limitation
         var addButton = $('.add_button'); //Add button selector
         var wrapper = $('.field_wrapper'); //Input field wrapper
-        var fieldHTML = '<div><div style="height:10px"></div><input type="text" style="width:120px" name="size[]" placeholder="Size"/>&nbsp;<input type="text" style="width:120px" name="sku[]" placeholder="SKU"/>&nbsp;<input type="text" style="width:120px" name="price[]" placeholder="Price"/>&nbsp;<input type="text" style="width:120px" name="stock[]" placeholder="Stock"/>&nbsp;<a href="javascript:void(0);" class="remove_button">Delete</a></div>'; //New input field html 
+        var fieldHTML = '<div><div style="height:10px"></div><input type="text" style="width:120px" name="size[]" placeholder="Size"/>&nbsp;<input type="text" style="width:120px" name="sku[]" placeholder="SKU"/>&nbsp;<input type="text" style="width:120px" name="price[]" placeholder="Price"/>&nbsp;<input type="text" style="width:120px" name="stock[]" placeholder="Stock"/>&nbsp;<a href="javascript:void(0);" class="remove_button">Delete</a></div>'; //New input field html
         var x = 1; //Initial field counter is 1
-        
+
         //Once add button is clicked
         $(addButton).click(function(){
             //Check maximum number of input fields
-            if(x < maxField){ 
+            if(x < maxField){
                 x++; //Increment field counter
                 $(wrapper).append(fieldHTML); //Add field html
             }
         });
-        
+
         //Once remove button is clicked
         $(wrapper).on('click', '.remove_button', function(e){
             e.preventDefault();

@@ -1,5 +1,8 @@
 <?php
+<<<<<<< HEAD
 
+=======
+>>>>>>> 61183679f2b2a0026380ae560234fd821ab40917
 namespace Database\Seeders;
 use App\Category;
 use Illuminate\Database\Seeder;
