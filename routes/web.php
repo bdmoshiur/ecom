@@ -28,6 +28,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('sections', 'SectionController@sections')->name('admin.sections');
         Route::post('/update-section-status', 'SectionController@updateSectionStatus');
 
+        //Brands
+        Route::get('brands', 'BrandController@brands')->name('admin.brands');
+        Route::post('/update-brand-status', 'BrandController@updateBrandStatus');
+        Route::match(['get', 'post'], 'add-edit-brand/{id?}', 'BrandController@addEditBrand')->name('admin.add.edit.brands');
+        Route::get('delete_brand/{id}', 'BrandController@deleteBrands')->name('admin.delete.brand');
+
         // Categories
         Route::get('categories', 'CategoryController@categories')->name('admin.categories');
         Route::post('update-category-status', 'CategoryController@updateCategoryStatus');
@@ -48,7 +54,17 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('delete_product/{id}', 'ProductController@deleteProduct')->name('admin.delete.product');
 
         // Products Attributes
-        Route::match(['get', 'post'], 'add-attributes/{id?}', 'ProductController@add_attributes')->name('admin.add_attributes');
+        Route::match(['get', 'post'], 'add-attributes/{id}', 'ProductController@addAttributes')->name('admin.add_attributes');
+        Route::post('edit_attributes/{id}', 'ProductController@editAttributes')->name('admin.edit_attributes');
+        Route::post('update-attribute-status', 'ProductController@updateAttributeStatus');
+        Route::get('delete_attribute/{id}', 'ProductController@deleteAttribute')->name('admin.delete.attribute');
+
+
+        // Product Images
+        Route::match(['get', 'post'],'add-images/{id}', 'ProductController@addImagess')->name('admin.add_images');
+        Route::post('update-image-status', 'ProductController@updateImageStatus');
+        Route::get('delete_image/{id}', 'ProductController@deleteImage')->name('admin.delete.image');
+        Route::post('edit_images/{id}', 'ProductController@editImages')->name('admin.edit_images');
 
     });
 });

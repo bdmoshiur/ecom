@@ -90,15 +90,21 @@
                                                         product_id="{{ $product->id }}">Inactive</a>
                                                 @endif
                                             </td>
-                                            <td><a title="Add/Edit Attributes" href="{{ route('admin.add_attributes', $product->id) }}"><i
+                                            <td style="width: 120px"><a title="Add/Edit Attributes"
+                                                    href="{{ route('admin.add_attributes', $product->id) }}"><i
                                                         class="fas fa-plus"></i></a>
                                                 &nbsp;
-                                                <a title="Edit Product" href="{{ route('admin.add.edit.products', $product->id) }}"><i
-                                                    class="fas fa-edit"></i></a>
+                                                <a title="Add Imagess"
+                                                    href="{{ route('admin.add_images', $product->id) }}"><i
+                                                        class="fas fa-plus-circle"></i></a>
                                                 &nbsp;
-                                                <a title="Delete Product" href="javascript:void(0)" class="confirmDelete" record="product"
-                                                    recordid="{{ $product->id }}"><i
-                                                    class="fas fa-trash"></i></a>
+                                                <a title="Edit Product"
+                                                    href="{{ route('admin.add.edit.products', $product->id) }}"><i
+                                                        class="fas fa-edit"></i></a>
+                                                &nbsp;
+                                                <a title="Delete Product" href="javascript:void(0)" class="confirmDelete"
+                                                    record="product" recordid="{{ $product->id }}"><i
+                                                        class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
