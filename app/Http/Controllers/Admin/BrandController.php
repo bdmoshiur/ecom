@@ -2,14 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-<<<<<<< HEAD
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-class BrandController extends Controller
-{
-    //
-=======
 use App\Brand;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -87,5 +79,4 @@ class BrandController extends Controller
         Session::flash('success_message', 'Brand Deleted Successfully');
         return redirect()->back();
     }
->>>>>>> 61183679f2b2a0026380ae560234fd821ab40917
 }
