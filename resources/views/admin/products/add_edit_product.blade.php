@@ -84,6 +84,20 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                        <label>Select Brand</label>
+                                        <select name="brand_id" id="brand_id" class="form-control select2"
+                                            style="width: 100%;">
+                                            <option value="">Select</option>
+                                            @foreach ($brands as $brand)
+                                                <option value="{{ $brand['id'] }}"
+                                                    @if (!empty($productdata['brand_id']) && $productdata['brand_id'] == $brand['id']) selected @endif>{{ $brand['name'] }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="product_name">Product Name</label>
                                         <input type="text" class="form-control" name="product_name" id="product_name"
                                             @if (!empty($productdata['product_name'])) value="{{ $productdata['product_name'] }}"
@@ -91,8 +105,6 @@
                                         value="{{ old('product_name') }}" @endif
                                             placeholder="Enter product Name">
                                     </div>
-                                </div>
-                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_code">Product Code</label>
                                         <input type="text" class="form-control" name="product_code" id="product_code"
@@ -101,6 +113,8 @@
                                         value="{{ old('product_code') }}" @endif
                                             placeholder="Enter product Code">
                                     </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_color">Product Color</label>
                                         <input type="text" class="form-control" name="product_color" id="product_color"
@@ -109,8 +123,6 @@
                                         value="{{ old('product_color') }}" @endif
                                             placeholder="Enter product Color">
                                     </div>
-                                </div>
-                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_price">Product Price</label>
                                         <input type="number" class="form-control" name="product_price" id="product_price"
