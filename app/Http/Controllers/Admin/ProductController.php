@@ -347,6 +347,11 @@ class ProductController extends Controller
         return redirect()->back()->with('success_message', 'Product Image Deleted Successfully');
     }
 
+    public function editImages()
+    {
+        echo 'uncomplete work';
+    }
+
 
 
 }
