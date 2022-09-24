@@ -75,18 +75,20 @@
                                                 @if ($category->status == 1)
                                                     <a href="javascript:void(0)" class="updateCategoryStatus"
                                                         id="category-{{ $category->id }}"
-                                                        category_id="{{ $category->id }}">Active</a>
+                                                        category_id="{{ $category->id }}"><i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
                                                 @else
                                                     <a href="javascript:void(0)" class="updateCategoryStatus"
                                                         id="category-{{ $category->id }}"
-                                                        category_id="{{ $category->id }}">Inactive</a>
+                                                        category_id="{{ $category->id }}"><i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
                                                 @endif
                                             </td>
                                             <td><a
-                                                    href="{{ route('admin.add.edit.categories', $category->id) }}">Edit</a>
+                                                    href="{{ route('admin.add.edit.categories', $category->id) }}"><i
+                                                    class="fas fa-edit"></i></a>
                                                 &nbsp;
                                                 {{--  <a href="{{ route('admin.delete.category', $category->id) }}">Delete</a>  --}}
-                                                <a href="javascript:void(0)" class="confirmDelete" record="category" recordid="{{ $category->id }}">Delete</a>
+                                                <a href="javascript:void(0)" class="confirmDelete" record="category" recordid="{{ $category->id }}"><i
+                                                    class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
