@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Front\IndexController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -7,9 +8,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-// Auth::routes();
+Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
@@ -67,4 +68,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::post('edit_images/{id}', 'ProductController@editImages')->name('admin.edit_images');
 
     });
+});
+
+Route::group(['namespace' => 'Front'], function () {
+    Route::get('/', [IndexController::class,'index']);
 });
