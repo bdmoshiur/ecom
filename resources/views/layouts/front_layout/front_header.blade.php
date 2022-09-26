@@ -29,20 +29,23 @@ $sections = Section::sections();
                             <ul class="nav">
                                 <li class="active"><a href="#">Home</a></li>
                                 @foreach ($sections as $section)
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle"
-                                            data-toggle="dropdown">{{ $section['name'] }} <b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            @foreach ($section['categories'] as $category)
-                                                <li class="divider"></li>
-                                                <li class="nav-header"><a
-                                                        href="#">{{ $category['category_name'] }}</a></li>
-                                                @foreach ($category['subcategories'] as $subcategory)
-                                                    <li><a href="#">{{ $subcategory['category_name'] }}</a></li>
+                                    @if (count($section['categories']) > 0)
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle"
+                                                data-toggle="dropdown">{{ $section['name'] }} <b class="caret"></b></a>
+                                            <ul class="dropdown-menu">
+                                                @foreach ($section['categories'] as $category)
+                                                    <li class="divider"></li>
+                                                    <li class="nav-header"><a
+                                                            href="#">{{ $category['category_name'] }}</a></li>
+                                                    @foreach ($category['subcategories'] as $subcategory)
+                                                        <li><a href="#">{{ $subcategory['category_name'] }}</a>
+                                                        </li>
+                                                    @endforeach
                                                 @endforeach
-                                            @endforeach
-                                        </ul>
-                                    </li>
+                                            </ul>
+                                        </li>
+                                    @endif
                                 @endforeach
                                 <li><a href="#">About</a></li>
                             </ul>
