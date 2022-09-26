@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>online Shopping cart</title>
+	<title>online Shopping</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="">
@@ -26,6 +26,7 @@
 <body>
 @include('layouts.front_layout.front_header')
 <!-- Header End====================================================================== -->
+@if (isset($index_page) && $index_page == 'index')
 <div id="carouselBlk">
 	<div id="myCarousel" class="carousel slide">
 		<div class="carousel-inner">
@@ -62,6 +63,7 @@
 		<a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
 	</div>
 </div>
+@endif
 <div id="mainBody">
 	<div class="container">
 		<div class="row">
