@@ -23,8 +23,9 @@ $(document).ready(function () {
     });
 
     //Update Section Status
-    $(".updateSectionStatus").click(function () {
-        var status = $(this).children('i').attr('status');
+    // $(".updateSectionStatus").click(function () {
+    $(document).on("click", ".updateSectionStatus", function () {
+        var status = $(this).children("i").attr("status");
         var section_id = $(this).attr("section_id");
         $.ajax({
             type: "post",
@@ -32,9 +33,13 @@ $(document).ready(function () {
             data: { status: status, section_id: section_id },
             success: function (resp) {
                 if (resp["status"] == 0) {
-                    $("#section-" + section_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>");
+                    $("#section-" + section_id).html(
+                        "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                    );
                 } else if (resp["status"] == 1) {
-                    $("#section-" + section_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>");
+                    $("#section-" + section_id).html(
+                        "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                    );
                 }
             },
             error: function () {
@@ -44,8 +49,9 @@ $(document).ready(function () {
     });
 
     //Update Brand Status
-    $(".updateBrandStatus").click(function () {
-        var status = $(this).children('i').attr('status');
+    // $(".updateBrandStatus").click(function () {
+    $(document).on("click", ".updateBrandStatus", function () {
+        var status = $(this).children("i").attr("status");
         var brand_id = $(this).attr("brand_id");
         $.ajax({
             type: "post",
@@ -53,9 +59,13 @@ $(document).ready(function () {
             data: { status: status, brand_id: brand_id },
             success: function (resp) {
                 if (resp["status"] == 0) {
-                    $("#brand-" + brand_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>");
+                    $("#brand-" + brand_id).html(
+                        "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                    );
                 } else if (resp["status"] == 1) {
-                    $("#brand-" + brand_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>");
+                    $("#brand-" + brand_id).html(
+                        "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                    );
                 }
             },
             error: function () {
@@ -65,8 +75,9 @@ $(document).ready(function () {
     });
 
     // Update Category Status
-    $(".updateCategoryStatus").click(function () {
-        var status = $(this).children('i').attr('status');
+    // $(".updateCategoryStatus").click(function () {
+    $(document).on("click", ".updateCategoryStatus", function () {
+        var status = $(this).children("i").attr("status");
         var category_id = $(this).attr("category_id");
         $.ajax({
             type: "post",
@@ -74,9 +85,13 @@ $(document).ready(function () {
             data: { status: status, category_id: category_id },
             success: function (resp) {
                 if (resp["status"] == 0) {
-                    $("#category-" + category_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>");
+                    $("#category-" + category_id).html(
+                        "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                    );
                 } else if (resp["status"] == 1) {
-                    $("#category-" + category_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>");
+                    $("#category-" + category_id).html(
+                        "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                    );
                 }
             },
             error: function () {
@@ -86,8 +101,9 @@ $(document).ready(function () {
     });
 
     // Update Product Status
-    $(".updateProductStatus").click(function () {
-        var status = $(this).children('i').attr('status');
+    // $(".updateProductStatus").click(function () {
+    $(document).on("click", ".updateProductStatus", function () {
+        var status = $(this).children("i").attr("status");
         var product_id = $(this).attr("product_id");
         $.ajax({
             type: "post",
@@ -95,9 +111,13 @@ $(document).ready(function () {
             data: { status: status, product_id: product_id },
             success: function (resp) {
                 if (resp["status"] == 0) {
-                    $("#product-" + product_id).html("<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>");
+                    $("#product-" + product_id).html(
+                        "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                    );
                 } else if (resp["status"] == 1) {
-                    $("#product-" + product_id).html("<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>");
+                    $("#product-" + product_id).html(
+                        "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                    );
                 }
             },
             error: function () {
@@ -106,9 +126,9 @@ $(document).ready(function () {
         });
     });
 
-
     // Update Product attributes Status
-    $(".updateAttributeStatus").click(function () {
+    // $(".updateAttributeStatus").click(function () {
+    $(document).on("click", ".updateAttributeStatus", function () {
         var status = $(this).text();
         var attribute_id = $(this).attr("attribute_id");
         $.ajax({
@@ -117,13 +137,9 @@ $(document).ready(function () {
             data: { status: status, attribute_id: attribute_id },
             success: function (resp) {
                 if (resp["status"] == 0) {
-                    $("#attribute-" + attribute_id).html(
-                        "Inactive"
-                    );
+                    $("#attribute-" + attribute_id).html("Inactive");
                 } else if (resp["status"] == 1) {
-                    $("#attribute-" + attribute_id).html(
-                        "Active"
-                    );
+                    $("#attribute-" + attribute_id).html("Active");
                 }
             },
             error: function () {
@@ -133,7 +149,8 @@ $(document).ready(function () {
     });
 
     // Update Product Images Status
-    $(".updateImageStatus").click(function () {
+    // $(".updateImageStatus").click(function () {
+    $(document).on("click", ".updateImageStatus", function () {
         var status = $(this).text();
         var image_id = $(this).attr("image_id");
         $.ajax({
@@ -142,13 +159,9 @@ $(document).ready(function () {
             data: { status: status, image_id: image_id },
             success: function (resp) {
                 if (resp["status"] == 0) {
-                    $("#image-" + image_id).html(
-                        "Inactive"
-                    );
+                    $("#image-" + image_id).html("Inactive");
                 } else if (resp["status"] == 1) {
-                    $("#image-" + image_id).html(
-                        "Active"
-                    );
+                    $("#image-" + image_id).html("Active");
                 }
             },
             error: function () {
@@ -168,51 +181,52 @@ $(document).ready(function () {
                 $("#appendCategoriesLevel").html(data);
             },
             error: function () {
-                alert('error');
+                alert("error");
             },
         });
     });
 
-    $(".confirmDelete").click(function () {
-        var record = $(this).attr('record');
-        var recordid = $(this).attr('recordid');
+    // $(".confirmDelete").click(function () {
+    $(document).on("click", ".confirmDelete", function () {
+        var record = $(this).attr("record");
+        var recordid = $(this).attr("recordid");
         Swal.fire({
-            title: 'Are you sure?',
+            title: "Are you sure?",
             text: "You won't be able to revert this!",
-            icon: 'warning',
+            icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
             if (result.value) {
-              window.location.href = "/admin/delete_"+record+"/"+recordid;
+                window.location.href =
+                    "/admin/delete_" + record + "/" + recordid;
             }
-          })
+        });
     });
 
-
     // Product attributes add remove script
-        var maxField = 10; //Input fields increment limitation
-        var addButton = $('.add_button'); //Add button selector
-        var wrapper = $('.field_wrapper'); //Input field wrapper
-        var fieldHTML = '<div><div style="height:10px"></div><input type="text" style="width:120px" name="size[]" placeholder="Size"/>&nbsp;<input type="text" style="width:120px" name="sku[]" placeholder="SKU"/>&nbsp;<input type="text" style="width:120px" name="price[]" placeholder="Price"/>&nbsp;<input type="text" style="width:120px" name="stock[]" placeholder="Stock"/>&nbsp;<a href="javascript:void(0);" class="remove_button">Delete</a></div>'; //New input field html
-        var x = 1; //Initial field counter is 1
+    var maxField = 10; //Input fields increment limitation
+    var addButton = $(".add_button"); //Add button selector
+    var wrapper = $(".field_wrapper"); //Input field wrapper
+    var fieldHTML =
+        '<div><div style="height:10px"></div><input type="text" style="width:120px" name="size[]" placeholder="Size"/>&nbsp;<input type="text" style="width:120px" name="sku[]" placeholder="SKU"/>&nbsp;<input type="text" style="width:120px" name="price[]" placeholder="Price"/>&nbsp;<input type="text" style="width:120px" name="stock[]" placeholder="Stock"/>&nbsp;<a href="javascript:void(0);" class="remove_button">Delete</a></div>'; //New input field html
+    var x = 1; //Initial field counter is 1
 
-        //Once add button is clicked
-        $(addButton).click(function(){
-            //Check maximum number of input fields
-            if(x < maxField){
-                x++; //Increment field counter
-                $(wrapper).append(fieldHTML); //Add field html
-            }
-        });
+    //Once add button is clicked
+    $(addButton).click(function () {
+        //Check maximum number of input fields
+        if (x < maxField) {
+            x++; //Increment field counter
+            $(wrapper).append(fieldHTML); //Add field html
+        }
+    });
 
-        //Once remove button is clicked
-        $(wrapper).on('click', '.remove_button', function(e){
-            e.preventDefault();
-            $(this).parent('div').remove(); //Remove field html
-            x--; //Decrement field counter
-        });
-
+    //Once remove button is clicked
+    $(wrapper).on("click", ".remove_button", function (e) {
+        e.preventDefault();
+        $(this).parent("div").remove(); //Remove field html
+        x--; //Decrement field counter
+    });
 });

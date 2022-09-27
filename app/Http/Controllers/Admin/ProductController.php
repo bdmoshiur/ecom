@@ -145,6 +145,8 @@ class ProductController extends Controller
             $product->meta_keywords = $data['meta_keywords'];
             if (!empty($data['is_featured'])) {
                 $product->is_featured = $data['is_featured'];
+            } else{
+                $product->is_featured = 'No';
             }
 
             $product->status = 1;
