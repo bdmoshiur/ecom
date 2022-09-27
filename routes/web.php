@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Front\IndexController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Front\IndexController;
+use App\Http\Controllers\Admin\BannerController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -66,6 +67,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::post('update-image-status', 'ProductController@updateImageStatus');
         Route::get('delete_image/{id}', 'ProductController@deleteImage')->name('admin.delete.image');
         Route::post('edit_images/{id}', 'ProductController@editImages')->name('admin.edit_images');
+
+        //Banners
+        Route::get('banners', 'BannerController@banners')->name('admin.banners');
+        Route::post('/update-banner-status', 'BannerController@updateBannerStatus');
+        Route::match(['get', 'post'], 'add-edit-banner/{id?}', 'BannerController@addEditBrand')->name('admin.add.edit.banners');
+        Route::get('delete_banner/{id}', 'BannerController@deleteBanners')->name('admin.delete.banner');
 
     });
 });
