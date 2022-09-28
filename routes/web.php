@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Front\ProductsController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -79,4 +80,5 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 
 Route::group(['namespace' => 'Front'], function () {
     Route::get('/', [IndexController::class,'index']);
+    Route::get('/{url}', [ProductsController::class,'listing']);
 });

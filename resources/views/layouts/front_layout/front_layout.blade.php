@@ -26,7 +26,7 @@
 <body>
 @include('layouts.front_layout.front_header')
 <!-- Header End====================================================================== -->
-@include('front.home_page_banner')
+@include('front.banners.home_page_banner')
 <div id="mainBody">
 	<div class="container">
 		<div class="row">

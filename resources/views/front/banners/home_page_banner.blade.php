@@ -10,7 +10,7 @@ $getBanners = Banner::getBanners();
                     <div class="item @if ($key == 0) active @endif">
                         <div class="container">
                             <a @if (!empty($getBanner['link'])) href="{{ url($getBanner['link']) }}" @else href="javascript:void(0)"  @endif><img
-                                    style="width:100%" src="{{ asset('images/banner_images/' . $getBanner['image']) }}"
+                                    style="width:100%" src="{{ asset('images/banner_images/'.$getBanner['image']) }}"
                                     alt="{{ $getBanner['alt'] }}" title="{{ $getBanner['title'] }}" /></a>
                         </div>
                     </div>
