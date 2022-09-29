@@ -15,9 +15,15 @@
                                             <div class="thumbnail">
                                                 <i class="tag"></i>
                                                 <a href="product_details.html">
-                                                    @php
-                                                        $product_image_path = 'images/product_images/small/' . $item['main_image'];
-                                                    @endphp
+                                                    @if (isset($item['main_image']))
+                                                        @php
+                                                            $product_image_path = 'images/product_images/small/' . $item['main_image'];
+                                                        @endphp
+                                                    @else
+                                                        @php
+                                                            $product_image_path = '';
+                                                        @endphp
+                                                    @endif
                                                     @if (!empty($item['main_image']) && file_exists($product_image_path))
                                                         <img src="{{ asset($product_image_path) }}" alt="">
                                                     @else
@@ -50,13 +56,21 @@
             @foreach ($newProducts as $newProduct)
                 <li class="span3">
                     <div class="thumbnail">
-                        <a href="product_details.html">@php
-                            $product_image_path = 'images/product_images/small/' . $newProduct['main_image'];
-                        @endphp
+                        <a href="product_details.html">
+                            @if (isset($newProduct['main_image']))
+                                @php
+                                    $product_image_path = 'images/product_images/small/' . $newProduct['main_image'];
+                                @endphp
+                            @else
+                                @php
+                                    $product_image_path = '';
+                                @endphp
+                            @endif
                             @if (!empty($newProduct['main_image']) && file_exists($product_image_path))
                                 <img style="width: 150px" src="{{ asset($product_image_path) }}" alt="">
                             @else
-                                <img style="width: 150px" src="{{ asset('images/product_images') }}/small/no_image.png" alt="">
+                                <img style="width: 150px" src="{{ asset('images/product_images') }}/small/no_image.png"
+                                    alt="">
                             @endif
                         </a>
                         <div class="caption">
