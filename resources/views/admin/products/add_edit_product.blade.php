@@ -162,10 +162,10 @@
                                                 <span class="input-group-text" id="">Upload</span>
                                             </div>
                                         </div>
-                                        <div>Recomended Image Size: Width: 1040px, Height: 120px</div>
+                                        <div>Recomended Image Size: Width: 1000px, Height: 1000px</div>
                                         @if (!empty($productdata['main_image']))
                                             <div>
-                                                <img style="width: 60px; margin:5x"
+                                                <img style="width: 80px; margin:5x"
                                                     src="{{ asset('images/product_images/small/' . $productdata['main_image']) }}"
                                                     alt="Category Image"> &nbsp;
                                                 <a href="javascript:void(0)" class="confirmDelete" record="product_image"
