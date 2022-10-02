@@ -18,9 +18,8 @@
                 <label class="control-label alignL">Sort By </label>
                 <select name="sort" id="sort">
                     <option value="">Select</option>
-                    <option value="product_latest" @if(isset($_GET['sort']) && $_GET['sort'] == "product_latest")
-                        selected
-                    @endif>Latest Products</option>
+                    <option value="product_latest" @if (isset($_GET['sort']) && $_GET['sort'] == 'product_latest') selected @endif>Latest Products
+                    </option>
                     <option value="priduct_name_a_z">Priduct name A - Z</option>
                     <option value="priduct_name_z_a">Priduct name Z - A</option>
                     <option value="price_lowest">Lowest Price first</option>
@@ -35,7 +34,7 @@
         <a href="compair.html" class="btn btn-large pull-right">Compair Product</a>
         <div class="pagination">
             @if (isset($_GET['sort']) && !empty($_GET['sort']))
-                {{ $categoryProducts->appends(['sort'=> $_GET['sort']])->links() }}
+                {{ $categoryProducts->appends(['sort' => $_GET['sort']])->links() }}
             @else
                 {{ $categoryProducts->links() }}
             @endif

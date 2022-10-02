@@ -64,7 +64,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 
 
         // Product Images
-        Route::match(['get', 'post'],'add-images/{id}', 'ProductController@addImagess')->name('admin.add_images');
+        Route::match(['get', 'post'], 'add-images/{id}', 'ProductController@addImagess')->name('admin.add_images');
         Route::post('update-image-status', 'ProductController@updateImageStatus');
         Route::get('delete_image/{id}', 'ProductController@deleteImage')->name('admin.delete.image');
         Route::post('edit_images/{id}', 'ProductController@editImages')->name('admin.edit_images');
@@ -74,11 +74,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::post('/update-banner-status', 'BannerController@updateBannerStatus');
         Route::match(['get', 'post'], 'add-edit-banner/{id?}', 'BannerController@addEditBanner')->name('admin.add.edit.banners');
         Route::get('delete_banner/{id}', 'BannerController@deleteBanners')->name('admin.delete.banner');
-
     });
 });
 
 Route::group(['namespace' => 'Front'], function () {
-    Route::get('/', [IndexController::class,'index']);
-    Route::get('/{url}', [ProductsController::class,'listing']);
+    Route::get('/', [IndexController::class, 'index']);
+    Route::get('/{url}', [ProductsController::class, 'listing']);
 });

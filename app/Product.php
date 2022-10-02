@@ -36,4 +36,13 @@ class Product extends Model
     {
         return $this->hasMany(ProductsImage::class, 'product_id');
     }
+    public static function productFilters()
+    {
+        $productFilters['fabricArray'] = array('Coton', 'Polyester', 'Wool', 'Pure Cotton');
+        $productFilters['sleeveArray'] = array('Full Sleeve', 'Half Sleeve', 'Short Sleeve', 'Sleeveless');
+        $productFilters['patternArray'] = array('Checked', 'Plain', 'Printed', 'Self', 'Solid');
+        $productFilters['fitArray'] = array('Regular', 'Slim');
+        $productFilters['occasionArray'] = array('Casual', 'Formal');
+        return $productFilters;
+    }
 }

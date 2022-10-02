@@ -8,8 +8,7 @@
                             $product_image_path = 'images/product_images/small/' . $catProduct['main_image'];
                         @endphp
                         @if (!empty($catProduct['main_image']) && file_exists($product_image_path))
-                            <img style="width: 250px; height:250px" src="{{ asset($product_image_path) }}"
-                                alt="">
+                            <img style="width: 250px; height:250px" src="{{ asset($product_image_path) }}" alt="">
                         @else
                             <img style="width: 250px; height:250px"
                                 src="{{ asset('images/product_images') }}/small/no_image.png" alt="">
@@ -24,6 +23,9 @@
                                     class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i
                                     class="icon-shopping-cart"></i></a> <a class="btn btn-primary"
                                 href="#">Tk.{{ $catProduct['product_price'] }}</a></h4>
+                        <p>
+                            {{ $catProduct['fabric'] }}
+                        </p>
                     </div>
                 </div>
             </li>

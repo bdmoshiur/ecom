@@ -24,7 +24,7 @@ $sections = Section::sections();
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </a>
-                        <a class="brand" href="#">Stack Developers</a>
+                        <a class="brand" href="#">Ecommerce Website</a>
                         <div class="nav-collapse">
                             <ul class="nav">
                                 <li class="active"><a href="#">Home</a></li>
