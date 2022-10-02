@@ -23,9 +23,6 @@
                                     class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i
                                     class="icon-shopping-cart"></i></a> <a class="btn btn-primary"
                                 href="#">Tk.{{ $catProduct['product_price'] }}</a></h4>
-                        <p>
-                            {{ $catProduct['fabric'] }}
-                        </p>
                     </div>
                 </div>
             </li>

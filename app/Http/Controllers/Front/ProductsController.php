@@ -6,10 +6,11 @@ use App\Product;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Route;
 
 class ProductsController extends Controller
 {
-    public function listing(Request $request, $url)
+    public function listing(Request $request)
     {
         if ($request->ajax()) {
             $data = $request->all();
@@ -21,6 +22,19 @@ class ProductsController extends Controller
 
                 if (isset($data['fabric']) && !empty($data['fabric'])) {
                     $categoryProducts->whereIn('products.fabric', $data['fabric']);
+                }
+
+                if (isset($data['sleeve']) && !empty($data['sleeve'])) {
+                    $categoryProducts->whereIn('products.sleeve', $data['sleeve']);
+                }
+                if (isset($data['pattern']) && !empty($data['pattern'])) {
+                    $categoryProducts->whereIn('products.pattern', $data['pattern']);
+                }
+                if (isset($data['fit']) && !empty($data['fit'])) {
+                    $categoryProducts->whereIn('products.fit', $data['fit']);
+                }
+                if (isset($data['occasion']) && !empty($data['occasion'])) {
+                    $categoryProducts->whereIn('products.occasion', $data['occasion']);
                 }
 
                 if (isset($data['sort']) && !empty($data['sort'])) {
@@ -48,6 +62,7 @@ class ProductsController extends Controller
                 abort(404);
             }
         } else {
+            $url = Route::getFacadeRoot()->current()->uri();
             $categoryCount = Category::where(['url' => $url, 'status' => 1])->count();
             if ($categoryCount > 0) {
                 $categoryDetails = Category::catDetails($url);

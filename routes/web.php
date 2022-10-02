@@ -1,5 +1,6 @@
 <?php
 
+use App\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\IndexController;
@@ -79,5 +80,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 
 Route::group(['namespace' => 'Front'], function () {
     Route::get('/', [IndexController::class, 'index']);
-    Route::get('/{url}', [ProductsController::class, 'listing']);
+    
+    $catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
+    foreach($catUrls as $url){
+        Route::get('/'.$url, [ProductsController::class, 'listing']);
+    }
+    Route::get('/contact-us',function(){
+        echo "dfsfs";
+    });
 });
