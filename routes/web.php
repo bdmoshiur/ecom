@@ -80,12 +80,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 
 Route::group(['namespace' => 'Front'], function () {
     Route::get('/', [IndexController::class, 'index']);
-    
+
     $catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
     foreach($catUrls as $url){
         Route::get('/'.$url, [ProductsController::class, 'listing']);
     }
-    Route::get('/contact-us',function(){
-        echo "dfsfs";
-    });
+
+    //product detail route
+    Route::get('/product/{id}', [ProductsController::class, 'detail']);
 });
