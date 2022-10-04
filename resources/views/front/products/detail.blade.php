@@ -8,33 +8,30 @@
         </ul>
         <div class="row">
             <div id="gallery" class="span3">
-                <a href="themes/images/products/large/f1.jpg" title="Blue Casual T-Shirt">
-                    <img src="{{ asset('images/front_images') }}/products/large/3.jpg" style="width:100%"
+                <a href="{{ asset('images/product_images/large/' . $productDetails['main_image']) }}"
+                    title="Blue Casual T-Shirt">
+                    <img src="{{ asset('images/product_images/large/' . $productDetails['main_image']) }}" style="width:100%"
                         alt="Blue Casual T-Shirt" />
                 </a>
                 <div id="differentview" class="moreOptopm carousel slide">
                     <div class="carousel-inner">
                         <div class="item active">
-                            <a href="themes/images/products/large/f1.jpg"> <img style="width:29%"
-                                    src="{{ asset('images/front_images') }}/products/large/f1.jpg" alt="" /></a>
-                            <a href="themes/images/products/large/f2.jpg"> <img style="width:29%"
-                                    src="{{ asset('images/front_images') }}/products/large/f2.jpg" alt="" /></a>
-                            <a href="themes/images/products/large/f3.jpg"> <img style="width:29%"
-                                    src="{{ asset('images/front_images') }}/products/large/f3.jpg" alt="" /></a>
+                            @foreach ($productDetails['images'] as $images)
+                                <a href="{{ asset('images/product_images/large/' . $images['image']) }}"> <img style="width:29%"
+                                        src="{{ asset('images/product_images/large/' . $images['image']) }}" alt="" /></a>
+                            @endforeach
                         </div>
                         <div class="item">
-                            <a href="themes/images/products/large/f3.jpg"> <img style="width:29%"
-                                    src="{{ asset('images/front_images') }}/products/large/f3.jpg" alt="" /></a>
-                            <a href="themes/images/products/large/f1.jpg"> <img style="width:29%"
-                                    src="{{ asset('images/front_images') }}/products/large/f1.jpg" alt="" /></a>
-                            <a href="themes/images/products/large/f2.jpg"> <img style="width:29%"
-                                    src="{{ asset('images/front_images') }}/products/large/f2.jpg" alt="" /></a>
+                            @foreach ($productDetails['images'] as $images)
+                                <a href="{{ asset('images/product_images/large/' . $images['image']) }}"> <img style="width:29%"
+                                        src="{{ asset('images/product_images/large/' . $images['image']) }}" alt="" /></a>
+                            @endforeach
                         </div>
                     </div>
                     <!--
-                                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
-                        <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
-                        -->
+                                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+                            <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+                            -->
                 </div>
 
                 <div class="btn-toolbar">
@@ -52,14 +49,14 @@
                 <h3>{{ $productDetails['product_name'] }}</h3>
                 <small>- {{ $productDetails['brand']['name'] }}</small>
                 <hr class="soft" />
-                <small>100 items in stock</small>
+                <small>{{ $total_stock }} items in stock</small>
                 <form class="form-horizontal qtyFrm">
                     <div class="control-group">
-                        <h4>Tk.{{ $productDetails['product_price'] }}</h4>
-                        <select class="span2 pull-left">
-                            <option>Select Size</option>
+                        <h4 class="getAttrPrice">Tk.{{ $productDetails['product_price'] }}</h4>
+                        <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="span2 pull-left">
+                            <option value="">Select Size</option>
                             @foreach ($productDetails['attributes'] as $attribute)
-                                <option>{{ $attribute['size'] }}</option>
+                                <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
                             @endforeach
                         </select>
                         <input type="number" class="span1" placeholder="Qty." />
@@ -105,7 +102,7 @@
                                 <td class="techSpecTD1">Color:</td>
                                 <td class="techSpecTD2">{{ $productDetails['product_color'] }}</td>
                             </tr>
-                            @if (!empty($productDetails['fabric'])))
+                            @if (!empty($productDetails['fabric']))
                                 <tr class="techSpecRow">
                                     <td class="techSpecTD1">Fabric:</td>
                                     <td class="techSpecTD2">{{ $productDetails['fabric'] }}</td>

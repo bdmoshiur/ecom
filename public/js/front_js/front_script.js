@@ -1,7 +1,10 @@
 $(document).ready(function () {
-    // $('#sort').on('change', function(){
-    //     this.form.submit();
-    // });
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
 
     $("#sort").on("change", function () {
         var sort = $(this).val();
@@ -14,7 +17,15 @@ $(document).ready(function () {
         $.ajax({
             url: url,
             method: "POST",
-            data: { fabric: fabric, sleeve:sleeve,pattern:pattern, fit:fit, occasion:occasion, sort: sort, url: url },
+            data: {
+                fabric: fabric,
+                sleeve: sleeve,
+                pattern: pattern,
+                fit: fit,
+                occasion: occasion,
+                sort: sort,
+                url: url,
+            },
             success: function (data) {
                 $(".filter_products").html(data);
             },
@@ -32,7 +43,15 @@ $(document).ready(function () {
         $.ajax({
             url: url,
             method: "POST",
-            data: { fabric: fabric, sleeve:sleeve, pattern:pattern, fit:fit, occasion:occasion, sort: sort, url: url },
+            data: {
+                fabric: fabric,
+                sleeve: sleeve,
+                pattern: pattern,
+                fit: fit,
+                occasion: occasion,
+                sort: sort,
+                url: url,
+            },
             success: function (data) {
                 $(".filter_products").html(data);
             },
@@ -50,7 +69,15 @@ $(document).ready(function () {
         $.ajax({
             url: url,
             method: "POST",
-            data: { fabric: fabric, sleeve: sleeve, pattern:pattern, fit:fit, occasion:occasion, sort: sort, url: url },
+            data: {
+                fabric: fabric,
+                sleeve: sleeve,
+                pattern: pattern,
+                fit: fit,
+                occasion: occasion,
+                sort: sort,
+                url: url,
+            },
             success: function (data) {
                 $(".filter_products").html(data);
             },
@@ -68,7 +95,15 @@ $(document).ready(function () {
         $.ajax({
             url: url,
             method: "POST",
-            data: { fabric: fabric, sleeve: sleeve, pattern:pattern, fit:fit, occasion:occasion, sort: sort, url: url },
+            data: {
+                fabric: fabric,
+                sleeve: sleeve,
+                pattern: pattern,
+                fit: fit,
+                occasion: occasion,
+                sort: sort,
+                url: url,
+            },
             success: function (data) {
                 $(".filter_products").html(data);
             },
@@ -86,7 +121,15 @@ $(document).ready(function () {
         $.ajax({
             url: url,
             method: "POST",
-            data: { fabric: fabric, sleeve: sleeve, pattern:pattern, fit:fit, occasion:occasion, sort: sort, url: url },
+            data: {
+                fabric: fabric,
+                sleeve: sleeve,
+                pattern: pattern,
+                fit: fit,
+                occasion: occasion,
+                sort: sort,
+                url: url,
+            },
             success: function (data) {
                 $(".filter_products").html(data);
             },
@@ -104,7 +147,15 @@ $(document).ready(function () {
         $.ajax({
             url: url,
             method: "POST",
-            data: { fabric: fabric, sleeve: sleeve, pattern:pattern, fit:fit, occasion:occasion, sort: sort, url: url },
+            data: {
+                fabric: fabric,
+                sleeve: sleeve,
+                pattern: pattern,
+                fit: fit,
+                occasion: occasion,
+                sort: sort,
+                url: url,
+            },
             success: function (data) {
                 $(".filter_products").html(data);
             },
@@ -118,4 +169,24 @@ $(document).ready(function () {
         });
         return filter;
     }
+
+    $("#getPrice").change(function () {
+        var size = $(this).val();
+        if(size == ''){
+            alert('Please Select Size');
+            return false;
+        }
+        var product_id = $(this).attr("product-id");
+        $.ajax({
+            url: "/get-product-price",
+            type: "post",
+            data: { size: size, product_id: product_id },
+            success: function (resp) {
+                $(".getAttrPrice").text("Tk ." + resp);
+            },
+            error:function(error){
+                alert(error);
+            },
+        });
+    });
 });

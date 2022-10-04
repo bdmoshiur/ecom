@@ -6,6 +6,7 @@ use App\Product;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\ProductsAttribute;
 use Illuminate\Support\Facades\Route;
 
 class ProductsController extends Controller
@@ -97,8 +98,19 @@ class ProductsController extends Controller
     public function detail($id){
         $productDetails = Product::with('category','brand','attributes','images')->find($id)->toArray();
         // dd($productDetails);
+        $total_stock = ProductsAttribute::where('product_id',$id)->sum('stock');
         return view('front.products.detail',[
             'productDetails'=> $productDetails,
+            'total_stock'=> $total_stock,
         ]);
+    }
+
+    public function getProductPrice(Request $request)
+    {
+        if($request->ajax()){
+            $data = $request->all();
+            $getProductPrice = ProductsAttribute::where(['product_id'=> $data['product_id'], 'size'=> $data['size']])->first();
+            return $getProductPrice->price;
+        }
     }
 }
