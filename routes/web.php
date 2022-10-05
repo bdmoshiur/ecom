@@ -79,16 +79,22 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 });
 
 Route::group(['namespace' => 'Front'], function () {
+    // home page route
     Route::get('/', [IndexController::class, 'index'])->name('index');
 
+    // lisining category route
     $catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
     foreach($catUrls as $url){
         Route::get('/'.$url, [ProductsController::class, 'listing'])->name('index'.$url);
     }
 
-    //product detail route
+    // product detail route
     Route::get('/product/{id}', [ProductsController::class, 'detail'])->name('product');
+    // getproduct attribute price
     Route::post('/get-product-price', [ProductsController::class, 'getProductPrice']);
+    // add to cart route
     Route::post('/add-to-cart', [ProductsController::class, 'addToCart'])->name('addToCart');
+    // shoping cart route
+    Route::get('/cart', [ProductsController::class, 'cart'])->name('cart');
 
 });

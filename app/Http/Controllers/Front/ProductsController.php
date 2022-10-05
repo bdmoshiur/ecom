@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Cart;
 use App\Product;
 use App\Category;
+use App\ProductsAttribute;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\ProductsAttribute;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 class ProductsController extends Controller
 {
@@ -96,39 +98,79 @@ class ProductsController extends Controller
         }
     }
 
-    public function detail($id){
-        $productDetails = Product::with(['category','brand','attributes'=>function($query){
-            $query->where('status',1);
-        },'images'])->find($id)->toArray();
+    public function detail($id)
+    {
+        $productDetails = Product::with(['category', 'brand', 'attributes' => function ($query) {
+            $query->where('status', 1);
+        }, 'images'])->find($id)->toArray();
         // dd($productDetails);
-        $total_stock = ProductsAttribute::where('product_id',$id)->sum('stock');
-        $relatedProducts = Product::where('category_id',$productDetails['category']['id'])->where('id','!=',$id)->limit(3)->inRandomOrder()->get()->toArray();
+        $total_stock = ProductsAttribute::where('product_id', $id)->sum('stock');
+        $relatedProducts = Product::where('category_id', $productDetails['category']['id'])->where('id', '!=', $id)->limit(3)->inRandomOrder()->get()->toArray();
         // dd($relatedProducts);
-        return view('front.products.detail',[
-            'productDetails'=> $productDetails,
-            'total_stock'=> $total_stock,
-            'relatedProducts'=> $relatedProducts,
+        return view('front.products.detail', [
+            'productDetails' => $productDetails,
+            'total_stock' => $total_stock,
+            'relatedProducts' => $relatedProducts,
         ]);
     }
 
     public function getProductPrice(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             $data = $request->all();
-            $getProductPrice = ProductsAttribute::where(['product_id'=> $data['product_id'], 'size'=> $data['size']])->first();
+            $getProductPrice = ProductsAttribute::where(['product_id' => $data['product_id'], 'size' => $data['size']])->first();
             return $getProductPrice->price;
         }
     }
 
-    public function addToCart( Request $request)
+    public function addToCart(Request $request)
     {
-        if($request->isMethod('post')){
+        if ($request->isMethod('post')) {
             $data = $request->all();
-            $getProductStock = ProductsAttribute::where(['product_id'=>$data['product_id'],'size'=>$data['size']])->first()->toArray();
-            if($getProductStock['stock'] < $data['quantity']){
+            $getProductStock = ProductsAttribute::where(['product_id' => $data['product_id'], 'size' => $data['size']])->first()->toArray();
+            if ($getProductStock['stock'] < $data['quantity']) {
                 Session::flash('error_message', 'Required quantity is not available');
                 return redirect()->back();
             }
+
+            // Generate Session Id if not exists
+            $session_id = Session::get('session_id');
+            if (empty($session_id)) {
+                $session_id = Session::getId();
+                Session::put('session_id', $session_id);
+            }
+
+            if (Auth::check()) {
+                $countProducts = Cart::where(['product_id' => $data['product_id'], 'size' => $data['size'], 'user_id' => Auth::user()->id])->count();
+            } else {
+                $countProducts = Cart::where(['product_id' => $data['product_id'], 'size' => $data['size'], 'session_id'=> Session::get('session_id')])->count();
+            }
+
+            // check product alreaday exist in cart
+            if ($countProducts > 0) {
+                Session::flash('error_message', 'Product already exists in cart');
+                return redirect()->back();
+            }
+
+            // Save Product In Cart
+            $cart = new Cart;
+            $cart->session_id = $session_id;
+            $cart->product_id = $data['product_id'];
+            $cart->size = $data['size'];
+            $cart->quantity = $data['quantity'];
+            $cart->save();
+
+            Session::flash('success_message', 'Product has been added in cart');
+            return redirect()->back();
         }
+    }
+
+    public function cart()
+    {
+        $userCartItems = Cart::userCartItrms();
+        // dd($userCartItems);
+        return view('front.products.cart',[
+            'userCartItems' => $userCartItems,
+        ]);
     }
 }

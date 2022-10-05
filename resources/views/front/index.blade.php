@@ -14,7 +14,7 @@
                                         <li class="span3">
                                             <div class="thumbnail">
                                                 <i class="tag"></i>
-                                                <a href="product_details.html">
+                                                <a href="{{ route('product',$item['id']) }}">
                                                     @if (isset($item['main_image']))
                                                         @php
                                                             $product_image_path = 'images/product_images/small/' . $item['main_image'];
@@ -36,7 +36,7 @@
 
                                                 <div class="caption">
                                                     <h5>{{ $item['product_name'] }}</h5>
-                                                    <h4><a class="btn" href="product_details.html">VIEW</a> <span
+                                                    <h4><a class="btn" href="{{ route('product',$item['id']) }}">VIEW</a> <span
                                                             class="pull-right">Tk.{{ $item['product_price'] }}</span></h4>
                                                 </div>
                                             </div>
@@ -56,7 +56,7 @@
             @foreach ($newProducts as $newProduct)
                 <li class="span3">
                     <div class="thumbnail">
-                        <a href="product_details.html">
+                        <a href="{{ route('product',$newProduct['id']) }}">
                             @if (isset($newProduct['main_image']))
                                 @php
                                     $product_image_path = 'images/product_images/small/' . $newProduct['main_image'];
@@ -79,7 +79,7 @@
                                 {{ $newProduct['product_code'] }} {{ $newProduct['product_color'] }}
                             </p>
 
-                            <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i
+                            <h4 style="text-align:center"><a class="btn" href="{{ route('product',$newProduct['id']) }}"> <i
                                         class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i
                                         class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Tk.
                                     {{ $newProduct['product_price'] }}</a>
