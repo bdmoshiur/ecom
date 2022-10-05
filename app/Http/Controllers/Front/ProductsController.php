@@ -99,9 +99,12 @@ class ProductsController extends Controller
         $productDetails = Product::with('category','brand','attributes','images')->find($id)->toArray();
         // dd($productDetails);
         $total_stock = ProductsAttribute::where('product_id',$id)->sum('stock');
+        $relatedProducts = Product::where('category_id',$productDetails['category']['id'])->where('id','!=',$id)->limit(3)->inRandomOrder()->get()->toArray();
+        // dd($relatedProducts);
         return view('front.products.detail',[
             'productDetails'=> $productDetails,
             'total_stock'=> $total_stock,
+            'relatedProducts'=> $relatedProducts,
         ]);
     }
 

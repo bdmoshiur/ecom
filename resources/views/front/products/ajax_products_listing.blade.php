@@ -3,7 +3,7 @@
         @foreach ($categoryProducts as $catProduct)
             <li class="span3">
                 <div class="thumbnail">
-                    <a href="product_details.html">
+                    <a href="{{ route('product',$catProduct['id']) }}">
                         @php
                             $product_image_path = 'images/product_images/small/' . $catProduct['main_image'];
                         @endphp
@@ -19,7 +19,7 @@
                         <p>
                             {{ $catProduct['brand']['name'] }}
                         </p>
-                        <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i
+                        <h4 style="text-align:center"><a class="btn" href="{{ route('product',$catProduct['id']) }}"> <i
                                     class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i
                                     class="icon-shopping-cart"></i></a> <a class="btn btn-primary"
                                 href="#">Tk.{{ $catProduct['product_price'] }}</a></h4>
