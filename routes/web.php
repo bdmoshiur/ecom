@@ -89,4 +89,6 @@ Route::group(['namespace' => 'Front'], function () {
     //product detail route
     Route::get('/product/{id}', [ProductsController::class, 'detail'])->name('product');
     Route::post('/get-product-price', [ProductsController::class, 'getProductPrice']);
+    Route::post('/add-to-cart', [ProductsController::class, 'addToCart'])->name('addToCart');
+
 });

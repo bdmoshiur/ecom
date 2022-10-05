@@ -7,6 +7,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ProductsAttribute;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 
 class ProductsController extends Controller
@@ -96,7 +97,9 @@ class ProductsController extends Controller
     }
 
     public function detail($id){
-        $productDetails = Product::with('category','brand','attributes','images')->find($id)->toArray();
+        $productDetails = Product::with(['category','brand','attributes'=>function($query){
+            $query->where('status',1);
+        },'images'])->find($id)->toArray();
         // dd($productDetails);
         $total_stock = ProductsAttribute::where('product_id',$id)->sum('stock');
         $relatedProducts = Product::where('category_id',$productDetails['category']['id'])->where('id','!=',$id)->limit(3)->inRandomOrder()->get()->toArray();
@@ -114,6 +117,18 @@ class ProductsController extends Controller
             $data = $request->all();
             $getProductPrice = ProductsAttribute::where(['product_id'=> $data['product_id'], 'size'=> $data['size']])->first();
             return $getProductPrice->price;
+        }
+    }
+
+    public function addToCart( Request $request)
+    {
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $getProductStock = ProductsAttribute::where(['product_id'=>$data['product_id'],'size'=>$data['size']])->first()->toArray();
+            if($getProductStock['stock'] < $data['quantity']){
+                Session::flash('error_message', 'Required quantity is not available');
+                return redirect()->back();
+            }
         }
     }
 }

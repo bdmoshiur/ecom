@@ -53,21 +53,39 @@
                 </div>
             </div>
             <div class="span6">
+                @if (Session::has('success_message'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ Session::get('success_message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            @if (Session::has('error_message'))
+            <div class="alert alert-danger" role="alert">
+                {{ Session::get('error_message') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
                 <h3>{{ $productDetails['product_name'] }}</h3>
                 <small>- {{ $productDetails['brand']['name'] }}</small>
                 <hr class="soft" />
                 <small>{{ $total_stock }} items in stock</small>
-                <form class="form-horizontal qtyFrm">
+                <form action="{{ route('addToCart') }}" method="post" class="form-horizontal qtyFrm">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
                     <div class="control-group">
                         <h4 class="getAttrPrice">Tk.{{ $productDetails['product_price'] }}</h4>
                         <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}"
-                            class="span2 pull-left">
+                            class="span2 pull-left" required>
                             <option value="">Select Size</option>
                             @foreach ($productDetails['attributes'] as $attribute)
                                 <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
                             @endforeach
                         </select>
-                        <input type="number" class="span1" placeholder="Qty." />
+                        <input type="number" class="span1" name="quantity" placeholder="Qty." required />
                         <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i
                                 class=" icon-shopping-cart"></i></button>
                     </div>
