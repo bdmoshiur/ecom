@@ -45,4 +45,25 @@ class Product extends Model
         $productFilters['occasionArray'] = array('Casual', 'Formal');
         return $productFilters;
     }
+
+    public static function getDiscountPrice( $product_id)
+    {
+        $proDetails = Product::select('product_price','product_discount', 'category_id')->where('id',$product_id)->first()->toArray();
+
+        $catDetails = Category::select('category_discount')->where('id',$proDetails['category_id'])->first()->toArray();
+        // dd($proDetails, $catDetails);
+
+        if($proDetails['product_discount'] > 0){
+            // if product discount is added from admin panel
+            $discounted_Price = $proDetails['product_price'] - ($proDetails['product_price'] * $proDetails['product_discount']/100);
+             // Sale price = cost price - disaount price
+            // 450          500   - (500*10/100 = 50)
+        } else if($catDetails['category_discount'] > 0){
+            // if product discount is not added and category discount added from admin panel
+            $discounted_Price = $proDetails['product_price'] - ($proDetails['product_price'] * $catDetails['category_discount']/100);
+        } else {
+            $discounted_Price = 0;
+        }
+        return $discounted_Price;
+    }
 }

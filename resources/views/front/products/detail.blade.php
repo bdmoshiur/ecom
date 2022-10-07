@@ -1,3 +1,6 @@
+@php
+use App\Product;
+@endphp
 @extends('layouts.front_layout.front_layout')
 @section('content')
     <div class="span9">
@@ -77,7 +80,16 @@
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
                     <div class="control-group">
-                        <h4 class="getAttrPrice">Tk.{{ $productDetails['product_price'] }}</h4>
+                        @php
+                            $discounted_Price = Product::getDiscountPrice($productDetails['id']);
+                        @endphp
+                        <h4 class="getAttrPrice">
+                            @if ($discounted_Price > 0)
+                            <del>Tk.{{ $productDetails['product_price'] }}</del> Tk. {{ $discounted_Price }}
+                        @else
+                            Tk.{{ $productDetails['product_price'] }}
+                        @endif
+                        </h4>
                         <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}"
                             class="span2 pull-left" required>
                             <option value="">Select Size</option>
