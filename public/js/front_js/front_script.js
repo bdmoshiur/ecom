@@ -182,8 +182,8 @@ $(document).ready(function () {
             type: "post",
             data: { size: size, product_id: product_id },
             success: function (resp) {
-                if(resp['discounted_price']){
-                    $(".getAttrPrice").html("<del>Tk ." + resp['product_price']+ "</del> Tk ." +resp['discounted_price']);
+                if(resp['discount'] >0 ){
+                    $(".getAttrPrice").html("<del>Tk ." + resp['product_price']+ "</del> Tk ." +resp['final_price']);
                 } else{
                     $(".getAttrPrice").html("Tk ." + resp['product_price']);
                 }

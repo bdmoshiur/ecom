@@ -39,9 +39,9 @@ use App\Product;
                         </div>
                     </div>
                     <!--
-                                                <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
-                                    <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
-                                    -->
+                                                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+                                        <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+                                        -->
                 </div>
 
                 <div class="btn-toolbar">
@@ -57,21 +57,21 @@ use App\Product;
             </div>
             <div class="span6">
                 @if (Session::has('success_message'))
-                <div class="alert alert-success" role="alert">
-                    {{ Session::get('success_message') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-            @if (Session::has('error_message'))
-            <div class="alert alert-danger" role="alert">
-                {{ Session::get('error_message') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
+                    <div class="alert alert-success" role="alert">
+                        {{ Session::get('success_message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                @if (Session::has('error_message'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ Session::get('error_message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 <h3>{{ $productDetails['product_name'] }}</h3>
                 <small>- {{ $productDetails['brand']['name'] }}</small>
                 <hr class="soft" />
@@ -85,10 +85,10 @@ use App\Product;
                         @endphp
                         <h4 class="getAttrPrice">
                             @if ($discounted_Price > 0)
-                            <del>Tk.{{ $productDetails['product_price'] }}</del> Tk. {{ $discounted_Price }}
-                        @else
-                            Tk.{{ $productDetails['product_price'] }}
-                        @endif
+                                <del>Tk.{{ $productDetails['product_price'] }}</del> Tk. {{ $discounted_Price }}
+                            @else
+                                Tk.{{ $productDetails['product_price'] }}
+                            @endif
                         </h4>
                         <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}"
                             class="span2 pull-left" required>
@@ -202,8 +202,8 @@ use App\Product;
                                             $product_image_path = 'images/product_images/small/' . $relatedProduct['main_image'];
                                         @endphp
                                         @if (!empty($relatedProduct['main_image']) && file_exists($product_image_path))
-                                            <img style="width: 250px;"
-                                                src="{{ asset($product_image_path) }}" alt="">
+                                            <img style="width: 250px;" src="{{ asset($product_image_path) }}"
+                                                alt="">
                                         @else
                                             <img style="width: 250px;"
                                                 src="{{ asset('images/product_images') }}/small/no_image.png"
@@ -217,7 +217,8 @@ use App\Product;
                                         <p>
                                             {{ $relatedProduct['description'] }}
                                         </p>
-                                        <a class="btn btn-small pull-right" href="{{ route('product',$relatedProduct['id']) }}">View Details</a>
+                                        <a class="btn btn-small pull-right"
+                                            href="{{ route('product', $relatedProduct['id']) }}">View Details</a>
                                         <br class="clr" />
                                     </div>
                                     <div class="span3 alignR">
@@ -227,7 +228,8 @@ use App\Product;
                                                 <input type="checkbox"> Adds product to compair
                                             </label><br />
                                             <div class="btn-group">
-                                                <a href="{{ route('product',$relatedProduct['id']) }}" class="btn btn-large btn-primary"> Add to
+                                                <a href="{{ route('product', $relatedProduct['id']) }}"
+                                                    class="btn btn-large btn-primary"> Add to
                                                     <i class=" icon-shopping-cart"></i></a>
                                                 <a href="product_details.html" class="btn btn-large"><i
                                                         class="icon-zoom-in"></i></a>
@@ -243,7 +245,7 @@ use App\Product;
                                 @foreach ($relatedProducts as $relatedProduct)
                                     <li class="span3">
                                         <div class="thumbnail">
-                                            <a href="{{ route('product',$relatedProduct['id']) }}">
+                                            <a href="{{ route('product', $relatedProduct['id']) }}">
                                                 @php
                                                     $product_image_path = 'images/product_images/small/' . $relatedProduct['main_image'];
                                                 @endphp
@@ -262,11 +264,12 @@ use App\Product;
                                                     {{ $relatedProduct['product_code'] }}
                                                 </p>
                                                 <h4 style="text-align:center"><a class="btn"
-                                                        href="{{ route('product',$relatedProduct['id']) }}">
+                                                        href="{{ route('product', $relatedProduct['id']) }}">
                                                         <i class="icon-zoom-in"></i></a> <a class="btn"
                                                         href="#">Add
                                                         to <i class="icon-shopping-cart"></i></a> <a
-                                                        class="btn btn-primary" href="#">Tk.{{ $relatedProduct['product_price'] }}</a></h4>
+                                                        class="btn btn-primary"
+                                                        href="#">Tk.{{ $relatedProduct['product_price'] }}</a></h4>
                                             </div>
                                         </div>
                                     </li>
