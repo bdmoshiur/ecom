@@ -4,7 +4,7 @@ $(document).ready(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    
+
 
     $("#sort").on("change", function () {
         var sort = $(this).val();
@@ -182,7 +182,11 @@ $(document).ready(function () {
             type: "post",
             data: { size: size, product_id: product_id },
             success: function (resp) {
-                $(".getAttrPrice").text("Tk ." + resp);
+                if(resp['discounted_price']){
+                    $(".getAttrPrice").html("<del>Tk ." + resp['product_price']+ "</del> Tk ." +resp['discounted_price']);
+                } else{
+                    $(".getAttrPrice").html("Tk ." + resp['product_price']);
+                }
             },
             error:function(error){
                 alert(error);
