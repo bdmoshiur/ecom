@@ -1,3 +1,6 @@
+@php
+use App\Product;
+@endphp
 @extends('layouts.front_layout.front_layout')
 
 @section('content')
@@ -14,7 +17,7 @@
                                         <li class="span3">
                                             <div class="thumbnail">
                                                 <i class="tag"></i>
-                                                <a href="{{ route('product',$item['id']) }}">
+                                                <a href="{{ route('product', $item['id']) }}">
                                                     @if (isset($item['main_image']))
                                                         @php
                                                             $product_image_path = 'images/product_images/small/' . $item['main_image'];
@@ -36,8 +39,20 @@
 
                                                 <div class="caption">
                                                     <h5>{{ $item['product_name'] }}</h5>
-                                                    <h4><a class="btn" href="{{ route('product',$item['id']) }}">VIEW</a> <span
-                                                            class="pull-right">Tk.{{ $item['product_price'] }}</span></h4>
+                                                    @php
+                                                        $discounted_price = Product::getDiscountPrice($item['id']);
+                                                    @endphp
+                                                    <h4><a class="btn"
+                                                            href="{{ route('product', $item['id']) }}">VIEW</a>
+                                                        <span class="pull-right" style="font-size: 13px">
+                                                            @if ($discounted_price > 0)
+                                                                <del>Tk.{{ $item['product_price'] }}</del>
+                                                                <font color='red'>Tk. {{ $discounted_price }}</font>
+                                                            @else
+                                                                Tk.{{ $item['product_price'] }}
+                                                            @endif
+                                                        </span>
+                                                    </h4>
                                                 </div>
                                             </div>
                                         </li>
@@ -56,7 +71,7 @@
             @foreach ($newProducts as $newProduct)
                 <li class="span3">
                     <div class="thumbnail">
-                        <a href="{{ route('product',$newProduct['id']) }}">
+                        <a href="{{ route('product', $newProduct['id']) }}">
                             @if (isset($newProduct['main_image']))
                                 @php
                                     $product_image_path = 'images/product_images/small/' . $newProduct['main_image'];
@@ -78,11 +93,21 @@
                             <p>
                                 {{ $newProduct['product_code'] }} {{ $newProduct['product_color'] }}
                             </p>
-
-                            <h4 style="text-align:center"><a class="btn" href="{{ route('product',$newProduct['id']) }}"> <i
-                                        class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i
-                                        class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">Tk.
-                                    {{ $newProduct['product_price'] }}</a>
+                            @php
+                                $discounted_price = Product::getDiscountPrice($newProduct['id']);
+                            @endphp
+                            <h4 style="text-align:center">
+                                {{--  <a class="btn"
+                                    href="{{ route('product', $newProduct['id']) }}"> <i class="icon-zoom-in"></i></a>  --}}
+                                <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a
+                                    class="btn btn-secondary" href="#">
+                                    @if ($discounted_price > 0)
+                                        <del>Tk.{{ $newProduct['product_price'] }}</del>
+                                        <font color='red'>Tk. {{ $discounted_price }}</font>
+                                    @else
+                                        Tk.{{ $newProduct['product_price'] }}
+                                    @endif
+                                </a>
                             </h4>
                         </div>
                     </div>

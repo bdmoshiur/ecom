@@ -23,23 +23,22 @@ use App\Product;
                             {{ $catProduct['brand']['name'] }}
                         </p>
                         @php
-                            $discounted_Price = Product::getDiscountPrice($catProduct['id']);
+                            $discounted_price = Product::getDiscountPrice($catProduct['id']);
                         @endphp
-                        <h4 style="text-align:center"><a class="btn" href="{{ route('product', $catProduct['id']) }}">
-                                <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i
-                                    class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">
-                                @if ($discounted_Price > 0)
+                        <h4 style="text-align:center">
+                            {{--  <a class="btn" href="{{ route('product', $catProduct['id']) }}">
+                                <i class="icon-zoom-in"></i></a>  --}}
+                            <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a
+                                class="btn btn-secondary" href="#">
+                                @if ($discounted_price > 0)
                                     <del>Tk.{{ $catProduct['product_price'] }}</del>
+                                    <font color='red'>Tk. {{ $discounted_price }}</font>
                                 @else
                                     Tk.{{ $catProduct['product_price'] }}
                                 @endif
 
-                            </a></h4>
-                        @if ($discounted_Price > 0)
-                            <h4>
-                                <font color='red'>Discounted Price : {{ $discounted_Price }}</font>
-                            </h4>
-                        @endif
+                            </a>
+                        </h4>
                     </div>
                 </div>
             </li>
