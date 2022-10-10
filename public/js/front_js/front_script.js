@@ -1,10 +1,9 @@
 $(document).ready(function () {
     $.ajaxSetup({
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
     });
-
 
     $("#sort").on("change", function () {
         var sort = $(this).val();
@@ -172,8 +171,8 @@ $(document).ready(function () {
 
     $("#getPrice").change(function () {
         var size = $(this).val();
-        if(size == ''){
-            alert('Please Select Size');
+        if (size == "") {
+            alert("Please Select Size");
             return false;
         }
         var product_id = $(this).attr("product-id");
@@ -182,23 +181,28 @@ $(document).ready(function () {
             type: "post",
             data: { size: size, product_id: product_id },
             success: function (resp) {
-                if(resp['discount'] >0 ){
-                    $(".getAttrPrice").html("<del>Tk ." + resp['product_price']+ "</del> Tk ." +resp['final_price']);
-                } else{
-                    $(".getAttrPrice").html("Tk ." + resp['product_price']);
+                if (resp["discount"] > 0) {
+                    $(".getAttrPrice").html(
+                        "<del>Tk ." +
+                            resp["product_price"] +
+                            "</del> Tk ." +
+                            resp["final_price"]
+                    );
+                } else {
+                    $(".getAttrPrice").html("Tk ." + resp["product_price"]);
                 }
             },
-            error:function(error){
+            error: function (error) {
                 alert(error);
             },
         });
     });
 
-    $(document).on('click', '.btnItemUpdate',function(){
+    $(document).on("click", ".btnItemUpdate", function () {
         // if qtyMinus button gets clicked by user
-        if($(this).hasClass('qtyMinus')) {
+        if ($(this).hasClass("qtyMinus")) {
             var quantity = $(this).prev().val();
-            if(quantity <= 1 ){
+            if (quantity <= 1) {
                 alert("Item qunatity must be 1 or greater!");
                 return false;
             } else {
@@ -206,27 +210,42 @@ $(document).ready(function () {
             }
         }
 
-        if($(this).hasClass('qtyPlus')) {
+        if ($(this).hasClass("qtyPlus")) {
             var quantity = $(this).prev().prev().val();
             new_qty = parseInt(quantity) + 1;
         }
-        var cartid = $(this).data('cartid');
+        var cartid = $(this).data("cartid");
         $.ajax({
-            data:{cartid,new_qty},
-            url:'/update-cart-item-qty',
-            type:'post',
-            success:function(resp){
-                if(resp.status == false){
-                    alert(resp.message );
+            data: { cartid, new_qty },
+            url: "/update-cart-item-qty",
+            type: "post",
+            success: function (resp) {
+                if (resp.status == false) {
+                    alert(resp.message);
                 }
-                $('#appendCartItems').html(resp.view);
+                $("#appendCartItems").html(resp.view);
             },
-            error: function(){
-                alert('Error');
-            }
+            error: function () {
+                alert("Error");
+            },
+        });
+    });
 
-        })
-
-
+    $(document).on("click", ".cartItemDelete", function () {
+        var cartid = $(this).data("cartid");
+        var result = confirm("Want to delete this cart item!");
+        if (result) {
+            $.ajax({
+                data: { cartid },
+                url: "/delete-cart-item",
+                type: "post",
+                success: function (resp) {
+                    $("#appendCartItems").html(resp.view);
+                },
+                error: function () {
+                    alert("Error");
+                },
+            });
+        }
     });
 });
