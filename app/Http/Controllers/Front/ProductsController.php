@@ -9,6 +9,7 @@ use App\ProductsAttribute;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -143,7 +144,7 @@ class ProductsController extends Controller
             if (Auth::check()) {
                 $countProducts = Cart::where(['product_id' => $data['product_id'], 'size' => $data['size'], 'user_id' => Auth::user()->id])->count();
             } else {
-                $countProducts = Cart::where(['product_id' => $data['product_id'], 'size' => $data['size'], 'session_id'=> Session::get('session_id')])->count();
+                $countProducts = Cart::where(['product_id' => $data['product_id'], 'size' => $data['size'], 'session_id' => Session::get('session_id')])->count();
             }
 
             // check product alreaday exist in cart
@@ -169,8 +170,45 @@ class ProductsController extends Controller
     {
         $userCartItems = Cart::userCartItrms();
         // dd($userCartItems);
-        return view('front.products.cart',[
+        return view('front.products.cart', [
             'userCartItems' => $userCartItems,
         ]);
+    }
+
+    public function updateCarItemQty(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+
+            $cartDetails = Cart::find($data['cartid']);
+            $availableStock = ProductsAttribute::select('stock')->where(['product_id' => $cartDetails['product_id'], 'size' => $cartDetails['size']])->first()->toArray();
+
+            if ($data['new_qty'] > $availableStock['stock']) {
+                $userCartItems = Cart::userCartItrms();
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Product Stock is not available',
+                    'view' => (string)View::make('front.products.cart_items', ['userCartItems' => $userCartItems]),
+                ]);
+            }
+
+            $availableSize = ProductsAttribute::where(['product_id' => $cartDetails['product_id'], 'size' => $cartDetails['size'], 'status' => 1])->count();
+
+            if ($availableSize == 0) {
+                $userCartItems = Cart::userCartItrms();
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Product Size is not available ',
+                    'view' => (string)View::make('front.products.cart_items', ['userCartItems' => $userCartItems])
+                ]);
+            }
+
+            Cart::where('id', $data['cartid'])->update(['quantity' => $data['new_qty']]);
+            $userCartItems = Cart::userCartItrms();
+            return response()->json([
+                'status' => true,
+                'view' => (string)View::make('front.products.cart_items', ['userCartItems' => $userCartItems])
+            ]);
+        }
     }
 }

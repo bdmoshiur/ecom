@@ -193,4 +193,40 @@ $(document).ready(function () {
             },
         });
     });
+
+    $(document).on('click', '.btnItemUpdate',function(){
+        // if qtyMinus button gets clicked by user
+        if($(this).hasClass('qtyMinus')) {
+            var quantity = $(this).prev().val();
+            if(quantity <= 1 ){
+                alert("Item qunatity must be 1 or greater!");
+                return false;
+            } else {
+                new_qty = parseInt(quantity) - 1;
+            }
+        }
+
+        if($(this).hasClass('qtyPlus')) {
+            var quantity = $(this).prev().prev().val();
+            new_qty = parseInt(quantity) + 1;
+        }
+        var cartid = $(this).data('cartid');
+        $.ajax({
+            data:{cartid,new_qty},
+            url:'/update-cart-item-qty',
+            type:'post',
+            success:function(resp){
+                if(resp.status == false){
+                    alert(resp.message );
+                }
+                $('#appendCartItems').html(resp.view);
+            },
+            error: function(){
+                alert('Error');
+            }
+
+        })
+
+
+    });
 });
