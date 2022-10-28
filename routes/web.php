@@ -12,7 +12,7 @@ use App\Http\Controllers\Front\ProductsController;
 //     return view('welcome');
 // });
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -103,10 +103,13 @@ Route::group(['namespace' => 'Front'], function () {
     Route::post('/delete-cart-item', [ProductsController::class, 'deleteCartItem']);
 
     //Login Register page show route
-    Route::get('/login-register',[UsersController::class, 'loginRegister']);
+    Route::get('/login-register',[UsersController::class, 'loginRegister'])->name('front.login_register');
     // user login
     Route::post('/login',[UsersController::class, 'loginUser'])->name('front.login');
     // user register
     Route::post('/register',[UsersController::class, 'registerUser'])->name('front.register');
+    // logout user
+    Route::get('/logout',[UsersController::class, 'logoutUser'])->name('front.logout');
+    Route::get('/account',[UsersController::class, 'accountUser'])->name('front.account');
 
 });
