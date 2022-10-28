@@ -4,6 +4,7 @@ use App\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\IndexController;
+use App\Http\Controllers\Front\UsersController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Front\ProductsController;
 
@@ -100,5 +101,12 @@ Route::group(['namespace' => 'Front'], function () {
     Route::post('/update-cart-item-qty', [ProductsController::class, 'updateCarItemQty']);
     //Delete Cart Item Quantity
     Route::post('/delete-cart-item', [ProductsController::class, 'deleteCartItem']);
+
+    //Login Register page show route
+    Route::get('/login-register',[UsersController::class, 'loginRegister']);
+    // user login
+    Route::post('/login',[UsersController::class, 'loginUser'])->name('front.login');
+    // user register
+    Route::post('/register',[UsersController::class, 'registerUser'])->name('front.register');
 
 });
