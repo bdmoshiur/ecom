@@ -248,4 +248,72 @@ $(document).ready(function () {
             });
         }
     });
+
+
+    // validate Register form on keyup and submit
+    $("#registerForm").validate({
+        rules: {
+            name: "required",
+            mobile: {
+                required: true,
+                minlength: 10,
+                maxlength: 10,
+                digits:true
+            },
+            email: {
+                required: true,
+                email: true,
+                remote:"check-email"
+            },
+            password: {
+                required: true,
+                minlength: 6
+            }
+        },
+        messages: {
+            name: "Please enter your name",
+            mobile: {
+                required: "Please enter a mobile",
+                minlength: "Your mobile must consist of 10 digits",
+                maxlength: "Your mobile must consist of 10 digits"
+            },
+            email: {
+                required: "Please enter your email address",
+                email: "Please enter your valid email address",
+                remote: "Email address already exists"
+            },
+            password: {
+                required: "Please provide a password",
+                minlength: "Your password must be at least 6 characters long"
+            }
+        }
+    });
+
+
+     // validate Register form on keyup and submit
+     $("#loginForm").validate({
+        rules: {
+            name: "required",
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 6
+            }
+        },
+        messages: {
+            email: {
+                required: "Please enter your email",
+                email: "Please enter your valid email"
+            },
+            password: {
+                required: "Please enter your password",
+                minlength: "Your password must be at least 6 characters long"
+            }
+        }
+    });
+
+
 });

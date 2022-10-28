@@ -16,15 +16,15 @@ class UsersController extends Controller
         return view('front.users.login_register');
     }
 
-    public function registerUser( Request $request)
+    public function registerUser(Request $request)
     {
-        if($request->isMethod('post')){
-        $data = $request->all();
-        $userCount = User::where('email', $data['email'])->count();
-            if($userCount > 0){
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            $userCount = User::where('email', $data['email'])->count();
+            if ($userCount > 0) {
                 Session::flash('error_message', 'Email already exists');
                 return redirect()->back();
-            }else{
+            } else {
                 $user = new User();
                 $user->name = $data['name'];
                 $user->mobile = $data['mobile'];
@@ -33,9 +33,21 @@ class UsersController extends Controller
                 $user->status = 1;
                 $user->save();
 
-                if( Auth::attempt( ['email'=> $data['email'], 'password' => $data['password'] ]) ){
+                if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
                     return redirect('casul-t-shirts');
                 }
+            }
+        }
+    }
+    public function loginUser(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+                return redirect('/cart');
+            } else{
+                Session::flash('error_message', 'Invalid email or password');
+                return redirect()->back();
             }
         }
     }
@@ -44,5 +56,16 @@ class UsersController extends Controller
     {
         Auth::logout();
         return redirect('/');
+    }
+
+    public function checkEmail(Request $request)
+    {
+        $data = $request->all();
+        $countEmail = User::where('email', $data['email'])->count();
+        if ($countEmail > 0) {
+            return "false";
+        } else {
+            return "true";
+        }
     }
 }
