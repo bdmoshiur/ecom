@@ -50,8 +50,11 @@ class Product extends Model
     {
         $proDetails = Product::select('product_price','product_discount', 'category_id')->where('id',$product_id)->first()->toArray();
 
-        $catDetails = Category::select('category_discount')->where('id',$proDetails['category_id'])->first()->toArray();
+        $catDetails = Category::select('category_discount')->where('id',$proDetails['category_id'])->first();
         // dd($proDetails, $catDetails);
+        if($catDetails){
+            $catDetails = $catDetails->toArray();
+        }
 
         if($proDetails['product_discount'] > 0){
             // if product discount is added from admin panel
