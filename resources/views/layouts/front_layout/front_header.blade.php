@@ -24,7 +24,7 @@ $sections = Section::sections();
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </a>
-                        <a class="brand" href="#">Stack Developers</a>
+                        <a class="brand" href="#">Ecommerce Website</a>
                         <div class="nav-collapse">
                             <ul class="nav">
                                 <li class="active"><a href="#">Home</a></li>
@@ -55,7 +55,12 @@ $sections = Section::sections();
                             <ul class="nav pull-right">
                                 <li><a href="#">Contact</a></li>
                                 <li class="divider-vertical"></li>
-                                <li><a href="#">Login</a></li>
+                                @if (Auth::check())
+                                <li><a href="{{  route('front.account') }}">My Account</a></li>
+                                <li><a href="{{ route('front.logout') }}">Logout</a></li>
+                                @else
+                                <li><a href="{{ route('front.login_register') }}">Login / Register</a></li>
+                                @endif
                             </ul>
                         </div><!-- /.nav-collapse -->
                     </div>

@@ -102,7 +102,7 @@ class ProductController extends Controller
                     $large_image_path = 'images/product_images/large/' . $imageName;
                     $medium_image_path = 'images/product_images/medium/' . $imageName;
                     $small_image_path = 'images/product_images/small/' . $imageName;
-                    Image::make($image_tmp)->save($large_image_path);
+                    Image::make($image_tmp)->resize(1000, 1000)->save($large_image_path);
                     Image::make($image_tmp)->resize(500, 500)->save($medium_image_path);
                     Image::make($image_tmp)->resize(250, 250)->save($small_image_path);
                     $product->main_image = $imageName;
@@ -145,7 +145,7 @@ class ProductController extends Controller
             $product->meta_keywords = $data['meta_keywords'];
             if (!empty($data['is_featured'])) {
                 $product->is_featured = $data['is_featured'];
-            } else{
+            } else {
                 $product->is_featured = 'No';
             }
 
@@ -156,19 +156,22 @@ class ProductController extends Controller
             return redirect()->route('admin.products');
         }
 
-        $fabricArray = array('Coton', 'Polyester', 'Wool');
-        $sleeveArray = array('Full Sleeve', 'Half Sleeve', 'Short Sleeve', 'Sleeveless');
-        $patternArray = array('Checked', 'Plain', 'Printed', 'Self', 'Solid');
-        $fitArray = array('Regular', 'Slim');
-        $occasionArray = array('Casual', 'Formal');
+        //products Filters
+        $productFilters = Product::productFilters();
+        $fabricArray = $productFilters['fabricArray'];
+        $sleeveArray = $productFilters['sleeveArray'];
+        $patternArray = $productFilters['patternArray'];
+        $fitArray = $productFilters['fitArray'];
+        $occasionArray = $productFilters['occasionArray'];
+
         $categories = Section::with('categories')->get();
         $categories = json_decode(json_encode($categories), true);
         // echo "<pre>"; print_r($categories); die;
-        $brands = Brand::where('status',1)->get();
+        $brands = Brand::where('status', 1)->get();
         $brands = json_decode(json_encode($brands), true);
 
 
-        return view('admin.products.add_edit_product', compact('title', 'fabricArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'categories', 'productdata','brands'));
+        return view('admin.products.add_edit_product', compact('title', 'fabricArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'categories', 'productdata', 'brands'));
     }
 
     public function deleteProductImage($id)
@@ -360,7 +363,4 @@ class ProductController extends Controller
     {
         echo 'uncomplete work';
     }
-
-
-
 }

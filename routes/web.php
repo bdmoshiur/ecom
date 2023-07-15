@@ -1,8 +1,10 @@
 <?php
 
+use App\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\IndexController;
+use App\Http\Controllers\Front\UsersController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Front\ProductsController;
 
@@ -10,7 +12,7 @@ use App\Http\Controllers\Front\ProductsController;
 //     return view('welcome');
 // });
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -64,7 +66,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 
 
         // Product Images
-        Route::match(['get', 'post'],'add-images/{id}', 'ProductController@addImagess')->name('admin.add_images');
+        Route::match(['get', 'post'], 'add-images/{id}', 'ProductController@addImagess')->name('admin.add_images');
         Route::post('update-image-status', 'ProductController@updateImageStatus');
         Route::get('delete_image/{id}', 'ProductController@deleteImage')->name('admin.delete.image');
         Route::post('edit_images/{id}', 'ProductController@editImages')->name('admin.edit_images');
@@ -74,11 +76,42 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::post('/update-banner-status', 'BannerController@updateBannerStatus');
         Route::match(['get', 'post'], 'add-edit-banner/{id?}', 'BannerController@addEditBanner')->name('admin.add.edit.banners');
         Route::get('delete_banner/{id}', 'BannerController@deleteBanners')->name('admin.delete.banner');
-
     });
 });
 
 Route::group(['namespace' => 'Front'], function () {
-    Route::get('/', [IndexController::class,'index']);
-    Route::get('/{url}', [ProductsController::class,'listing']);
+    // home page route
+    Route::get('/', [IndexController::class, 'index'])->name('index');
+
+    // lisining category route
+    $catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
+    foreach($catUrls as $url){
+        Route::get('/'.$url, [ProductsController::class, 'listing'])->name('index'.$url);
+    }
+
+    // product detail route
+    Route::get('/product/{id}', [ProductsController::class, 'detail'])->name('product');
+    // getproduct attribute price
+    Route::post('/get-product-price', [ProductsController::class, 'getProductPrice']);
+    // add to cart route
+    Route::post('/add-to-cart', [ProductsController::class, 'addToCart'])->name('addToCart');
+    // shoping cart route
+    Route::get('/cart', [ProductsController::class, 'cart'])->name('cart');
+    //Update Cart Item Quantity
+    Route::post('/update-cart-item-qty', [ProductsController::class, 'updateCarItemQty']);
+    //Delete Cart Item Quantity
+    Route::post('/delete-cart-item', [ProductsController::class, 'deleteCartItem']);
+
+    //Login Register page show route
+    Route::get('/login-register',[UsersController::class, 'loginRegister'])->name('front.login_register');
+    // user login
+    Route::post('/login',[UsersController::class, 'loginUser'])->name('front.login');
+    // user register
+    Route::post('/register',[UsersController::class, 'registerUser'])->name('front.register');
+    // logout user
+    Route::get('/logout',[UsersController::class, 'logoutUser'])->name('front.logout');
+
+    Route::get('/check-email',[UsersController::class, 'checkEmail'])->name('front.check_email');
+    Route::get('/account',[UsersController::class, 'accountUser'])->name('front.account');
+
 });
