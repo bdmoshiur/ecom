@@ -257,7 +257,7 @@ $(document).ready(function () {
             mobile: {
                 required: true,
                 minlength: 10,
-                maxlength: 10,
+                maxlength: 11,
                 digits:true
             },
             email: {
@@ -275,7 +275,8 @@ $(document).ready(function () {
             mobile: {
                 required: "Please enter a mobile",
                 minlength: "Your mobile must consist of 10 digits",
-                maxlength: "Your mobile must consist of 10 digits"
+                maxlength: "Your mobile must consist of 11 digits",
+                digits: "Please enter your valid mobile",
             },
             email: {
                 required: "Please enter your email address",
@@ -293,7 +294,6 @@ $(document).ready(function () {
      // validate Register form on keyup and submit
      $("#loginForm").validate({
         rules: {
-            name: "required",
             email: {
                 required: true,
                 email: true
