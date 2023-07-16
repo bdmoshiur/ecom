@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 
 use App\User;
+use App\Cart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,12 @@ class UsersController extends Controller
         if ($request->isMethod('post')) {
             $data = $request->all();
             if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+
+                if(!empty(Session::get('session_id'))){
+                    $user_id = Auth::user()->id;
+                    $session_id = Session::get('session_id');
+                    Cart::where('session_id', $session_id)->update(['user_id'=> $user_id]);
+                }
                 return redirect('/cart');
             } else{
                 Session::flash('error_message', 'Invalid email or password');
