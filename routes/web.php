@@ -112,6 +112,7 @@ Route::group(['namespace' => 'Front'], function () {
     Route::get('/logout',[UsersController::class, 'logoutUser'])->name('front.logout');
 
     Route::match(['get','post'],'/check-email',[UsersController::class, 'checkEmail'])->name('front.check_email');
+    Route::get('/confirm/{code}',[UsersController::class, 'confirm'])->name('front.confirm');
     Route::get('/account',[UsersController::class, 'accountUser'])->name('front.account');
 
 });
