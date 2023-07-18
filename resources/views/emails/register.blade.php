@@ -12,7 +12,7 @@
       <td>Dear {{ $name }}</td>
    </tr>
    <tr>
-       <td>Welcome to our e-commerce website.</td>
+       <td>Welcome to our e-commerce website. your account is activated and details are as below</td>
    </tr>
    <tr>
       <td>&nbsp;</td>

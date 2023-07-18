@@ -126,7 +126,39 @@ class UsersController extends Controller
         }
     }
 
-    function confirm() {
+    function confirmAccount($email) {
+        Session::forget('success_message');
+        Session::forget('error_message');
+        $email = base64_decode($email);
+        $userCount = User::where('email', $email)->count();
+        if($userCount > 0){
+            $userDetails = User::where('email', $email)->first();
 
+            if($userDetails->status == 1){
+                $message = "Your email account is already activated. please login.";
+                Session::put('error_message');
+                return redirect('login-register');
+            } else {
+                $user = User::where('email', $email)->update(['status'=> 1]);
+
+                    // $message = 'Dear Custommer, You havbeen successfully registered with e-com website. login to your account to access orders and available offers.';
+                    // $mobile = $userDetails['mobile'];
+                    // Sms::sendSms($message,$mobile);
+
+
+
+                    $messageData = ['name' => $userDetails['name'], 'mobile' => $userDetails['mobile'], 'email' => $email ];
+                    Mail::send('emails.register', $messageData, function ($message) use ($email) {
+                        $message->to($email)->subject('Subject');
+                    });
+
+                    $message = "Your email account is activated. you can login now.";
+                    Session::put('success_message');
+                return redirect('login-register');
+
+            }
+        } else {
+            abort(404);
+        }
     }
 }
