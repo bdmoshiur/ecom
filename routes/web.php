@@ -113,6 +113,11 @@ Route::group(['namespace' => 'Front'], function () {
 
     Route::match(['get','post'],'/check-email',[UsersController::class, 'checkEmail'])->name('front.check_email');
     Route::match(['get','post'],'/confirm/{code}',[UsersController::class, 'confirmAccount'])->name('front.confirm');
-    Route::get('/account',[UsersController::class, 'accountUser'])->name('front.account');
+    Route::match(['get','post'],'/forgot/password',[UsersController::class, 'forgotPassword'])->name('front.forgot.password');
+
+    Route::match(['get','post'],'/update/password',[UsersController::class, 'updatePassword'])->name('front.update.password');
+    Route::match(['get','post'],'/account',[UsersController::class, 'account'])->name('front.account');
+
+
 
 });

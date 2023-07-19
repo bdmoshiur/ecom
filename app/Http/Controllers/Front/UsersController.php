@@ -136,7 +136,7 @@ class UsersController extends Controller
 
             if($userDetails->status == 1){
                 $message = "Your email account is already activated. please login.";
-                Session::put('error_message');
+                Session::put('error_message', $message);
                 return redirect('login-register');
             } else {
                 $user = User::where('email', $email)->update(['status'=> 1]);
@@ -153,12 +153,68 @@ class UsersController extends Controller
                     });
 
                     $message = "Your email account is activated. you can login now.";
-                    Session::put('success_message');
+                    Session::put('success_message',$message );
                 return redirect('login-register');
 
             }
         } else {
             abort(404);
         }
+
+
     }
+
+    function forgotPassword( Request $request) {
+
+        if ($request->isMethod('post')) {
+
+            $data = $request->all();
+            $emailCount = User::where('email', $data['email'])->count();
+
+            if($emailCount == 0){
+
+                $message = "Emai dose not exists";
+                Session::put('error_message',$message);
+                Session::forget('success_message');
+
+                return redirect()->back();
+            }
+
+            $random_password = str_random(8);
+
+            $new_password = bcrypt($random_password);
+
+            User::where('email', $data['email'])->update(['password' => $new_password]);
+            $userName =  User::select('name')->where('email', $data['email'])->first();
+
+            $email = $data['email'];
+            $name = $userName->name;
+            $messageData =  [
+                'name' => $name,
+                'email' => $email,
+                'password' => $random_password,
+            ];
+            Mail::send('emails.forgot_password', $messageData, function ($message) use ($email) {
+                $message->to($email)->subject('New Password E-commerce Website');
+            });
+
+            $message = "Please check your email for new password";
+            Session::put('success_message', $message);
+            Session::forget('error_message');
+        return redirect('login-register');
+
+
+        }
+        return view('front.users.forgot_password');
+    }
+
+    function account() {
+        return view('front.users.account');
+    }
+
+    function updatePassword() {
+
+    }
+
+
 }
