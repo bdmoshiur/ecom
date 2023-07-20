@@ -33,50 +33,50 @@
                         <div class="control-group">
                             <label class="control-label" for="name">Name</label>
                             <div class="controls">
-                                <input class="span3" type="text" id="name" name="name" placeholder="Enter Name">
+                                <input class="span3" type="text" id="name" value="{{ $userDetails['name'] }}" name="name" placeholder="Enter Name" required="" pattern="[A-Za-z]+">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="address">Address</label>
                             <div class="controls">
-                                <input class="span3" type="text" id="address" name="address" placeholder="Enter Address">
+                                <input class="span3" type="text" id="address" name="address" value="{{ $userDetails['address'] }}" placeholder="Enter Address">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="city">City</label>
                             <div class="controls">
-                                <input class="span3" type="text" id="city" name="city" placeholder="Enter City">
+                                <input class="span3" type="text" id="city" name="city" value="{{ $userDetails['city'] }}" placeholder="Enter City">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="state">State</label>
                             <div class="controls">
-                                <input class="span3" type="text" id="state" name="state" placeholder="Enter State">
+                                <input class="span3" type="text" id="state" name="state" value="{{ $userDetails['state'] }}" placeholder="Enter State">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="country">Country</label>
                             <div class="controls">
-                                <input class="span3" type="text" id="country" name="country" placeholder="Enter Country">
+                                <input class="span3" type="text" id="country" name="country" value="{{ $userDetails['country'] }}" placeholder="Enter Country">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="pincode">Pincode</label>
                             <div class="controls">
-                                <input class="span3" type="text" id="pincode" name="pincode" placeholder="Enter Pincode">
+                                <input class="span3" type="text" id="pincode" name="pincode" value="{{ $userDetails['pincode'] }}" placeholder="Enter Pincode">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="mobile">Mobile</label>
                             <div class="controls">
-                                <input class="span3" type="text" id="mobile" name="mobile"
+                                <input class="span3" type="text" id="mobile" name="mobile" value="{{ $userDetails['mobile'] }}"
                                     placeholder="Enter Mobile">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="email">Email</label>
                             <div class="controls">
-                                <input class="span3" readonly>
+                                <input class="span3" value="{{ $userDetails['email'] }}" readonly>
                             </div>
                         </div>
                         <div class="controls">

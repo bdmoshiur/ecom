@@ -208,8 +208,33 @@ class UsersController extends Controller
         return view('front.users.forgot_password');
     }
 
-    function account() {
-        return view('front.users.account');
+    function account(Request $request) {
+        $user_id = Auth::user()->id;
+        $userDetails = User::find($user_id)->toArray();
+
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+
+            $user = User::find($user_id);
+
+            $user->name =  $data['name'];
+            $user->address =  $data['address'];
+            $user->country =  $data['country'];
+            $user->city =  $data['city'];
+            $user->state =  $data['state'];
+            $user->pincode =  $data['pincode'];
+            $user->mobile =  $data['mobile'];
+            $user->save();
+
+            $message = "Your account details has been updated successfully";
+            Session::put('success_message',$message);
+            Session::forget('error_message');
+
+            return redirect()->back();
+
+        }
+
+        return view('front.users.account',['userDetails' => $userDetails]);
     }
 
     function updatePassword() {
