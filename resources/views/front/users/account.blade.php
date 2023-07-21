@@ -23,6 +23,15 @@
                 </button>
             </div>
         @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="row">
             <div class="span4">
                 <div class="well">
@@ -57,7 +66,13 @@
                         <div class="control-group">
                             <label class="control-label" for="country">Country</label>
                             <div class="controls">
-                                <input class="span3" type="text" id="country" name="country" value="{{ $userDetails['country'] }}" placeholder="Enter Country">
+                                {{-- <input class="span3" type="text" id="country" name="country" value="{{ $userDetails['country'] }}" placeholder="Enter Country"> --}}
+                                <select class="span3" id="country" name="country">
+                                    <option value="">Select Country</option>
+                                    @foreach ($countries as $country)
+                                    <option value="{{ $country['country_name'] }}" @if ($country['country_name'] == $userDetails['country']) selected @endif>{{ $country['country_name'] }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="control-group">

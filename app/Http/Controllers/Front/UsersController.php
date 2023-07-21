@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Front;
 use App\User;
 use App\Cart;
 use App\Sms;
+use App\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -212,8 +213,24 @@ class UsersController extends Controller
         $user_id = Auth::user()->id;
         $userDetails = User::find($user_id)->toArray();
 
+        $countries = Country::where('status',1)->get()->toArray();
+
         if ($request->isMethod('post')) {
             $data = $request->all();
+
+            Session::forget('error_message');
+            Session::forget('success_message');
+
+            $rules = [
+                'name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'mobile'     => 'required|numeric',
+            ];
+            $customMessage = [
+                'name.required' => 'Name is Required',
+                'name.regex' => 'Valid Name is Required',
+                'mobile.required' => 'Mobile is Required'
+            ];
+            $this->validate($request, $rules, $customMessage);
 
             $user = User::find($user_id);
 
@@ -228,13 +245,12 @@ class UsersController extends Controller
 
             $message = "Your account details has been updated successfully";
             Session::put('success_message',$message);
-            Session::forget('error_message');
 
             return redirect()->back();
 
         }
 
-        return view('front.users.account',['userDetails' => $userDetails]);
+        return view('front.users.account',[ 'userDetails' => $userDetails, 'countries' => $countries ]);
     }
 
     function updatePassword() {
