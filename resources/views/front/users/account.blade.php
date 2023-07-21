@@ -104,28 +104,29 @@
             <div class="span4">
                 <div class="well">
                     <h5>UPDATE PASSWORD </h5>
-                    <form id="passwordForm" action="{{ route('front.update.password') }}" method="post">
+                    <form id="passwordForm" action="{{ route('front.update.user.password') }}" method="post">
                         @csrf
 
                         <div class="control-group">
-                            <label class="control-label" for="password">Current Password</label>
+                            <label class="control-label" for="current_pwd">Current Password</label>
                             <div class="controls">
-                                <input class="span3" type="password" id="password" name="password"
+                                <input class="span3" type="password" id="current_pwd" name="current_pwd"
                                     placeholder="Enter Current Password">
+                                    <br> <span id="chkPwd"></span>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="password">New Password</label>
+                            <label class="control-label" for="new_pwd">New Password</label>
                             <div class="controls">
-                                <input class="span3" type="password" id="password" name="password"
+                                <input class="span3" type="password" id="new_pwd" name="new_pwd"
                                     placeholder="Enter New Password">
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="password"> Confirm Password</label>
+                            <label class="control-label" for="confirm_pwd"> Confirm Password</label>
                             <div class="controls">
-                                <input class="span3" type="password" id="password" name="password"
-                                    placeholder="Enter Confirm Password">
+                                <input class="span3" type="password" id="confirm_pwd" name="confirm_pwd"
+                                    placeholder="Confirm Password">
                             </div>
                         </div>
                         <div class="control-group">

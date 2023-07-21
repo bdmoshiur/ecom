@@ -344,4 +344,46 @@ $(document).ready(function () {
         }
     });
 
+
+    // validate Password form on keyup and submit
+    $("#passwordForm").validate({
+        rules: {
+            current_pwd: {
+                required: true,
+                minlength:6,
+                maxlength:20
+            },
+            new_pwd: {
+                required: true,
+                minlength:6,
+                maxlength:20
+            },
+            confirm_pwd: {
+                required: true,
+                minlength:6,
+                maxlength:20,
+                equalTo:"#new_pwd"
+            },
+        },
+    });
+
+    $("#current_pwd").keyup(function(){
+        var current_pwd = $(this).val();
+        $.ajax({
+            data: {current_pwd:current_pwd},
+            url: "/check-password",
+            type: "post",
+            success: function (resp) {
+                if(resp=="false"){
+                    $('#chkPwd').html("<font color='red'> Current password is Incorrect </font>");
+                } else if(resp == "true") {
+                    $('#chkPwd').html("<font color='green'> Current password is Correct </font>");
+                }
+            },
+            error: function () {
+                alert("Error");
+            },
+        });
+    });
+
 });

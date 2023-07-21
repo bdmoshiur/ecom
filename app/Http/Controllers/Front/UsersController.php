@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 
 class UsersController extends Controller
@@ -253,8 +254,52 @@ class UsersController extends Controller
         return view('front.users.account',[ 'userDetails' => $userDetails, 'countries' => $countries ]);
     }
 
-    function updatePassword() {
 
+    function checkUserPassword( Request $request) {
+
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            $user_id = Auth::user()->id;
+
+            $ckPassword = User::select('password')->where('id', $user_id)->first();
+
+            if(Hash::check($data['current_pwd'],$ckPassword->password )){
+                return "true";
+            }else {
+                return "false";
+            }
+
+        }
+    }
+
+    function updateUserPassword( Request $request) {
+
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            $user_id = Auth::user()->id;
+
+            $ckPassword = User::select('password')->where('id', $user_id)->first();
+
+            if(Hash::check($data['current_pwd'],$ckPassword->password )){
+
+                $new_pwd = bcrypt($data['new_pwd']);
+                User::where('id',$user_id)->update(['password' => $new_pwd]);
+
+                $message = 'Password updated successfully';
+                Session::put('success_message', $message);
+                Session::forget('error_message');
+
+                return redirect()->back();
+            }else {
+
+                $message = 'Current Password is Incorrect';
+                Session::put('error_message', $message);
+                Session::forget('success_message');
+
+                return redirect()->back();
+            }
+
+        }
     }
 
 
