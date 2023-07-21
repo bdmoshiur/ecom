@@ -7,6 +7,8 @@ use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\UsersController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Front\ProductsController;
+use App\Http\Controllers\Admin\CouponController;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -76,6 +78,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::post('/update-banner-status', 'BannerController@updateBannerStatus');
         Route::match(['get', 'post'], 'add-edit-banner/{id?}', 'BannerController@addEditBanner')->name('admin.add.edit.banners');
         Route::get('delete_banner/{id}', 'BannerController@deleteBanners')->name('admin.delete.banner');
+
+
+        Route::get('coupons', [CouponController::class,'coupons'])->name('admin.coupons');
+        Route::match(['get', 'post'], 'add-edit-coupon/{id?}',[CouponController::class,'addEditCoupon'])->name('admin.add.edit.coupons');
+        Route::post('/update-coupon-status', [CouponController::class,'updateCouponStatus']);
+
     });
 });
 
