@@ -223,6 +223,8 @@ $(document).ready(function () {
                 if (resp.status == false) {
                     alert(resp.message);
                 }
+
+                $('.totalCartItems').html(resp.totalCartItems);
                 $("#appendCartItems").html(resp.view);
             },
             error: function () {
@@ -240,6 +242,7 @@ $(document).ready(function () {
                 url: "/delete-cart-item",
                 type: "post",
                 success: function (resp) {
+                    $('.totalCartItems').html(resp.totalCartItems);
                     $("#appendCartItems").html(resp.view);
                 },
                 error: function () {

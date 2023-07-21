@@ -103,7 +103,7 @@ Route::group(['namespace' => 'Front'], function () {
     Route::post('/delete-cart-item', [ProductsController::class, 'deleteCartItem']);
 
     //Login Register page show route
-    Route::get('/login-register',[UsersController::class, 'loginRegister'])->name('front.login_register');
+    Route::get('/login-register',[UsersController::class, 'loginRegister'])->name('login');
     // user login
     Route::post('/login',[UsersController::class, 'loginUser'])->name('front.login');
     // user register
@@ -113,11 +113,13 @@ Route::group(['namespace' => 'Front'], function () {
 
     Route::match(['get','post'],'/check-email',[UsersController::class, 'checkEmail'])->name('front.check_email');
     Route::match(['get','post'],'/confirm/{code}',[UsersController::class, 'confirmAccount'])->name('front.confirm');
-    Route::match(['get','post'],'/forgot/password',[UsersController::class, 'forgotPassword'])->name('front.forgot.password');
 
-    Route::post('/check-password',[UsersController::class, 'checkUserPassword'])->name('front.check.user.password');
-    Route::post('/update-password',[UsersController::class, 'updateUserPassword'])->name('front.update.user.password');
-    Route::match(['get','post'],'/account',[UsersController::class, 'account'])->name('front.account');
+    Route::group(['middleware' =>['auth']],function () {
+        Route::match(['get','post'],'/forgot/password',[UsersController::class, 'forgotPassword'])->name('front.forgot.password');
+        Route::post('/check-password',[UsersController::class, 'checkUserPassword'])->name('front.check.user.password');
+        Route::post('/update-password',[UsersController::class, 'updateUserPassword'])->name('front.update.user.password');
+        Route::match(['get','post'],'/account',[UsersController::class, 'account'])->name('front.account');
+    });
 
 
 

@@ -9,8 +9,8 @@ $sections = Section::sections();
             <div class="span6">Welcome!<strong> User</strong></div>
             <div class="span6">
                 <div class="pull-right">
-                    <a href="product_summary.html"><span class="btn btn-mini btn-primary"><i
-                                class="icon-shopping-cart icon-white"></i> [ 3 ] Items in your cart </span> </a>
+                    <a href="{{ route('cart')}}"><span class="btn btn-mini btn-primary"><i
+                                class="icon-shopping-cart icon-white"></i> [ <span class="totalCartItems">{{ totalCartItems() }} </span> ] Items in your cart </span> </a>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@ $sections = Section::sections();
                                 <li><a href="{{  route('front.account') }}">My Account</a></li>
                                 <li><a href="{{ route('front.logout') }}">Logout</a></li>
                                 @else
-                                <li><a href="{{ route('front.login_register') }}">Login / Register</a></li>
+                                <li><a href="{{ route('login') }}">Login / Register</a></li>
                                 @endif
                             </ul>
                         </div><!-- /.nav-collapse -->
