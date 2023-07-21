@@ -316,4 +316,74 @@ $(document).ready(function () {
     });
 
 
+     // validate Account form on keyup and submit
+     $("#accountForm").validate({
+        rules: {
+            name: {
+                required: true,
+                lettersonly: true,
+            },
+            mobile: {
+                required: true,
+                minlength: 10,
+                maxlength: 11,
+                digits:true
+            }
+        },
+        messages: {
+            name: {
+              required:  "Please enter your name",
+              lettersonly: "Please enter valid name",
+            },
+            mobile: {
+                required: "Please enter a mobile",
+                minlength: "Your mobile must consist of 10 digits",
+                maxlength: "Your mobile must consist of 11 digits",
+                digits: "Please enter your valid mobile",
+            }
+        }
+    });
+
+
+    // validate Password form on keyup and submit
+    $("#passwordForm").validate({
+        rules: {
+            current_pwd: {
+                required: true,
+                minlength:6,
+                maxlength:20
+            },
+            new_pwd: {
+                required: true,
+                minlength:6,
+                maxlength:20
+            },
+            confirm_pwd: {
+                required: true,
+                minlength:6,
+                maxlength:20,
+                equalTo:"#new_pwd"
+            },
+        },
+    });
+
+    $("#current_pwd").keyup(function(){
+        var current_pwd = $(this).val();
+        $.ajax({
+            data: {current_pwd:current_pwd},
+            url: "/check-password",
+            type: "post",
+            success: function (resp) {
+                if(resp=="false"){
+                    $('#chkPwd').html("<font color='red'> Current password is Incorrect </font>");
+                } else if(resp == "true") {
+                    $('#chkPwd').html("<font color='green'> Current password is Correct </font>");
+                }
+            },
+            error: function () {
+                alert("Error");
+            },
+        });
+    });
+
 });

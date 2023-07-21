@@ -6,11 +6,13 @@ namespace App\Http\Controllers\Front;
 use App\User;
 use App\Cart;
 use App\Sms;
+use App\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 
 class UsersController extends Controller
@@ -208,12 +210,96 @@ class UsersController extends Controller
         return view('front.users.forgot_password');
     }
 
-    function account() {
-        return view('front.users.account');
+    function account(Request $request) {
+        $user_id = Auth::user()->id;
+        $userDetails = User::find($user_id)->toArray();
+
+        $countries = Country::where('status',1)->get()->toArray();
+
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+
+            Session::forget('error_message');
+            Session::forget('success_message');
+
+            $rules = [
+                'name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'mobile'     => 'required|numeric',
+            ];
+            $customMessage = [
+                'name.required' => 'Name is Required',
+                'name.regex' => 'Valid Name is Required',
+                'mobile.required' => 'Mobile is Required'
+            ];
+            $this->validate($request, $rules, $customMessage);
+
+            $user = User::find($user_id);
+
+            $user->name =  $data['name'];
+            $user->address =  $data['address'];
+            $user->country =  $data['country'];
+            $user->city =  $data['city'];
+            $user->state =  $data['state'];
+            $user->pincode =  $data['pincode'];
+            $user->mobile =  $data['mobile'];
+            $user->save();
+
+            $message = "Your account details has been updated successfully";
+            Session::put('success_message',$message);
+
+            return redirect()->back();
+
+        }
+
+        return view('front.users.account',[ 'userDetails' => $userDetails, 'countries' => $countries ]);
     }
 
-    function updatePassword() {
 
+    function checkUserPassword( Request $request) {
+
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            $user_id = Auth::user()->id;
+
+            $ckPassword = User::select('password')->where('id', $user_id)->first();
+
+            if(Hash::check($data['current_pwd'],$ckPassword->password )){
+                return "true";
+            }else {
+                return "false";
+            }
+
+        }
+    }
+
+    function updateUserPassword( Request $request) {
+
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            $user_id = Auth::user()->id;
+
+            $ckPassword = User::select('password')->where('id', $user_id)->first();
+
+            if(Hash::check($data['current_pwd'],$ckPassword->password )){
+
+                $new_pwd = bcrypt($data['new_pwd']);
+                User::where('id',$user_id)->update(['password' => $new_pwd]);
+
+                $message = 'Password updated successfully';
+                Session::put('success_message', $message);
+                Session::forget('error_message');
+
+                return redirect()->back();
+            }else {
+
+                $message = 'Current Password is Incorrect';
+                Session::put('error_message', $message);
+                Session::forget('success_message');
+
+                return redirect()->back();
+            }
+
+        }
     }
 
 
