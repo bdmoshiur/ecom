@@ -83,6 +83,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('coupons', [CouponController::class,'coupons'])->name('admin.coupons');
         Route::match(['get', 'post'], 'add-edit-coupon/{id?}',[CouponController::class,'addEditCoupon'])->name('admin.add.edit.coupons');
         Route::post('/update-coupon-status', [CouponController::class,'updateCouponStatus']);
+        Route::match(['get', 'post'], 'add-edit-coupon/{id?}', [CouponController::class,'addEditCoupon'])->name('admin.add.edit.coupons');
+        Route::get('delete_coupon/{id}', [CouponController::class,'deleteCoupon'])->name('admin.delete.coupon');
 
     });
 });

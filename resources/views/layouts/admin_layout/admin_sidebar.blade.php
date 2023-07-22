@@ -150,6 +150,20 @@
                                   <p>Banners</p>
                               </a>
                           </li>
+
+                          @if (Session::get('page') == 'coupons')
+                              <?php $active = 'active'; ?>
+                          @else
+                              <?php $active = ''; ?>
+                          @endif
+                          <li class="nav-item">
+                              <a href="{{ route('admin.coupons') }}" class="nav-link {{ $active }}">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Coupons</p>
+                              </a>
+                          </li>
+
+
                       </ul>
                   </li>
 

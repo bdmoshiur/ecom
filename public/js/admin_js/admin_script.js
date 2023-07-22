@@ -282,4 +282,13 @@ $(document).ready(function () {
         $(this).parent("div").remove(); //Remove field html
         x--; //Decrement field counter
     });
+
+    $('#manualCoupon').click(function(){
+        $('#couponField').show()
+    });
+
+    $('#automaticCoupon').click(function(){
+        $('#couponField').hide()
+     });
+
 });
