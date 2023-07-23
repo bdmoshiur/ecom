@@ -58,7 +58,7 @@
                                             <td>{{ $coupon->coupon_code }}</td>
                                             <td>{{ $coupon->coupon_type }}</td>
                                             <td>{{ $coupon->amount }}
-                                                @if ($coupon->coupon_type == 'Percentage')
+                                                @if ($coupon->amount_type == 'Percentage')
                                                     %
                                                 @else
                                                     INR
