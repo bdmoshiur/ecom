@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Cart;
 use App\Product;
 use App\Category;
+use App\Coupon;
 use App\ProductsAttribute;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -233,6 +234,29 @@ class ProductsController extends Controller
                 'totalCartItems' => $totalCartItems,
                 'view' => (string)View::make('front.products.cart_items', ['userCartItems' => $userCartItems])
             ]);
+
+        }
+    }
+
+    public function applyCoupon(Request $request ) {
+        if ($request->ajax()) {
+            $data = $request->all();
+            $couponCount = Coupon::where('coupon_code', $data['code'])->count();
+
+
+            if($couponCount == 0){
+                $userCartItems = Cart::userCartItrms();
+                $totalCartItems = totalCartItems();
+
+                return response()->json([
+                    'status' => false,
+                    'message' => "The coupon is not valid",
+                    'totalCartItems' => $totalCartItems,
+                    'view' => (string)View::make('front.products.cart_items', ['userCartItems' => $userCartItems])
+                ]);
+            }else{
+
+            }
 
         }
     }

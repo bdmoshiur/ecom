@@ -389,4 +389,34 @@ $(document).ready(function () {
         });
     });
 
+
+    //Apply Coupon
+
+
+    $("#ApplyCoupon").submit(function(){
+        var user = $(this).attr('user');
+        if(user==1){
+
+        }else{
+            alert('Please login to apply coupon');
+            return false;
+        }
+        var code = $('#code').val();
+        $.ajax({
+            data: {code:code},
+            url: "/apply-coupon",
+            type: "post",
+            success: function (resp) {
+                if(resp.message != ""){
+                    alert(resp.message);
+                }
+                $('.totalCartItems').html(resp.totalCartItems);
+                $("#appendCartItems").html(resp.view);
+            },
+            error: function (){
+                alert("Error");
+            },
+        });
+    });
+
 });
