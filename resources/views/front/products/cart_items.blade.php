@@ -56,13 +56,19 @@ use App\Product;
             <td>Tk.{{ $total_price }}</td>
         </tr>
         <tr>
-            <td colspan="6" style="text-align:right">Voucher Discount: </td>
-            <td> Tk.0.00</td>
+            <td colspan="6" style="text-align:right">Coupon Discount: </td>
+            <td class="couponAmount">
+                @if (Session::has('couponAmount'))
+                    - Tk. {{ Session::get('couponAmount') }}
+                @else
+                    Tk. 0
+                @endif
+            </td>
         </tr>
         <tr>
-            <td colspan="6" style="text-align:right"><strong>GRAND TOTAL (Tk.{{ $total_price }} - Tk.0 )
+            <td colspan="6" style="text-align:right"><strong>GRAND TOTAL (Tk.{{ $total_price }} - <span class="couponAmount">Tk.0</span> )
                     =</strong></td>
-            <td class="label label-important" style="display:block"> <strong> Tk.{{ $total_price }} </strong></td>
+            <td class="label label-important" style="display:block"> <strong class="grand_total"> Tk.{{ $total_price - Session::get('couponAmount') }} </strong></td>
         </tr>
 
     </tbody>

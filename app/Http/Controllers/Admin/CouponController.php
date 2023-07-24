@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Section;
 use App\Coupon;
+use App\User;
 use Illuminate\Support\Facades\Session;
 
 class CouponController extends Controller
@@ -27,38 +28,87 @@ class CouponController extends Controller
             //Add Coupon Functionality
             $title = "Add Coupon";
             $coupon = new Coupon();
-            $coupondata = array();
+            $selCats = array();
+            $selUsers = array();
             $message = "Coupon Added Successfully";
         } else {
             //Edit Coupon Functionality
             $title = "Edit Coupon";
             $coupon = Coupon::find($id);
-            $coupondata = Coupon::find($id)->toArray();
+
+            $selCats = explode(',', $coupon['categories']);
+            $selUsers =  explode(',', $coupon['users']);
             $message = "Coupon Updated Successfully";
+        }
+
+          if($request->isMethod('post')){
+            $data = $request->all();
+
+            $rules = [
+                'categories' => 'required',
+                'coupon_option' => 'required',
+                'coupon_type' => 'required',
+                'amount_type' => 'required',
+                'amount' => 'required|numeric',
+                'expiry_date' => 'required',
+            ];
+            $customMessage = [
+                'categories.required' => 'Select Categories',
+                'coupon_option.required' => 'Select Coupon Option',
+                'coupon_type.required' => 'Select Coupon Type',
+                'amount_type.required' => 'Select Amount Type',
+                'amount.required' => 'Enter Amount',
+                'amount.numeric' => 'Enter Valid Amount',
+                'expiry_date.required' => 'Enter Expiry Date'
+            ];
+
+            $this->validate($request, $rules, $customMessage);
+
+            if (isset($data['users'])) {
+                $users = implode(',', $data['users']);
+            }else{
+                $users = "";
+            }
+
+            if (isset($data['categories'])) {
+                $categories = implode(',', $data['categories']);
+            }
+
+            if($data['coupon_option'] == 'Automatic'){
+                $coupon_code = str_random(8);
+            } else {
+                $coupon_code = $data['coupon_code'];
+            }
+
+            $coupon->coupon_option = $data['coupon_option'];
+            $coupon->coupon_code = $coupon_code;
+            $coupon->categories = $categories;
+            $coupon->users = $users;
+            $coupon->coupon_type = $data['coupon_type'];
+            $coupon->amount_type = $data['amount_type'];
+            $coupon->amount = $data['amount'];
+            $coupon->expiry_date = $data['expiry_date'];
+            $coupon->status = 1;
+            $coupon->save();
+
+            Session::flash('success_message', $message);
+            return redirect()->route('admin.coupons');
+
         }
 
         $categories = Section::with('categories')->get();
         $categories = json_decode(json_encode($categories), true);
+        $users = User::select('email')->where('status',1)->get()->toArray();
 
-        // if($request->isMethod('post')){
-        //     $data = $request->all();
 
-        //     $coupon->coupon_option = $data['coupon_option'];
-        //     $coupon->coupon_code = $data['coupon_code'];
-        //     $coupon->coupon_type = $data['coupon_type'];
-
-        //     $banncouponer->save();
-
-        //     Session::flash('success_message', $message);
-        //     return redirect()->route('admin.coupons');
-
-        // }
 
         return view('admin.coupons.add_edit_coupon',[
             'title' => $title,
             'coupon' => $coupon,
             'categories' => $categories,
-            'coupondata' => $coupondata,
+            'users' => $users,
+            'selCats' => $selCats,
+            'selUsers' => $selUsers
         ]);
     }
 
@@ -74,5 +124,14 @@ class CouponController extends Controller
             Coupon::where('id', $data['coupon_id'])->update(['status' => $status]);
             return response()->json(['status' => $status, 'coupon_id' => $data['coupon_id']]);
         }
+    }
+
+
+
+    public function deleteCoupon($id)
+    {
+        $deleteBrands = Coupon::find($id)->delete();
+        Session::flash('success_message', 'Coupon Deleted Successfully');
+        return redirect()->back();
     }
 }
