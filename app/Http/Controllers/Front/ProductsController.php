@@ -7,6 +7,7 @@ use App\Product;
 use App\Category;
 use App\Coupon;
 use App\User;
+use App\Delivery_address;
 use App\ProductsAttribute;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -340,5 +341,16 @@ class ProductsController extends Controller
             }
 
         }
+    }
+
+    public function checkOut() {
+        $userCartItems = Cart::userCartItrms();
+        $deliveryAddress = Delivery_address::deliveryAddress();
+
+        return view('front.products.checkout',[
+            'userCartItems' => $userCartItems,
+            'deliveryAddress' => $deliveryAddress
+        ]);
+
     }
 }
