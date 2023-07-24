@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Cart;
 use App\Product;
 use App\Category;
+use App\Country;
 use App\Coupon;
 use App\User;
 use App\Delivery_address;
@@ -352,5 +353,67 @@ class ProductsController extends Controller
             'deliveryAddress' => $deliveryAddress
         ]);
 
+    }
+
+    public function addEditDeliveryAddress( Request $request , $id = null) {
+
+        if ($id == "") {
+            //Add Product Functionality
+            $title = "Add Delivery Address";
+            $address = new Delivery_address();
+            $message = "Delivery Address Added Successfully";
+        } else {
+            //Edit Product Functionality
+            $title = "Edit Delivery Address";
+            $address = Delivery_address::find($id);
+            $message = "Delivery Address Updated Successfully";
+        }
+
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+
+            $rules = [
+                'name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'mobile'     => 'required|numeric',
+            ];
+            $customMessage = [
+                'name.required' => 'Name is Required',
+                'name.regex' => 'Valid Name is Required',
+                'mobile.required' => 'Mobile is Required'
+            ];
+            $this->validate($request, $rules, $customMessage);
+
+
+            $address->user_id =  Auth::user()->id;
+            $address->name =  $data['name'];
+            $address->address =  $data['address'];
+            $address->country =  $data['country'];
+            $address->city =  $data['city'];
+            $address->state =  $data['state'];
+            $address->pincode =  $data['pincode'];
+            $address->mobile =  $data['mobile'];
+            $address->save();
+
+            Session::put('success_message',$message);
+
+            return redirect()->route('front.checkout');
+
+        }
+
+        $countries = Country::where('status',1)->get()->toArray();
+
+        return view('front.products.add_edit_delivery_address',[
+            'title' => $title,
+            'countries' => $countries,
+            'address' => $address,
+        ]);
+    }
+
+    public function deleteDeliveryAddress( $id ) {
+        Delivery_address::where('id',$id)->delete();
+
+        $message = "Delivery address deleted Successfully";
+        Session::put('success_message', $message);
+        return redirect()->back();
     }
 }

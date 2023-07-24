@@ -19,6 +19,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <?php Session::forget('success_message'); ?>
         @endif
         @if (Session::has('error_message'))
             <div class="alert alert-danger" role="alert">
@@ -27,12 +28,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <?php Session::forget('error_message'); ?>
         @endif
 
 
         <table class="table table-bordered">
             <tr>
-                <th> DELIVERY ADDRESS </th>
+                <td> <strong>DELIVERY ADDRESS</strong>  |  <a href="{{ route('front.add.edit.delivery.address') }}">Add</a></td>
             </tr>
             @foreach ($deliveryAddress as $address)
                 <tr>
@@ -41,9 +43,10 @@
                             <input type="radio" id="address{{ $address['id']}}" name="address_id" value="{{ $address['id']}}">
                         </div>
                         <div class="control-group">
-                            <label class="control-label"> {{ $address['name'] }}, {{ $address['address'] }}, {{ $address['city'] }}, {{ $address['state'] }}, {{ $address['country'] }}</label>
+                            <label class="control-label"> {{ $address['name'] }}, {{ $address['address'] }}, {{ $address['city'] }} -- {{ $address['pincode'] }}, {{ $address['state'] }}, {{ $address['country'] }} (M:{{ $address['mobile'] }})</label>
                         </div>
                     </td>
+                    <td><a href="{{ route('front.add.edit.delivery.address', $address['id'] ) }}">Edit</a> | <a href="{{ route('front.delete.delivery.address', $address['id'])}}" class="addressDelete">Delete</a> </td>
                 </tr>
             @endforeach
         </table>

@@ -428,4 +428,11 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on('click','.addressDelete',function(){
+        var result = confirm('Want to delete this address!');
+        if (!result) {
+            return false;
+        }
+    });
+
 });
