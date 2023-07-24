@@ -412,6 +412,15 @@ $(document).ready(function () {
                 }
                 $('.totalCartItems').html(resp.totalCartItems);
                 $("#appendCartItems").html(resp.view);
+                if(resp.couponAmount >= 0){
+                    $(".couponAmount").text("Tk." + resp.couponAmount);
+                } else{
+                    $(".couponAmount").text("Tk.0");
+                }
+
+                if(resp.grand_total >= 0){
+                    $(".grand_total").text("Tk." + resp.grand_total);
+                }
             },
             error: function (){
                 alert("Error");
