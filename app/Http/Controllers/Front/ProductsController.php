@@ -7,6 +7,8 @@ use App\Product;
 use App\Category;
 use App\Country;
 use App\Coupon;
+use App\OrderProduct;
+use App\Order;
 use App\User;
 use App\Delivery_address;
 use App\ProductsAttribute;
@@ -16,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use DB;
 
 class ProductsController extends Controller
 {
@@ -344,7 +347,93 @@ class ProductsController extends Controller
         }
     }
 
-    public function checkOut() {
+    public function checkOut(Request $request) {
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+
+            if (empty($data['address_id'])) {
+                $message = "Please Select Delivery Address!";
+                Session::flash('error_message',$message);
+
+                return redirect()->back();
+            }
+            if (empty($data['payment_gateway'])) {
+                $message = "Please Select Payment Method!";
+                Session::flash('error_message',$message);
+
+                return redirect()->back();
+            }
+
+            if($data['payment_gateway'] == "COD"){
+                $payment_method = "COD";
+            }else{
+                dd('prepaid1');
+                $payment_method = "Prepaid";
+            }
+
+            $deliveryAddress = Delivery_address::where('id',$data['address_id'])->first()->toArray();
+
+            DB::beginTransaction();
+            $order = new Order();
+
+            $order->user_id = Auth::user()->id;
+            $order->name = $deliveryAddress['name'];
+            $order->address = $deliveryAddress['address'];
+            $order->city = $deliveryAddress['city'];
+            $order->state = $deliveryAddress['state'];
+            $order->country = $deliveryAddress['country'];
+            $order->pincode = $deliveryAddress['pincode'];
+            $order->mobile = $deliveryAddress['mobile'];
+            $order->email = Auth::user()->email;
+            $order->shipping_charges = 0;
+            $order->coupon_code = Session::get('couponCode');
+            $order->coupon_amount = Session::get('couponAmount');
+            $order->order_status = 'New';
+            $order->payment_method = $payment_method;
+            $order->payment_gateway = $data['payment_gateway'];
+            $order->grand_total = Session::get('grand_total');
+            $order->save();
+
+            $order_id = DB::getPdo()->lastInsertId();
+
+
+            $cartItemts = Cart::where('user_id', Auth::user()->id)->get()->toArray();
+
+            foreach ($cartItemts as $key => $item) {
+
+                $cartItem = new OrderProduct();
+
+                $cartItem->order_id = $order_id;
+                $cartItem->user_id = Auth::user()->id;
+
+                $getProductDetails = Product::select('product_code', 'product_name','product_color')->where('id', $item['product_id'])->first()->toArray();
+
+                $cartItem->product_id = $item['product_id'];
+                $cartItem->product_code = $getProductDetails['product_code'];
+                $cartItem->product_name = $getProductDetails['product_name'];
+                $cartItem->product_color = $getProductDetails['product_color'];
+                $cartItem->product_size = $item['size'];
+
+                $getDiscountAttrPrice = Product::getDiscountAttrPrice($item['product_id'],$item['size']);
+
+                $cartItem->product_price = $getDiscountAttrPrice['final_price'];
+                $cartItem->product_quantity = $item['quantity'];
+                $cartItem->save();
+
+            }
+
+            $cart = Cart::where('user_id', Auth::user()->id)->delete();
+            Session::put('order_id',$order_id);
+
+            DB::commit();
+
+            if ($data['payment_gateway'] == "COD") {
+
+                return redirect()->route('front.thanks');
+            }else{
+                dd('prepaid2');
+            }
+        }
         $userCartItems = Cart::userCartItrms();
         $deliveryAddress = Delivery_address::deliveryAddress();
 
@@ -352,7 +441,15 @@ class ProductsController extends Controller
             'userCartItems' => $userCartItems,
             'deliveryAddress' => $deliveryAddress
         ]);
+    }
 
+    public function thanks(){
+        if(Session::has('order_id')){
+            Cart::where('user_id', Auth::user()->id)->delete();
+            return view('front.products.thanks');
+        }else{
+            return redirect()->route('cart');
+        }
     }
 
     public function addEditDeliveryAddress( Request $request , $id = null) {
@@ -374,12 +471,28 @@ class ProductsController extends Controller
 
             $rules = [
                 'name' => 'required|regex:/^[\pL\s\-]+$/u',
-                'mobile'     => 'required|numeric',
+                'address' => "required",
+                'city' => 'required|regex:/^[\pL\s\-]+$/u',
+                'state' => 'required|regex:/^[\pL\s\-]+$/u',
+                'country' => 'required',
+                'pincode' => 'required|numeric|digits:4',
+                'mobile'     => 'required|numeric|digits:11',
             ];
             $customMessage = [
                 'name.required' => 'Name is Required',
                 'name.regex' => 'Valid Name is Required',
-                'mobile.required' => 'Mobile is Required'
+                'address.required' => 'Address is Required',
+                'city.required' => 'City is Required',
+                'city.regex' => 'Valid City is Required',
+                'state.required' => 'State is Required',
+                'state.regex' => 'Valid State is Required',
+                'country.required' => 'Country is Required',
+                'pincode.required' => 'Pincode is Required',
+                'pincode.numeric' => 'Valid Pincode is Required',
+                'pincode.digits' => 'Pincode must be of 4 digits',
+                'mobile.required' => 'Mobile is Required',
+                'mobile.numeric' => 'Valid Mobile is Required',
+                'mobile.digits' => 'Mobile must be of 11 digits',
             ];
             $this->validate($request, $rules, $customMessage);
 
@@ -416,4 +529,5 @@ class ProductsController extends Controller
         Session::put('success_message', $message);
         return redirect()->back();
     }
+
 }

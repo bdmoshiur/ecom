@@ -133,6 +133,9 @@ Route::group(['namespace' => 'Front'], function () {
         Route::match(['get','post'],'/checkout',[ProductsController::class, 'checkOut'])->name('front.checkout');
         Route::match(['get','post'],'/add-edit-delivery-address/{id?}',[ProductsController::class, 'addEditDeliveryAddress'])->name('front.add.edit.delivery.address');
         Route::get('/delete-delivery-address/{id}',[ProductsController::class, 'deleteDeliveryAddress'])->name('front.delete.delivery.address');
+        Route::get('/thanks',[ProductsController::class, 'thanks'])->name('front.thanks');
+
+
 
     });
 

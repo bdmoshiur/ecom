@@ -42,7 +42,7 @@
                                 <label class="control-label"><strong> COUPON CODE: </strong> </label>
                                 <div class="controls">
                                     <input type="text" class="input-medium" name="code" id="code" placeholder="Enter coupon code" required="">
-                                    <button type="submit" class="btn"> ADD </button>
+                                    <button type="submit" class="btn"> Apply </button>
                                 </div>
                             </div>
                         </form>
