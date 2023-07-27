@@ -94,5 +94,16 @@ class Product extends Model
         return ['product_price' =>$proAttrPrice['price'] ,'final_price' => $final_price, 'discount' =>$discount];
     }
 
+    public static function getProductImage($product_id) {
+        $getProductImage = Product::select('main_image')->where('id',$product_id)->first();
+
+        if($getProductImage){
+            $getProductImage = $getProductImage->toArray();
+        } else{
+            $getProductImage['main_image'] = "Image Not Found";
+        }
+
+        return $getProductImage['main_image'];
+    }
 
 }
