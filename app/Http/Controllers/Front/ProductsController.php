@@ -10,11 +10,13 @@ use App\Coupon;
 use App\OrderProduct;
 use App\Order;
 use App\User;
+use App\Sms;
 use App\Delivery_address;
 use App\ProductsAttribute;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -428,6 +430,26 @@ class ProductsController extends Controller
             DB::commit();
 
             if ($data['payment_gateway'] == "COD") {
+
+                $message = "Dear Customer, Your order ". $order_id . "has been successfully placed with e-commerce website. we will intimate you once your order is shipped";
+                $mobile = Auth::user()->mobile;
+
+                Sms::sendSms($message,$mobile);
+
+                $orders_details = Order::with('orders_products')->where('id', $order_id)->first()->toArray();
+
+                $email = Auth::user()->email;
+                $user = Auth::user()->name;
+                $messageData = [
+                    'name' => $user,
+                    'email' => $email,
+                    'order_id' => $order_id,
+                    'orders_details' => $orders_details,
+                ];
+                Mail::send('emails.order', $messageData, function ($message) use ($email) {
+                    $message->to($email)->subject('Order Placed E-commerce website');
+                });
+
 
                 return redirect()->route('front.thanks');
             }else{

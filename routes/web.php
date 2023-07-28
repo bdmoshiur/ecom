@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Front\ProductsController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Front\OrdersController;
+use App\Http\Controllers\Admin\OrderssController;
+
+
 
 
 // Route::get('/', function () {
@@ -80,13 +83,18 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::match(['get', 'post'], 'add-edit-banner/{id?}', 'BannerController@addEditBanner')->name('admin.add.edit.banners');
         Route::get('delete_banner/{id}', 'BannerController@deleteBanners')->name('admin.delete.banner');
 
-
+        //Coupons
         Route::get('coupons', [CouponController::class,'coupons'])->name('admin.coupons');
         Route::match(['get', 'post'], 'add-edit-coupon/{id?}',[CouponController::class,'addEditCoupon'])->name('admin.add.edit.coupons');
         Route::post('/update-coupon-status', [CouponController::class,'updateCouponStatus']);
         Route::match(['get', 'post'], 'add-edit-coupon/{id?}', [CouponController::class,'addEditCoupon'])->name('admin.add.edit.coupons');
         Route::get('delete_coupon/{id}', [CouponController::class,'deleteCoupon'])->name('admin.delete.coupon');
 
+
+        // Orders
+        Route::get('/orders',[OrderssController::class,'orders'])->name('admin.orders');
+        Route::get('/orders/details/{id}',[OrderssController::class,'ordersDetails'])->name('admin.orders.details');
+        Route::post('/update/orders/status',[OrderssController::class,'updateOrdersStaus'])->name('admin.update.orderstatus');
     });
 });
 
@@ -142,6 +150,7 @@ Route::group(['namespace' => 'Front'], function () {
         Route::match(['get','post'],'/add-edit-delivery-address/{id?}',[ProductsController::class, 'addEditDeliveryAddress'])->name('front.add.edit.delivery.address');
         Route::get('/delete-delivery-address/{id}',[ProductsController::class, 'deleteDeliveryAddress'])->name('front.delete.delivery.address');
         Route::get('/thanks',[ProductsController::class, 'thanks'])->name('front.thanks');
+
 
 
 

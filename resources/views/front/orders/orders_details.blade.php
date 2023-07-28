@@ -78,10 +78,6 @@
                         <td>Mobile</td>
                         <td>{{ $orders_details['mobile'] }}</td>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
                 </table>
             </div>
         </div>
