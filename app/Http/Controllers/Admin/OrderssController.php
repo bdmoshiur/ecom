@@ -55,6 +55,12 @@ class OrderssController extends Controller
             Order::where('id',$data['order_id'])->update(['order_status' => $data['order_status']]);
             Session::put('success_message','Order status has been updated successfully');
 
+            // update courier name and tracking number
+
+            if (!empty($data['courier_name']) && !empty($data['tracking_number']) ) {
+                Order::where('id',$data['order_id'])->update(['courier_name' => $data['courier_name'], 'tracking_number' => $data['tracking_number'] ]);
+            }
+
             //get delivery details
             $deliveryDetails = Order::select('mobile','email', 'name')->where('id',$data['order_id'])->first()->toArray();
 
@@ -73,6 +79,8 @@ class OrderssController extends Controller
                 'email' => $email,
                 'order_id' => $data['order_id'],
                 'order_status' => $data['order_status'],
+                'courier_name' => $data['courier_name'],
+                'tracking_number' => $data['tracking_number'],
                 'orders_details' => $orders_details,
             ];
             Mail::send('emails.order_status', $messageData, function ($message) use ($email) {

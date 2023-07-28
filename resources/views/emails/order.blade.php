@@ -16,9 +16,7 @@
                         <tr bgcolor="#cccccc">
                             <td>Product Name</td>
                             <td> Code</td>
-                            <td> Size</td>@auth
-                                
-                            @endauth
+                            <td> Size</td>
                             <td> Color</td>
                             <td> Quantity</td>
                             <td> Price</td>
@@ -39,7 +37,7 @@
                         </tr>
                         <tr>
                             <td colspan="5" align="right">Coupon Discount</td>
-                            <td>INR @if( $orders_details['coupon_amount'] > 0) 
+                            <td>INR @if( $orders_details['coupon_amount'] > 0)
                                 {{  $orders_details['coupon_amount'] }}
                                 @else
                                     0

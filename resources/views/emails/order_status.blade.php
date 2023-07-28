@@ -7,6 +7,10 @@
             <tr><td>Hello {{ $name }}</td></tr>
             <tr><td>&nbsp;</td></tr>
             <tr><td>Your order #{{ $order_id }} has been updated to {{ $order_status }}.</td></tr>
+            @if(!empty($courier_name) && !empty($tracking_number))
+                <tr><td>&nbsp;</td></tr>
+                <tr><td>Courier Name is <b>{{ $courier_name }}</b> and Tracking Number is <b>{{ $tracking_number }}</b></td></tr>
+            @endif
             <tr><td>&nbsp;</td></tr>
             <tr><td>You order details are as below. </td></tr>
             <tr><td>&nbsp;</td></tr>
@@ -17,9 +21,7 @@
                         <tr bgcolor="#cccccc">
                             <td>Product Name</td>
                             <td> Code</td>
-                            <td> Size</td>@auth
-
-                            @endauth
+                            <td> Size</td>
                             <td> Color</td>
                             <td> Quantity</td>
                             <td> Price</td>

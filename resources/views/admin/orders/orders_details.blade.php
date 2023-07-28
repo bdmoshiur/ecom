@@ -51,6 +51,19 @@
                     <td>Order Status</td>
                     <td>{{$orders_details['order_status'] }}</td>
                 </tr>
+                @if (!empty($orders_details['courier_name']))
+                    <tr>
+                        <td>Courier Name</td>
+                        <td>{{$orders_details['courier_name'] }}</td>
+                    </tr>
+                @endif
+
+                @if (!empty($orders_details['tracking_number']))
+                    <tr>
+                        <td>Tracking Number</td>
+                        <td>{{$orders_details['tracking_number'] }}</td>
+                    </tr>
+                @endif
                 <tr>
                     <td>Order Total</td>
                     <td>INR {{ $orders_details['grand_total'] }}</td>
@@ -202,7 +215,7 @@
                             <form action="{{ route('admin.update.orderstatus') }}" method="post">
                                 @csrf
                             <input type="hidden" name="order_id" value="{{$orders_details['id'] }}">
-                            <select name="order_status">
+                            <select name="order_status" id="order_status">
                                 <option value="">Select Status</option>
                                 @foreach ($order_statues as $status)
                                     <option value="{{ $status['name'] }}" @if (isset($orders_details['order_status']) && $orders_details['order_status'] == $status['name'])
@@ -210,6 +223,10 @@
                                     @endif>{{ $status['name'] }}</option>
                                 @endforeach
                             </select>&nbsp;&nbsp;
+                            <input style="width: 120px" type="text" name="courier_name" @if (empty($orders_details['courier_name']))
+                            id="courier_name" @endif value="{{ $orders_details['courier_name'] }}" placeholder="Courier Name">
+                            <input style="width: 120px" type="text" name="tracking_number"  @if (empty($orders_details['courier_name']))
+                            id="tracking_number" @endif value="{{ $orders_details['tracking_number']}}" placeholder="Tracking Number">
                             <button type="submit">Update</button>
                         </form>
                         </td>
