@@ -63,7 +63,7 @@ class UsersController extends Controller
                 //     }
 
                 //     Send Register SMS
-                //     $message = 'Dear Custommer, You havbeen successfully registered with e-com website. login to your account to access orders and available offers.';
+                //     $message = 'Dear Custommer, You have been successfully registered with e-com website. login to your account to access orders and available offers.';
                 //     $mobile = $data['mobile'];
                 //     Sms::sendSms($message,$mobile);
 

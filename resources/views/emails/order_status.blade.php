@@ -2,14 +2,15 @@
     <body>
         <table style="width: 70px">
             <tr><td>&nbsp;</td></tr>
-            <tr><td><img src="{{ asset('images/front_images/logo1.png')}}" alt="logo"></td></tr>
+            <tr><td><img src="{{ asset('/images/front_images/logo1.png')}}" alt="logo"></td></tr>
             <tr><td>&nbsp;</td></tr>
             <tr><td>Hello {{ $name }}</td></tr>
             <tr><td>&nbsp;</td></tr>
-            <tr><td>Thank you for shipping with us. Your order details are as below.</td></tr>
+            <tr><td>Your order #{{ $order_id }} has been updated to {{ $order_status }}.</td></tr>
             <tr><td>&nbsp;</td></tr>
-            <tr><td>Order No: {{ $order_id }}</td></tr>
+            <tr><td>You order details are as below. </td></tr>
             <tr><td>&nbsp;</td></tr>
+
             <tr>
                 <td>
                     <table style="width: 95%" csllpadding="5" cellspacing="5" bgcolor="#f7f4f4" >
@@ -17,7 +18,7 @@
                             <td>Product Name</td>
                             <td> Code</td>
                             <td> Size</td>@auth
-                                
+
                             @endauth
                             <td> Color</td>
                             <td> Quantity</td>
@@ -39,7 +40,7 @@
                         </tr>
                         <tr>
                             <td colspan="5" align="right">Coupon Discount</td>
-                            <td>INR @if( $orders_details['coupon_amount'] > 0) 
+                            <td>INR @if( $orders_details['coupon_amount'] > 0)
                                 {{  $orders_details['coupon_amount'] }}
                                 @else
                                     0
