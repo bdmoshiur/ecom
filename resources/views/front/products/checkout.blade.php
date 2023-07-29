@@ -57,7 +57,7 @@
                         <th>Product</th>
                         <th colspan="2">Description</th>
                         <th>Quantity</th>
-                        <th>Unit Price</th>
+                        <th>Price</th>
                         <th>Category / Product <br> Discount</th>
                         <th>Sub Total</th>
                     </tr>
@@ -83,8 +83,8 @@
                                 Size : {{ $item['size'] }}
                             </td>
                             <td>{{ $item['quantity'] }} </td>
-                            <td>Tk.{{ $attrPrice['product_price'] }}</td>
-                            <td>Tk.{{ $attrPrice['discount'] }}</td>
+                            <td>Tk.{{ $attrPrice['product_price'] * $item['quantity'] }}</td>
+                            <td>Tk.{{ $attrPrice['discount'] * $item['quantity'] }}</td>
                             <td>Tk.{{ $attrPrice['final_price'] * $item['quantity'] }}</td>
                         </tr>
                         @php

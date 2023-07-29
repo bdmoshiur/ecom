@@ -49,6 +49,7 @@ class OrderssController extends Controller
             'orders_log' => $orders_log,
         ]);
     }
+
     public function updateOrdersStaus(Request $request) {
         if ($request->isMethod('post')) {
             $data = $request->all();
@@ -96,6 +97,16 @@ class OrderssController extends Controller
 
             return redirect()->back();
         }
+    }
+
+    public function viewOrdersInvoice($id) {
+        $orders_details = Order::with('orders_products')->where('id', $id)->first()->toArray();
+        $users_details = User::where('id',$orders_details['user_id'])->first()->toArray();
+
+        return view('admin.orders.orders_invoice', [
+            'orders_details' => $orders_details,
+            'users_details' => $users_details,
+        ]);
     }
 
 }
