@@ -72,7 +72,8 @@
                                             <td>
                                                 <a title="View order Details" href="{{ route('admin.orders.details', $order['id']) }}"><i class="fas fa-file"></i></a>&nbsp;&nbsp;
                                                 @if ($order['order_status'] == "Shipped" || $order['order_status'] == "Delivered" )
-                                                    <a title="View order Invoice" target="_blank" href="{{ route('admin.view.orders.invoice', $order['id']) }}"><i class="fas fa-print"></i></a>
+                                                    <a title="View Order Invoice" target="_blank" href="{{ route('admin.view.orders.invoice', $order['id']) }}"><i class="fas fa-print"></i></a> &nbsp;&nbsp;
+                                                    <a title="Print PDF Invoice" target="_blank" href="{{ route('admin.print.pdf.invoice', $order['id']) }}"><i class="fas fa-file-pdf"></i></a>
                                                 @endif
                                             </td>
                                         </tr>
