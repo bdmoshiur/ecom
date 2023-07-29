@@ -63,6 +63,11 @@ use App\Product;
                 @else
                     Tk. 0
                 @endif
+                @if (Session::has('coponCode'))
+                    @php
+                        Session::put('coponCode', Session::get('coponCode'));
+                    @endphp
+                @endif
             </td>
         </tr>
         <tr>

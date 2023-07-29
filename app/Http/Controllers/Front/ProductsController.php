@@ -277,6 +277,18 @@ class ProductsController extends Controller
                     $message = "This coupon is expired !";
                 }
 
+                // check if coupon is for single or multiple time
+
+                if($couponDetails->coupon_type == "Single Times"){
+                    //check in orders table if coupon already applied by the user
+
+                    $couponCount = Order::where(['coupon_code' => $data['code'], 'user_id' =>Auth::user()->id])->count();
+                    if($couponCount >= 1){
+                        $message = "This coupon code is already availed by you!";
+                    }
+
+                }
+
                 $userCartItems  = Cart::userCartItrms();
                 $catArr = explode(',', $couponDetails->categories);
 
@@ -388,7 +400,7 @@ class ProductsController extends Controller
             $order->mobile = $deliveryAddress['mobile'];
             $order->email = Auth::user()->email;
             $order->shipping_charges = 0;
-            $order->coupon_code = Session::get('couponCode');
+            $order->coupon_code = Session::get('coponCode');
             $order->coupon_amount = Session::get('couponAmount');
             $order->order_status = 'New';
             $order->payment_method = $payment_method;
