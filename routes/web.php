@@ -95,6 +95,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('/orders',[OrderssController::class,'orders'])->name('admin.orders');
         Route::get('/orders/details/{id}',[OrderssController::class,'ordersDetails'])->name('admin.orders.details');
         Route::post('/update/orders/status',[OrderssController::class,'updateOrdersStaus'])->name('admin.update.orderstatus');
+        Route::get('/view/orders/invoice/{id}',[OrderssController::class,'viewOrdersInvoice'])->name('admin.view.orders.invoice');
+        Route::get('/print/pdf/invoice/{id}',[OrderssController::class,'printPdfInvoice'])->name('admin.print.pdf.invoice');
+
     });
 });
 

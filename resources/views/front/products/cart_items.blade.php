@@ -7,7 +7,7 @@ use App\Product;
             <th>Product</th>
             <th colspan="2">Description</th>
             <th>Quantity/Update</th>
-            <th>Unit Price</th>
+            <th>Price</th>
             <th> Category / Product <br> Discount</th>
             <th>Sub Total</th>
         </tr>
@@ -43,8 +43,8 @@ use App\Product;
                         <button class="btn btn-danger cartItemDelete" type="button" data-cartid="{{ $item['id'] }}"><i class="icon-remove icon-white"></i></button>
                     </div>
                 </td>
-                <td>Tk.{{ $attrPrice['product_price'] }}</td>
-                <td>Tk.{{ $attrPrice['discount'] }}</td>
+                <td>Tk.{{ $attrPrice['product_price'] * $item['quantity'] }}</td>
+                <td>Tk.{{ $attrPrice['discount'] * $item['quantity'] }}</td>
                 <td>Tk.{{ $attrPrice['final_price'] * $item['quantity'] }}</td>
             </tr>
             @php

@@ -456,7 +456,15 @@ class ProductsController extends Controller
                 dd('prepaid2');
             }
         }
+
         $userCartItems = Cart::userCartItrms();
+
+        if (count($userCartItems) == 0) {
+            $message = "Shopping cart is empty! Please add products to checkout.";
+            Session::flash('error_message',$message);
+            return redirect()->route('cart');
+        }
+
         $deliveryAddress = Delivery_address::deliveryAddress();
 
         return view('front.products.checkout',[

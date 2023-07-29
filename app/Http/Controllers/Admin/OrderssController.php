@@ -8,6 +8,7 @@ use App\Order;
 use App\User;
 use App\OrdersLog;
 use App\Sms;
+use Dompdf\Dompdf;
 use App\OrderStatus;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
@@ -49,6 +50,7 @@ class OrderssController extends Controller
             'orders_log' => $orders_log,
         ]);
     }
+
     public function updateOrdersStaus(Request $request) {
         if ($request->isMethod('post')) {
             $data = $request->all();
@@ -96,6 +98,328 @@ class OrderssController extends Controller
 
             return redirect()->back();
         }
+    }
+
+    public function viewOrdersInvoice($id) {
+        $orders_details = Order::with('orders_products')->where('id', $id)->first()->toArray();
+        $users_details = User::where('id',$orders_details['user_id'])->first()->toArray();
+
+        return view('admin.orders.orders_invoice', [
+            'orders_details' => $orders_details,
+            'users_details' => $users_details,
+        ]);
+    }
+
+    public function printPdfInvoice($id) {
+        $orders_details = Order::with('orders_products')->where('id', $id)->first()->toArray();
+        $users_details = User::where('id',$orders_details['user_id'])->first()->toArray();
+
+        $output = '<!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <title>Example 2</title>
+            <style>
+            @font-face {
+                font-family: SourceSansPro;
+                src: url(SourceSansPro-Regular.ttf);
+              }
+
+              .clearfix:after {
+                content: "";
+                display: table;
+                clear: both;
+              }
+
+              a {
+                color: #0087C3;
+                text-decoration: none;
+              }
+
+              body {
+                position: relative;
+                width: 21cm;
+                height: 29.7cm;
+                margin: 0 auto;
+                color: #555555;
+                background: #FFFFFF;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                font-family: SourceSansPro;
+              }
+
+              header {
+                padding: 10px 0;
+                margin-bottom: 20px;
+                border-bottom: 1px solid #AAAAAA;
+              }
+
+              #logo {
+                float: left;
+                margin-top: 8px;
+              }
+
+              #logo img {
+                height: 70px;
+              }
+
+              #company {
+                float: right;
+                text-align: right;
+              }
+
+
+              #details {
+                margin-bottom: 50px;
+              }
+
+              #client {
+                padding-left: 6px;
+                border-left: 6px solid #0087C3;
+                float: left;
+              }
+
+              #client .to {
+                color: #777777;
+              }
+
+              h2.name {
+                font-size: 1.4em;
+                font-weight: normal;
+                margin: 0;
+              }
+
+              #invoice {
+                float: right;
+                text-align: right;
+              }
+
+              #invoice h1 {
+                color: #0087C3;
+                font-size: 2.4em;
+                line-height: 1em;
+                font-weight: normal;
+                margin: 0  0 10px 0;
+              }
+
+              #invoice .date {
+                font-size: 1.1em;
+                color: #777777;
+              }
+
+              table {
+                width: 100%;
+                border-collapse: collapse;
+                border-spacing: 0;
+                margin-bottom: 20px;
+              }
+
+              table th,
+              table td {
+                padding: 20px;
+                background: #EEEEEE;
+                text-align: center;
+                border-bottom: 1px solid #FFFFFF;
+              }
+
+              table th {
+                white-space: nowrap;
+                font-weight: normal;
+              }
+
+              table td {
+                text-align: right;
+              }
+
+              table td h3{
+                color: #57B223;
+                font-size: 1.2em;
+                font-weight: normal;
+                margin: 0 0 0.2em 0;
+              }
+
+              table .no {
+                color: #FFFFFF;
+                font-size: 1.6em;
+                background: #57B223;
+              }
+
+              table .desc {
+                text-align: left;
+              }
+
+              table .unit {
+                background: #DDDDDD;
+              }
+
+              table .qty {
+              }
+
+              table .total {
+                background: #57B223;
+                color: #FFFFFF;
+              }
+
+              table td.unit,
+              table td.qty,
+              table td.total {
+                font-size: 1.2em;
+              }
+
+              table tbody tr:last-child td {
+                border: none;
+              }
+
+              table tfoot td {
+                padding: 10px 20px;
+                background: #FFFFFF;
+                border-bottom: none;
+                font-size: 1.2em;
+                white-space: nowrap;
+                border-top: 1px solid #AAAAAA;
+              }
+
+              table tfoot tr:first-child td {
+                border-top: none;
+              }
+
+              table tfoot tr:last-child td {
+                color: #57B223;
+                font-size: 1.4em;
+                border-top: 1px solid #57B223;
+
+              }
+
+              table tfoot tr td:first-child {
+                border: none;
+              }
+
+              #thanks{
+                font-size: 2em;
+                margin-bottom: 50px;
+              }
+
+              #notices{
+                padding-left: 6px;
+                border-left: 6px solid #0087C3;
+              }
+
+              #notices .notice {
+                font-size: 1.2em;
+              }
+
+              footer {
+                color: #777777;
+                width: 100%;
+                height: 30px;
+                position: absolute;
+                bottom: 0;
+                border-top: 1px solid #AAAAAA;
+                padding: 8px 0;
+                text-align: center;
+              }
+
+            </style>
+          </head>
+          <body>
+            <header class="clearfix">
+              <div id="logo">
+                <h1>ORDER INVOICE</h1>
+              </div>
+            </header>
+            <main>
+              <div id="details" class="clearfix">
+                <div id="client">
+                  <div class="to">INVOICE TO:</div>
+                  <h2 class="name">'.$orders_details['name'].'</h2>
+                  <div class="address">'.$orders_details['address'].','.$orders_details['city'].','.$orders_details['state'].'</div>
+                  <div class="address">'.$orders_details['country'].','.$orders_details['pincode'].'</div>
+                  <div class="email"><a href="mailto:'.$orders_details['email'].'">'.$orders_details['email'].'</a></div>
+                </div>
+                <div style="float:right">
+                  <h1>Order ID '.$orders_details['id'].'</h1>
+                  <div class="date">Order Date: '.date('d-m-Y', strtotime($orders_details['created_at'] ) ).'</div>
+                  <div class="date">Order Amount: INR '.$orders_details['grand_total'].' </div>
+                  <div class="date">Order Status:'.$orders_details['order_status'].' </div>
+                  <div class="date">Payment Method:'.$orders_details['payment_method'].' </div>
+                </div>
+              </div>
+              <table border="0" cellspacing="0" cellpadding="0">
+                <thead>
+                  <tr>
+                    <th class="unit">Product Code</th>
+                    <th class="desc">Size</th>
+                    <th class="unit">Color</th>
+                    <th class="qty">Price</th>
+                    <th class="unit">Qty</th>
+                    <th class="total">Totals</th>
+                  </tr>
+                </thead>
+                <tbody>';
+                  $subtotal = 0;
+                  foreach ($orders_details['orders_products'] as $product){
+                    $output .= '<tr>
+                    <td class="unit">'.$product['product_code'].'</td>
+                    <td class="desc">'.$product['product_size'].'</td>
+                    <td class="unit">'.$product['product_color'].'</td>
+                    <td class="qty">INR '.$product['product_price'].'</td>
+                    <td class="unit">'.$product['product_quantity'].'</td>
+                    <td class="total">INR '.$product['product_price'] * $product['product_quantity'].'</td>
+                  </tr>';
+                  $subtotal =  $subtotal + ($product['product_price'] * $product['product_quantity']) ;
+                }
+                $output .= '</tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">SUBTOTAL</td>
+                    <td>INR '.$subtotal.'</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">Shipping Charges</td>
+                    <td>INR 0</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">Coupon Discount</td>';
+                    if($orders_details['coupon_amount']){
+                      $output .= ' <td>INR '.$orders_details['coupon_amount'].'</td>';
+                    }else{
+                      $output .= ' <td>INR 0</td>';
+                    }
+                    $output .= ' </tr>
+                  <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">GRAND TOTAL</td>
+                    <td>INR '.$orders_details['grand_total'].'</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </main>
+            <footer>
+              Invoice was created on a computer and is valid without the signature and seal.
+            </footer>
+          </body>
+        </html>';
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($output);
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream();
+
+
+        return view('admin.orders.orders_invoice', [
+            'orders_details' => $orders_details,
+            'users_details' => $users_details,
+        ]);
     }
 
 }
