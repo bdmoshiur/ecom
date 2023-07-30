@@ -13,7 +13,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Brands</li>
+                            <li class="breadcrumb-item active">Shipping Charges</li>
                         </ol>
                     </div>
                 </div>
@@ -42,15 +42,12 @@
                 <?php Session::forget('success_message'); ?>
             @endif
 
-                <form
-                    @if (empty($brand['id'])) action="{{ route('admin.add.edit.brands') }}"
-                    @else
-                        action="{{ route('admin.add.edit.brands', $brand['id']) }}" @endif
-                    name="brandForm" id="brandForm" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.update.shipping.charges', $shipping_details['id']) }}"
+                    name="shippingForm" id="shippingForm" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card card-default">
                         <div class="card-header">
-                            <h3 class="card-title">{{ $title }}</h3>
+                            <h3 class="card-title">Update Shipping Charges</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
                                         class="fas fa-minus"></i></button>
@@ -63,12 +60,21 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="brand_name">Brand Name</label>
-                                        <input type="text" class="form-control" name="brand_name" id="brand_name"
-                                            @if (!empty($brand['name'])) value="{{ $brand['name'] }}"
+                                        <label for="country">Shipping Country</label>
+                                        <input readonly class="form-control" value="{{ $shipping_details['country'] }}"
+                                        placeholder="Enter Country">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="shipping_charges">Shipping Charges</label>
+                                        <input type="text" class="form-control" name="shipping_charges" id="shipping_charges"
+                                            @if (!empty($shipping_details['shipping_charges'])) value="{{ $shipping_details['shipping_charges'] }}"
                                         @else
-                                        value="{{ old('brand_name') }}" @endif
-                                            placeholder="Enter Brand Name">
+                                        value="{{ old('shipping_charges') }}" @endif
+                                            placeholder="Enter Shipping Charges">
                                     </div>
                                 </div>
                             </div>
