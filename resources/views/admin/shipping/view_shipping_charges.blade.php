@@ -45,7 +45,11 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Country</th>
-                                        <th>Customer Charges</th>
+                                        <th>0g-500g</th>
+                                        <th>5001g-1000g</th>
+                                        <th>1001g-2000g</th>
+                                        <th>2001g-5000g</th>
+                                        <th>above-5000g</th>
                                         <th>Updated At</th>
                                         <th>Status</th>
                                         <th>Actions</th>
@@ -57,7 +61,11 @@
                                         <tr>
                                             <td>{{ $shipping['id'] }}</td>
                                             <td>{{ $shipping['country'] }}</td>
-                                            <td>INR {{ $shipping['shipping_charges'] }}</td>
+                                            <td>INR {{ $shipping['0_500g'] }}</td>
+                                            <td>INR {{ $shipping['501_1000g'] }}</td>
+                                            <td>INR {{ $shipping['1001_2000g'] }}</td>
+                                            <td>INR {{ $shipping['2001_5000g'] }}</td>
+                                            <td>INR {{ $shipping['above_5000g'] }}</td>
                                             <td>{{ date('d-m-Y', strtotime($shipping['updated_at'] ) ) }}</td>
                                             <td>
                                                 @if ($shipping['status'] == 1)

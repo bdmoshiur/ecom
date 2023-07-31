@@ -69,12 +69,64 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="shipping_charges">Shipping Charges</label>
-                                        <input type="text" class="form-control" name="shipping_charges" id="shipping_charges"
-                                            @if (!empty($shipping_details['shipping_charges'])) value="{{ $shipping_details['shipping_charges'] }}"
+                                        <label for="0_500g">Shipping Charges (0_500g)</label>
+                                        <input type="text" class="form-control" name="0_500g" id="0_500g"
+                                            @if (!empty($shipping_details['0_500g'])) value="{{ $shipping_details['0_500g'] }}"
                                         @else
-                                        value="{{ old('shipping_charges') }}" @endif
-                                            placeholder="Enter Shipping Charges">
+                                        value="{{ old('0_500g') }}" @endif
+                                            placeholder="Enter Shipping Charges 0 to 500g">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="501_1000g">Shipping Charges (501_1000g)</label>
+                                        <input type="text" class="form-control" name="501_1000g" id="501_1000g"
+                                            @if (!empty($shipping_details['501_1000g'])) value="{{ $shipping_details['501_1000g'] }}"
+                                        @else
+                                        value="{{ old('501_1000g') }}" @endif
+                                            placeholder="Enter Shipping Charges 501 to 1000g">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="1001_2000g">Shipping Charges (1001_2000g)</label>
+                                        <input type="text" class="form-control" name="1001_2000g" id="1001_2000g"
+                                            @if (!empty($shipping_details['1001_2000g'])) value="{{ $shipping_details['1001_2000g'] }}"
+                                        @else
+                                        value="{{ old('1001_2000g') }}" @endif
+                                            placeholder="Enter Shipping Charges 1001 to 2000g">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="2001_5000g">Shipping Charges (2001_5000g)</label>
+                                        <input type="text" class="form-control" name="2001_5000g" id="2001_5000g"
+                                            @if (!empty($shipping_details['2001_5000g'])) value="{{ $shipping_details['2001_5000g'] }}"
+                                        @else
+                                        value="{{ old('2001_5000g') }}" @endif
+                                            placeholder="Enter Shipping Charges 2001 to 5000g">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="above_5000g">Shipping Charges (above_5000g)</label>
+                                        <input type="text" class="form-control" name="above_5000g" id="above_5000g"
+                                            @if (!empty($shipping_details['above_5000g'])) value="{{ $shipping_details['above_5000g'] }}"
+                                        @else
+                                        value="{{ old('above_5000g') }}" @endif
+                                            placeholder="Enter Shipping Charges Above to 5000g">
                                     </div>
                                 </div>
                             </div>
