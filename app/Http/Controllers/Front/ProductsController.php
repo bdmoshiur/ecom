@@ -11,6 +11,7 @@ use App\OrderProduct;
 use App\Order;
 use App\User;
 use App\Sms;
+use App\ShippingCharge;
 use App\Delivery_address;
 use App\ProductsAttribute;
 use Illuminate\Http\Request;
@@ -256,7 +257,8 @@ class ProductsController extends Controller
             if($couponCount == 0){
                 $userCartItems = Cart::userCartItrms();
                 $totalCartItems = totalCartItems();
-
+                Session::forget('coponCode');
+                Session::forget('couponAmount');
                 return response()->json([
                     'status' => false,
                     'message' => "The coupon is not valid!",
@@ -275,6 +277,18 @@ class ProductsController extends Controller
 
                 if ( $expiry_date < $current_date ) {
                     $message = "This coupon is expired !";
+                }
+
+                // check if coupon is for single or multiple time
+
+                if($couponDetails->coupon_type == "Single Times"){
+                    //check in orders table if coupon already applied by the user
+
+                    $couponCount = Order::where(['coupon_code' => $data['code'], 'user_id' =>Auth::user()->id])->count();
+                    if($couponCount >= 1){
+                        $message = "This coupon code is already availed by you!";
+                    }
+
                 }
 
                 $userCartItems  = Cart::userCartItrms();
@@ -350,6 +364,35 @@ class ProductsController extends Controller
     }
 
     public function checkOut(Request $request) {
+
+        $userCartItems = Cart::userCartItrms();
+
+        if (count($userCartItems) == 0) {
+            $message = "Shopping cart is empty! Please add products to checkout.";
+            Session::flash('error_message',$message);
+            return redirect()->route('cart');
+        }
+
+
+        $total_price = 0;
+        $total_weight = 0;
+        foreach ($userCartItems as $item){
+            $product_weight = $item['product']['product_weight'];
+            $total_weight = $total_weight + $product_weight;
+            $attrPrice = Product::getDiscountAttrPrice($item['product_id'], $item['size']);
+            $total_price = $total_price + $attrPrice['final_price'] * $item['quantity'];
+        }
+
+        $deliveryAddress = Delivery_address::deliveryAddress();
+
+
+        foreach ($deliveryAddress as $key => $value) {
+            $shipping_charges =  ShippingCharge::getShippingCharges($total_weight,$value['country']);
+
+           $deliveryAddress[$key]['shipping_charges'] =  $shipping_charges;
+        }
+
+
         if ($request->isMethod('post')) {
             $data = $request->all();
 
@@ -375,6 +418,14 @@ class ProductsController extends Controller
 
             $deliveryAddress = Delivery_address::where('id',$data['address_id'])->first()->toArray();
 
+            //Shipping charges get
+            $shipping_charges = ShippingCharge::getShippingCharges($total_weight,$deliveryAddress['country']);
+
+            // Grand total set
+
+            $grand_total = $total_price + $shipping_charges - Session::get('couponAmount');
+            Session::put('grand_total',$grand_total);
+
             DB::beginTransaction();
             $order = new Order();
 
@@ -387,8 +438,8 @@ class ProductsController extends Controller
             $order->pincode = $deliveryAddress['pincode'];
             $order->mobile = $deliveryAddress['mobile'];
             $order->email = Auth::user()->email;
-            $order->shipping_charges = 0;
-            $order->coupon_code = Session::get('couponCode');
+            $order->shipping_charges = $shipping_charges;
+            $order->coupon_code = Session::get('coponCode');
             $order->coupon_amount = Session::get('couponAmount');
             $order->order_status = 'New';
             $order->payment_method = $payment_method;
@@ -457,19 +508,11 @@ class ProductsController extends Controller
             }
         }
 
-        $userCartItems = Cart::userCartItrms();
-
-        if (count($userCartItems) == 0) {
-            $message = "Shopping cart is empty! Please add products to checkout.";
-            Session::flash('error_message',$message);
-            return redirect()->route('cart');
-        }
-
-        $deliveryAddress = Delivery_address::deliveryAddress();
 
         return view('front.products.checkout',[
             'userCartItems' => $userCartItems,
-            'deliveryAddress' => $deliveryAddress
+            'deliveryAddress' => $deliveryAddress,
+            'total_price' => $total_price
         ]);
     }
 

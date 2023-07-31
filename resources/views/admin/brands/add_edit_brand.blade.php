@@ -39,6 +39,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <?php Session::forget('success_message'); ?>
             @endif
 
                 <form

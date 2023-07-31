@@ -41,7 +41,7 @@
                     <tr>
                         <td>
                             <div class="control-group" style="float: left; margin-top: -2px; margin-right:5px">
-                                <input type="radio" id="address{{ $address['id']}}" name="address_id" value="{{ $address['id']}}">
+                                <input type="radio" id="address{{ $address['id']}}" name="address_id" value="{{ $address['id']}}" shipping_charges="{{ $address['shipping_charges']}}" total_price="{{ $total_price}}" coupon_amount="{{ Session::get('couponAmount') }}">
                             </div>
                             <div class="control-group">
                                 <label class="control-label"> {{ $address['name'] }}, {{ $address['address'] }}, {{ $address['city'] }} -- {{ $address['pincode'] }}, {{ $address['state'] }}, {{ $address['country'] }} (M:{{ $address['mobile'] }})</label>
@@ -106,7 +106,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="6" style="text-align:right"><strong>GRAND TOTAL (Tk.{{ $total_price }} - <span class="couponAmount">Tk.0</span> )
+                        <td colspan="6" style="text-align:right">Shipping Charges: </td>
+                        <td class="shipping_charges">Tk. 0 </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" style="text-align:right"><strong>GRAND TOTAL (Tk.{{ $total_price }} - <span class="couponAmount">Tk.0</span> + <span class="shipping_charges">Tk.0</span> )
                                 =</strong></td>
                         <td class="label label-important" style="display:block"> <strong class="grand_total"> Tk.{{ $grand_total = $total_price - Session::get('couponAmount') }} <?php Session::put('grand_total', $grand_total) ?> </strong></td>
                     </tr>
