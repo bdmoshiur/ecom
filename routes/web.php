@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Admin\OrderssController;
 use App\Http\Controllers\Admin\ShippingController;
+use App\Http\Controllers\Front\PayumoneyController;
+use App\Http\Controllers\Front\PaypalController;
 
 
 
@@ -159,6 +161,16 @@ Route::group(['namespace' => 'Front'], function () {
         Route::match(['get','post'],'/add-edit-delivery-address/{id?}',[ProductsController::class, 'addEditDeliveryAddress'])->name('front.add.edit.delivery.address');
         Route::get('/delete-delivery-address/{id}',[ProductsController::class, 'deleteDeliveryAddress'])->name('front.delete.delivery.address');
         Route::get('/thanks',[ProductsController::class, 'thanks'])->name('front.thanks');
+
+
+        //paypal
+        Route::get('/paypal',[PaypalController::class, 'paypal'])->name('front.paypal');
+        Route::get('/paypal/success',[PaypalController::class, 'success'])->name('front.paypal.success');
+        Route::get('/paypal/fail',[PaypalController::class, 'fail'])->name('front.paypal.fail');
+        Route::post('/paypal/ipn',[PaypalController::class, 'ipn'])->name('front.paypal.ipn');
+
+        // payUMoney
+        Route::post('/payumoney',[PayumoneyController::class, 'payumoney'])->name('front.payumoney');
 
 
 

@@ -127,6 +127,7 @@
                                     <span>
                                         <input type="radio" name="payment_gateway" id="COD" value="COD"><strong>COD</strong>&nbsp;&nbsp;
                                         <input type="radio" name="payment_gateway" id="Paypal" value="Paypal"><strong>Paypal</strong>
+                                         <input type="radio" name="payment_gateway" id="Payumoney" value="Payumoney"><strong>Payumoney</strong>
                                     </span>
                                 </div>
                             </div>

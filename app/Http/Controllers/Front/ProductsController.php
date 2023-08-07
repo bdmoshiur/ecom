@@ -412,7 +412,6 @@ class ProductsController extends Controller
             if($data['payment_gateway'] == "COD"){
                 $payment_method = "COD";
             }else{
-                dd('prepaid1');
                 $payment_method = "Prepaid";
             }
 
@@ -503,9 +502,14 @@ class ProductsController extends Controller
 
 
                 return redirect()->route('front.thanks');
+            }elseif($data['payment_gateway'] == "Paypal"){
+                return redirect()->route('front.paypal');
+            }elseif($data['payment_gateway'] == "Payumoney"){
+                return redirect()->route('front.payumoney');
             }else{
-                dd('prepaid2');
+                echo "Others payment method comming soon"; die;
             }
+            echo "Order Placed"; die;
         }
 
 
