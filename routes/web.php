@@ -143,9 +143,12 @@ Route::group(['namespace' => 'Front'], function () {
 
     Route::match(['get','post'],'/check-email',[UsersController::class, 'checkEmail'])->name('front.check_email');
     Route::match(['get','post'],'/confirm/{code}',[UsersController::class, 'confirmAccount'])->name('front.confirm');
+    Route::match(['get','post'],'/forgot/password',[UsersController::class, 'forgotPassword'])->name('front.forgot.password');
+
+    //check delivery pincode
+    Route::post('/check-pincode',[ProductsController::class, 'checkPincode'])->name('front.check.pincode');
 
     Route::group(['middleware' =>['auth']],function () {
-        Route::match(['get','post'],'/forgot/password',[UsersController::class, 'forgotPassword'])->name('front.forgot.password');
         Route::post('/check-password',[UsersController::class, 'checkUserPassword'])->name('front.check.user.password');
         Route::post('/update-password',[UsersController::class, 'updateUserPassword'])->name('front.update.user.password');
         Route::match(['get','post'],'/account',[UsersController::class, 'account'])->name('front.account');
@@ -169,8 +172,8 @@ Route::group(['namespace' => 'Front'], function () {
         Route::get('/paypal/fail',[PaypalController::class, 'fail'])->name('front.paypal.fail');
         Route::post('/paypal/ipn',[PaypalController::class, 'ipn'])->name('front.paypal.ipn');
 
-        // payUMoney
-        Route::post('/payumoney',[PayumoneyController::class, 'payumoney'])->name('front.payumoney');
+        // Bkash
+        Route::post('/bkash',[PaypalController::class, 'bkash'])->name('front.bkash');
 
 
 

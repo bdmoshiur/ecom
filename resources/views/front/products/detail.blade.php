@@ -93,15 +93,19 @@ use App\Product;
                             @endif
                         </h4>
                         <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}"
-                            class="span2 pull-left" required>
+                            class="span2 pull-left">
                             <option value="">Select Size</option>
                             @foreach ($productDetails['attributes'] as $attribute)
                                 <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
                             @endforeach
                         </select>
-                        <input type="number" class="span1" name="quantity" placeholder="Qty." required />
+                        <input type="number" class="span1" name="quantity" placeholder="Qty." />
                         <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i
                                 class=" icon-shopping-cart"></i></button>
+                                <br><br>
+                        <strong>Delivery</strong>
+                        <input style="width: 120px" type="text" name="pincode" id="pincode" placeholder="Check pincode">
+                        <button type="button" id="checkPincode">Go</button>
                     </div>
             </div>
             </form>

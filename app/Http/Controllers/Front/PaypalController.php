@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use App\ProductsAttribute;
 
 class PaypalController extends Controller
 {
@@ -53,6 +54,14 @@ class PaypalController extends Controller
             Sms::sendSms($message,$mobile);
 
             $orders_details = Order::with('orders_products')->where('id', $order_id)->first()->toArray();
+
+            foreach ($orders_details['orders_products'] as $order) {
+                $getProductStock = ProductsAttribute::where(['product_id'=> $order['product_id'], 'size' => $order['size']])->first()->toarray();
+                $newStock = $getProductStock['stock'] - $order['quantity'];
+
+                ProductsAttribute::where(['product_id'=> $order['product_id'], 'size' => $order['size']])->update(['stock' => $newStock]);
+            }
+
 
             $email = Auth::user()->email;
             $user = Auth::user()->name;

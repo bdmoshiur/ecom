@@ -138,6 +138,17 @@ class ProductsController extends Controller
     {
         if ($request->isMethod('post')) {
             $data = $request->all();
+
+            if ($data['quantity'] <= 0) {
+                $data['quantity'] = 1;
+            }
+
+            if (empty($data['size'])) {
+                $message = 'Please select size';
+                Session::flash('error_message', $message);
+                return redirect()->back();
+            }
+
             $getProductStock = ProductsAttribute::where(['product_id' => $data['product_id'], 'size' => $data['size']])->first()->toArray();
             if ($getProductStock['stock'] < $data['quantity']) {
                 Session::flash('error_message', 'Required quantity is not available');
@@ -385,16 +396,67 @@ class ProductsController extends Controller
 
         $deliveryAddress = Delivery_address::deliveryAddress();
 
-
         foreach ($deliveryAddress as $key => $value) {
             $shipping_charges =  ShippingCharge::getShippingCharges($total_weight,$value['country']);
 
            $deliveryAddress[$key]['shipping_charges'] =  $shipping_charges;
+         // check if delivary address exists in Cod pincodes list
+           $deliveryAddress[$key]['codpincodeCount'] = DB::table('cod_pincodes')->where('pincode', $value['pincode'])->count();
+         // check if delivary address exists in prepaid pincodes list
+           $deliveryAddress[$key]['prepaidpincodeCount'] = DB::table('prepaid_pincodes')->where('pincode', $value['pincode'])->count();
         }
 
 
         if ($request->isMethod('post')) {
             $data = $request->all();
+
+
+                // website sequrity checks
+
+                // fetch user cart items
+                foreach ($userCartItems as $key => $cart) {
+
+                    // prevent disable product to order
+                    $product_status = Product::getProductStatus($cart['product_id']);
+                    if($product_status == 0 ){
+                        // Product::deleteCartProduct($cart['product_id']);
+                        $message = $cart['product']['product_name'] . " is not available so please remove from cart.";
+                        Session::flash('error_message',$message);
+
+                        return redirect()->route('cart');
+                    }
+
+                    // prevent out of stock products to order
+                    $product_stock = Product::getProductStock($cart['product_id'], $cart['size']);
+                    if($product_stock == 0 ){
+                        // Product::deleteCartProduct($cart['product_id']);
+                        $message = $cart['product']['product_name'] . " is not available so please remove from cart.";
+                        Session::flash('error_message',$message);
+
+                        return redirect()->route('cart');
+                    }
+
+                    // prevent out of Disable or delete products to order
+                    $getAttributeCount = Product::getAttributeCount($cart['product_id'], $cart['size']);
+                    if($getAttributeCount == 0 ){
+                        // Product::deleteCartProduct($cart['product_id']);
+                        $message = $cart['product']['product_name'] . " is not available so please remove from cart.";
+                        Session::flash('error_message',$message);
+
+                        return redirect()->route('cart');
+                    }
+
+                    // prevent  Disable categories products to order
+                    $category_status = Product::getCategoryStatus($cart['product']['category_id']);
+                    if($category_status == 0 ){
+                        // Product::deleteCartProduct($cart['product_id']);
+                        $message = $cart['product']['product_name'] . " is not available so please remove from cart.";
+                        Session::flash('error_message',$message);
+
+                        return redirect()->route('cart');
+                    }
+
+                }
 
             if (empty($data['address_id'])) {
                 $message = "Please Select Delivery Address!";
@@ -472,6 +534,14 @@ class ProductsController extends Controller
                 $cartItem->product_quantity = $item['quantity'];
                 $cartItem->save();
 
+                if ($data['payment_gateway'] == "COD") {
+                    $getProductStock = ProductsAttribute::where(['product_id'=> $item['product_id'], 'size' => $item['size']])->first()->toarray();
+                    $newStock = $getProductStock['stock'] - $item['quantity'];
+
+                    ProductsAttribute::where(['product_id'=> $item['product_id'], 'size' => $item['size']])->update(['stock' => $newStock]);
+                }
+
+
             }
 
             $cart = Cart::where('user_id', Auth::user()->id)->delete();
@@ -504,8 +574,8 @@ class ProductsController extends Controller
                 return redirect()->route('front.thanks');
             }elseif($data['payment_gateway'] == "Paypal"){
                 return redirect()->route('front.paypal');
-            }elseif($data['payment_gateway'] == "Payumoney"){
-                return redirect()->route('front.payumoney');
+            }elseif($data['payment_gateway'] == "Bkash"){
+                return redirect()->route('front.bkash');
             }else{
                 echo "Others payment method comming soon"; die;
             }
@@ -606,5 +676,31 @@ class ProductsController extends Controller
         Session::put('success_message', $message);
         return redirect()->back();
     }
+
+    public function checkPincode(Request $request) {
+
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+
+          if (is_numeric($data['pincode']) && $data['pincode'] > 0 && $data['pincode'] == round($data['pincode'],0)) {
+
+            $codpincodeCount = DB::table('cod_pincodes')->where('pincode', $data['pincode'])->count();
+            $prepaidpincodeCount = DB::table('prepaid_pincodes')->where('pincode', $data['pincode'])->count();
+
+            if ( $codpincodeCount == 0 && $prepaidpincodeCount == 0 ) {
+                echo "This pincode is not available for delivery"; die;
+            }else{
+                echo "This pincode is available for delivery"; die;
+            }
+
+          }else{
+            echo "Please enter valid pincode";
+          }
+
+        }
+
+    }
+
+
 
 }

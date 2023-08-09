@@ -440,6 +440,21 @@ $(document).ready(function () {
         var shipping_charges = $(this).attr('shipping_charges');
         var total_price = $(this).attr('total_price');
         var coupon_amount = $(this).attr('coupon_amount');
+        var codpincodeCount = $(this).attr('codpincodeCount');
+        var prepaidpincodeCount = $(this).attr('prepaidpincodeCount');
+
+        if (codpincodeCount > 0) {
+            $('.codMethod').show();
+        }else{
+            $('.codMethod').hide();
+        }
+
+        if (prepaidpincodeCount > 0) {
+            $('.prepaidMethod').show();
+        }else{
+            $('.prepaidMethod').hide();
+        }
+
         if (coupon_amount == "") {
             coupon_amount = 0;
         }
@@ -448,5 +463,26 @@ $(document).ready(function () {
        $('.grand_total').html("Tk."+grand_total);
 
     });
+
+    $("#checkPincode").click(function(){
+       var pincode = $('#pincode').val();
+       if (pincode == "") {
+            alert('Please enter delivery pincode'); return false;
+       }
+       $.ajax({
+            type: 'post',
+            data: { pincode:pincode },
+            url:'/check-pincode',
+            success:function(resp){
+                alert(resp);
+            },
+            error:function(){
+                alert('Error');
+            }
+        });
+
+    });
+
+
 
 });

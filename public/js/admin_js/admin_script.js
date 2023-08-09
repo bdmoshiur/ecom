@@ -28,6 +28,9 @@ $(document).ready(function () {
         var status = $(this).children("i").attr("status");
         var section_id = $(this).attr("section_id");
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: "post",
             url: "/admin/update-section-status",
             data: { status: status, section_id: section_id },
@@ -54,6 +57,9 @@ $(document).ready(function () {
         var status = $(this).children("i").attr("status");
         var brand_id = $(this).attr("brand_id");
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: "post",
             url: "/admin/update-brand-status",
             data: { status: status, brand_id: brand_id },
@@ -80,6 +86,9 @@ $(document).ready(function () {
         var status = $(this).children("i").attr("status");
         var banner_id = $(this).attr("banner_id");
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: "post",
             url: "/admin/update-banner-status",
             data: { status: status, banner_id: banner_id },
@@ -105,6 +114,9 @@ $(document).ready(function () {
             var status = $(this).children("i").attr("status");
             var shipping_id = $(this).attr("shipping_id");
             $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 type: "post",
                 url: "/admin/update-shipping-status",
                 data: { status: status, shipping_id: shipping_id },
@@ -132,6 +144,9 @@ $(document).ready(function () {
             var status = $(this).children("i").attr("status");
             var coupon_id = $(this).attr("coupon_id");
             $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 type: "post",
                 url: "/admin/update-coupon-status",
                 data: { status: status, coupon_id: coupon_id },
@@ -158,6 +173,9 @@ $(document).ready(function () {
         var status = $(this).children("i").attr("status");
         var category_id = $(this).attr("category_id");
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: "post",
             url: "/admin/update-category-status",
             data: { status: status, category_id: category_id },
@@ -184,6 +202,10 @@ $(document).ready(function () {
         var status = $(this).children("i").attr("status");
         var product_id = $(this).attr("product_id");
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+
             type: "post",
             url: "/admin/update-product-status",
             data: { status: status, product_id: product_id },
@@ -210,6 +232,9 @@ $(document).ready(function () {
         var status = $(this).text();
         var attribute_id = $(this).attr("attribute_id");
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: "post",
             url: "/admin/update-attribute-status",
             data: { status: status, attribute_id: attribute_id },
@@ -232,6 +257,9 @@ $(document).ready(function () {
         var status = $(this).text();
         var image_id = $(this).attr("image_id");
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: "post",
             url: "/admin/update-image-status",
             data: { status: status, image_id: image_id },
