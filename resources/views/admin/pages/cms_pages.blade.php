@@ -12,7 +12,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Users</li>
+                            <li class="breadcrumb-item active">CMS Pages</li>
                         </ol>
                     </div>
                 </div>
@@ -34,48 +34,46 @@
                     @endif
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Users</h3>
-                            <a href="{{ route('admin.users') }}" class="btn btn-success btn-block"
-                                style="max-width:150px; float:right; display:inline-block;">Add User</a>
+                            <h3 class="card-title">CMS Pages</h3>
+                            <a href="{{ route('admin.add.edit.cms.pages') }}" class="btn btn-success btn-block"
+                                style="max-width:150px; float:right; display:inline-block;">Add CMS Pages</a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="users" class="table table-bordered table-striped">
+                            <table id="cms_pages" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Name</th>
-                                        <th>Address</th>
-                                        <th>City</th>
-                                        <th>State</th>
-                                        <th>Country</th>
-                                        <th>Pincode</th>
-                                        <th>Mobile</th>
-                                        <th>Email</th>
+                                        <th>Title</th>
+                                        <th>URL</th>
+                                        <th>Created On</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $key => $user)
+                                    @foreach ($cms_pages as $key => $cms_page)
                                         <tr>
-                                            <td>{{ $user->id }}</td>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->address }}</td>
-                                            <td>{{ $user->city }}</td>
-                                            <td>{{ $user->state }}</td>
-                                            <td>{{ $user->country }}</td>
-                                            <td>{{ $user->pincode }}</td>
-                                            <td>{{ $user->mobile }}</td>
-                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $cms_page->id }}</td>
+                                            <td>{{ $cms_page->title }}</td>
+                                            <td>{{ $cms_page->url }}</td>
+                                            <td>{{ $cms_page->created_at }}</td>
                                             <td>
-                                                @if ($user->status == 1)
-                                                    <a href="javascript:void(0)" class="updateUserStatus"
-                                                        id="user-{{ $user->id }}"
-                                                        user_id="{{ $user->id }}"><i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
+                                                <a title="Edit CMS Pages"
+                                                    href="{{ route('admin.add.edit.cms.pages',$cms_page->id) }}"><i
+                                                        class="fas fa-edit"></i></a>
+                                                &nbsp; &nbsp;
+                                                <a title="Delete CMS Pages" href="javascript:void(0)" class="confirmDelete"
+                                                    record="cmspage" recordid="{{$cms_page->id }}"><i
+                                                        class="fas fa-trash"></i></a>
+                                                &nbsp; &nbsp;
+                                                @if ($cms_page->status == 1)
+                                                    <a href="javascript:void(0)" class="updateCmsPageStatus"
+                                                        id="cmspage-{{$cms_page->id }}"
+                                                        cmspage_id="{{$cms_page->id }}"><i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
                                                 @else
-                                                    <a href="javascript:void(0)" class="updateUserStatus"
-                                                        id="user-{{ $user->id }}"
-                                                        user_id="{{ $user->id }}"><i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
+                                                    <a href="javascript:void(0)" class="updateCmsPageStatus"
+                                                        id="cmspage-{{$cms_page->id }}"
+                                                        cmspage_id="{{$cms_page->id }}"><i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
                                                 @endif
 
                                             </td>

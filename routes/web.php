@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrderssController;
 use App\Http\Controllers\Admin\ShippingController;
+use App\Http\Controllers\Admin\CmsController;
 
 
 
@@ -110,10 +111,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 
         // Users
         Route::get('/users', [UserController::class, 'users'])->name('admin.users');
-        Route::match(['get', 'post'], 'add-edit-user/{id?}',[UserController::class,'addEditUser'])->name('admin.add.edit.users');
-        Route::match(['get', 'post'], 'add-edit-user/{id?}', [UserController::class,'addEditUser'])->name('admin.add.edit.users');
-        Route::get('delete_user/{id}', [UserController::class,'deleteUser'])->name('admin.delete.user');
         Route::post('/update-user-status', [UserController::class,'updateUserStatus']);
+
+        // cms pages
+        Route::get('/cms_pages', [CmsController::class, 'cmsPages'])->name('admin.cms.pages');
+        Route::match(['get', 'post'],'/add-edit-cms-pages/{id?}',[CmsController::class, 'updateCmsPage'])->name('admin.add.edit.cms.pages');
+        Route::post('/update-cms-pages-status', [CmsController::class, 'updateCmsPageStatus']);
 
 
     });
@@ -131,6 +134,7 @@ Route::group(['namespace' => 'Front'], function () {
 
     // product detail route
     Route::get('/product/{id}', [ProductsController::class, 'detail'])->name('product');
+
     // getproduct attribute price
     Route::post('/get-product-price', [ProductsController::class, 'getProductPrice']);
     // add to cart route
@@ -157,6 +161,10 @@ Route::group(['namespace' => 'Front'], function () {
 
     //check delivery pincode
     Route::post('/check-pincode',[ProductsController::class, 'checkPincode'])->name('front.check.pincode');
+    // Search Product
+    Route::get('/search/product', [ProductsController::class, 'listing'])->name('front.product.search');
+
+
 
     Route::group(['middleware' =>['auth']],function () {
         Route::post('/check-password',[UsersController::class, 'checkUserPassword'])->name('front.check.user.password');

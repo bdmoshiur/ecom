@@ -31,6 +31,7 @@ class ProductsController extends Controller
             $data = $request->all();
             $url = $data['url'];
             $categoryCount = Category::where(['url' => $url, 'status' => 1])->count();
+
             if ($categoryCount > 0) {
                 $categoryDetails = Category::catDetails($url);
                 $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
@@ -79,7 +80,31 @@ class ProductsController extends Controller
         } else {
             $url = Route::getFacadeRoot()->current()->uri();
             $categoryCount = Category::where(['url' => $url, 'status' => 1])->count();
-            if ($categoryCount > 0) {
+
+            if (isset($_REQUEST['search']) && !empty($_REQUEST['search']) ) {
+                $search_product = $_REQUEST['search'];
+                $categoryDetails['breadcambs'] = $search_product;
+                $categoryDetails['catDetails']['category_name'] = $search_product;
+                $categoryDetails['catDetails']['description'] = "Search Results for " . $search_product;
+
+                $categoryProducts = Product::with('brand')->where(function($query) use ($search_product){
+                    $query->where('product_name' , 'like', '%' .$search_product . '%' )
+                    ->orWhere('product_code' , 'like', '%' .$search_product . '%' )
+                    ->orWhere('product_color' , 'like', '%' .$search_product . '%' )
+                    ->orWhere('description' , 'like', '%' .$search_product . '%' );
+
+                })->where('status',1);
+
+                $categoryProducts = $categoryProducts->get();
+
+                $page_name = 'Search Results';
+                return view('front.products.listing', [
+                    'page_name' => $page_name,
+                    'categoryDetails' => $categoryDetails,
+                    'categoryProducts' => $categoryProducts,
+                ]);
+
+            }elseif ($categoryCount > 0) {
                 $categoryDetails = Category::catDetails($url);
                 $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
                 $categoryProducts = $categoryProducts->paginate(30);
@@ -706,7 +731,6 @@ class ProductsController extends Controller
         }
 
     }
-
 
 
 }

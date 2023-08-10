@@ -109,6 +109,38 @@ $(document).ready(function () {
             });
         });
 
+
+
+            //Update CMS Pages Status
+        $(document).on("click", ".updateCmsPageStatus", function () {
+            var status = $(this).children("i").attr("status");
+            var cmspage_id = $(this).attr("cmspage_id");
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "post",
+                url: "/admin/update-cms-pages-status",
+                data: { status: status, cmspage_id: cmspage_id },
+                success: function (resp) {
+                    if (resp["status"] == 0) {
+                        $("#cmspage-" + cmspage_id).html(
+                            "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                        );
+                    } else if (resp["status"] == 1) {
+                        $("#cmspage-" + cmspage_id).html(
+                            "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                        );
+                    }
+                },
+                error: function () {
+                    alert("error");
+                },
+            });
+        });
+
+
+
      //Update Brand Status
     // $(".updateBrandStatus").click(function () {
     $(document).on("click", ".updateBannerStatus", function () {

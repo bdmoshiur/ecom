@@ -9,6 +9,7 @@ use Database\Seeders\SectionsTableSeeder;
 use Database\Seeders\ProductsImagesTableSeeder;
 use Database\Seeders\ProductsAttributesTableSeeder;
 use Database\Seeders\OrderStatusTableSeeder;
+use Database\Seeders\CmsPagesTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,7 +30,9 @@ class DatabaseSeeder extends Seeder
         //  $this->call(BannerTableSeeder::class);
         //  $this->call(CouponTableSeeder::class);
         //  $this->call(DeliveryAddressTableSeeder::class);
-         $this->call(OrderStatusTableSeeder::class);
+        //  $this->call(OrderStatusTableSeeder::class);
+         $this->call(CmsPagesTableSeeder::class);
+
 
     }
 }

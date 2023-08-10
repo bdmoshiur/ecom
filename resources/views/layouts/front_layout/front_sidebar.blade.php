@@ -26,7 +26,7 @@ $sections = Section::sections();
         @endforeach
     </ul>
     <br>
-    @if (isset($page_name) && ($page_name = 'listing'))
+    @if (isset($page_name) && ($page_name = 'listing') && !isset($_REQUEST['search']) )
         <div class="well well-small">
             <h5>Fabric</h5>
             @foreach ($fabricArray as $fabric)
