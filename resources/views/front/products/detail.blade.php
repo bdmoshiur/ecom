@@ -77,6 +77,20 @@ use App\Product;
                 <h3>{{ $productDetails['product_name'] }}</h3>
                 <small>- {{ $productDetails['brand']['name'] }}</small>
                 <hr class="soft" />
+
+
+                @if (count($groupProducts) > 0)
+                    <div>
+                        <div><strong>More Colors</strong></div>
+                        <div style="margin-top: 5px">
+                            @foreach ($groupProducts as $product)
+                                <a href="{{ route('product', $product['id']) }}"> <img style="width: 50px" src="{{ asset('images/product_images/small/'.$product['main_image']) }}" alt=""> </a>
+                            @endforeach
+                        </div>
+                    </div>
+                    <br>
+                @endif
+
                 <small>{{ $total_stock }} items in stock</small>
                 <form action="{{ route('addToCart') }}" method="post" class="form-horizontal qtyFrm">
                     @csrf

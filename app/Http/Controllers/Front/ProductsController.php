@@ -118,10 +118,16 @@ class ProductsController extends Controller
         $total_stock = ProductsAttribute::where('product_id', $id)->sum('stock');
         $relatedProducts = Product::where('category_id', $productDetails['category']['id'])->where('id', '!=', $id)->limit(3)->inRandomOrder()->get()->toArray();
         // dd($relatedProducts);
+
+        $groupProducts = [];
+        if (!empty($productDetails['group_code'])) {
+            $groupProducts = Product::select('id', 'main_image')->where('id' ,'!=', $id)->where(['group_code' =>$productDetails['group_code'] , 'status' => 1 ])->get()->toArray();
+        }
         return view('front.products.detail', [
             'productDetails' => $productDetails,
             'total_stock' => $total_stock,
             'relatedProducts' => $relatedProducts,
+            'groupProducts' => $groupProducts,
         ]);
     }
 
@@ -139,7 +145,7 @@ class ProductsController extends Controller
         if ($request->isMethod('post')) {
             $data = $request->all();
 
-            if ($data['quantity'] <= 0) {
+            if ($data['quantity'] <= 0 || $data['quantity'] == "" ) {
                 $data['quantity'] = 1;
             }
 
@@ -389,7 +395,7 @@ class ProductsController extends Controller
         $total_weight = 0;
         foreach ($userCartItems as $item){
             $product_weight = $item['product']['product_weight'];
-            $total_weight = $total_weight + $product_weight;
+            $total_weight = $total_weight + ($product_weight * $item['quantity']) ;
             $attrPrice = Product::getDiscountAttrPrice($item['product_id'], $item['size']);
             $total_price = $total_price + $attrPrice['final_price'] * $item['quantity'];
         }

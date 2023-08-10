@@ -80,6 +80,35 @@ $(document).ready(function () {
         });
     });
 
+
+    //Update Users Status
+        $(document).on("click", ".updateUserStatus", function () {
+            var status = $(this).children("i").attr("status");
+            var user_id = $(this).attr("user_id");
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "post",
+                url: "/admin/update-user-status",
+                data: { status: status, user_id: user_id },
+                success: function (resp) {
+                    if (resp["status"] == 0) {
+                        $("#user-" + user_id).html(
+                            "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                        );
+                    } else if (resp["status"] == 1) {
+                        $("#user-" + user_id).html(
+                            "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                        );
+                    }
+                },
+                error: function () {
+                    alert("error");
+                },
+            });
+        });
+
      //Update Brand Status
     // $(".updateBrandStatus").click(function () {
     $(document).on("click", ".updateBannerStatus", function () {
@@ -108,6 +137,7 @@ $(document).ready(function () {
             },
         });
     });
+
 
      //Update Shipping  Status
         $(document).on("click", ".updateShippingStatus", function () {

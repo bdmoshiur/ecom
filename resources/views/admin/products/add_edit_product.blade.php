@@ -199,25 +199,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="description">product Description</label>
-                                        <textarea class="form-control" name="description" id="description" rows="3" placeholder="Enter Discription ...">
-                                            @if (!empty($productdata['description']))
-                                                {{ $productdata['description'] }}
-                                                @else
-                                                {{ old('description') }}
-                                                @endif
-                                            </textarea>
+                                        <textarea class="form-control" name="description" id="description" rows="3" placeholder="Enter Discription ...">@if (!empty($productdata['description'])) {{ $productdata['description'] }}@else {{ old('description') }}@endif</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="wash_care">Wash Care</label>
-                                        <textarea class="form-control" name="wash_care" id="wash_care" rows="3" placeholder="Enter Wash Care ...">
-                                            @if (!empty($productdata['wash_care']))
-{{ $productdata['wash_care'] }}
-@else
-{{ old('wash_care') }}
-@endif
-                                            </textarea>
+                                        <textarea class="form-control" name="wash_care" id="wash_care" rows="3" placeholder="Enter Wash Care ...">@if (!empty($productdata['wash_care'])){{ $productdata['wash_care'] }} @else {{ old('wash_care') }}@endif</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Select Fabric</label>
@@ -285,43 +273,32 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
+                                        <label for="group_code">Group Code</label>
+                                        <input type="text" class="form-control" name="group_code" id="group_code"
+                                            @if (!empty($productdata['group_code'])) value="{{ $productdata['group_code'] }}"
+                                        @else
+                                        value="{{ old('group_code') }}" @endif
+                                            placeholder="Enter Group Code">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="meta_title">Meta Title</label>
-                                        <textarea class="form-control" name="meta_title" id="meta_title" rows="3" placeholder="Enter ...">
-                                            @if (!empty($productdata['meta_title']))
-{{ $productdata['meta_title'] }}
-@else
-{{ old('meta_title') }}
-@endif
-                                            </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="form-group">
-                                        <label for="meta_description">Meta Description</label>
-                                        <textarea class="form-control" name="meta_description" id="meta_description" rows="3" placeholder="Enter ...">
-                                            @if (!empty($productdata['meta_description']))
-{{ $productdata['meta_description'] }}
-@else
-{{ old('meta_description') }}
-@endif
-                                            </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="form-group">
-                                        <label for="meta_keywords">Meta Keywords</label>
-                                        <textarea class="form-control" name="meta_keywords" id="meta_keywords" rows="3" placeholder="Enter ..."> @if (!empty($productdata['meta_keywords']))
-{{ $productdata['meta_keywords'] }}
-@else
-{{ old('meta_keywords') }}
-@endif
-                                            </textarea>
+                                        <textarea class="form-control" name="meta_title" id="meta_title" rows="3" placeholder="Enter ..."> @if (!empty($productdata['meta_title'])){{ $productdata['meta_title'] }} @else {{ old('meta_title') }} @endif</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="meta_keywords">Featured Item</label>
                                         <input type="checkbox" name="is_featured" id="is_featured" value="Yes"
                                             @if (!empty($productdata['is_featured']) && $productdata['is_featured'] == 'Yes') checked @endif>
 
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="meta_description">Meta Description</label>
+                                        <textarea class="form-control" name="meta_description" id="meta_description" rows="3" placeholder="Enter ...">@if (!empty($productdata['meta_description'])){{ $productdata['meta_description'] }} @else {{ old('meta_description') }} @endif </textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="meta_keywords">Meta Keywords</label>
+                                        <textarea class="form-control" name="meta_keywords" id="meta_keywords" rows="3" placeholder="Enter ..."> @if (!empty($productdata['meta_keywords'])){{ $productdata['meta_keywords'] }}@else {{ old('meta_keywords') }} @endif</textarea>
                                     </div>
                                 </div>
                             </div>

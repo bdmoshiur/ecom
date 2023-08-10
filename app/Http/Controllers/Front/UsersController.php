@@ -114,6 +114,7 @@ class UsersController extends Controller
     public function logoutUser()
     {
         Auth::logout();
+        Session::invalidate();
         return redirect('/');
     }
 

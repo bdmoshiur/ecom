@@ -5,14 +5,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\IndexController;
 use App\Http\Controllers\Front\UsersController;
-use App\Http\Controllers\Admin\BannerController;
-use App\Http\Controllers\Front\ProductsController;
-use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Front\OrdersController;
+use App\Http\Controllers\Front\ProductsController;
+use App\Http\Controllers\Front\PaypalController;
+use App\Http\Controllers\Front\PayumoneyController;
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrderssController;
 use App\Http\Controllers\Admin\ShippingController;
-use App\Http\Controllers\Front\PayumoneyController;
-use App\Http\Controllers\Front\PaypalController;
 
 
 
@@ -105,6 +106,15 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('/view/shipping/charges',[ShippingController::class, 'viewShippingCharges'])->name('admin.shipping.charges');
         Route::match(['get', 'post'],'/edit/shipping/charges/{id}',[ShippingController::class, 'updateShippingCharges'])->name('admin.update.shipping.charges');
         Route::post('/update-shipping-status', [ShippingController::class, 'updateShippingStatus']);
+
+
+        // Users
+        Route::get('/users', [UserController::class, 'users'])->name('admin.users');
+        Route::match(['get', 'post'], 'add-edit-user/{id?}',[UserController::class,'addEditUser'])->name('admin.add.edit.users');
+        Route::match(['get', 'post'], 'add-edit-user/{id?}', [UserController::class,'addEditUser'])->name('admin.add.edit.users');
+        Route::get('delete_user/{id}', [UserController::class,'deleteUser'])->name('admin.delete.user');
+        Route::post('/update-user-status', [UserController::class,'updateUserStatus']);
+
 
     });
 });
