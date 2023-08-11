@@ -1,3 +1,7 @@
+<?php
+use App\CmsPage;
+$cmsUrls = CmsPage::select('url')->where('status',1)->get()->pluck('url')->toArray();
+?>
 <div  id="footerSection">
 	<div class="container">
 		<div class="row">
@@ -9,9 +13,13 @@
 			</div>
 			<div class="span3">
 				<h5>INFORMATION</h5>
-				<a href="contact.html">CONTACT</a>
-				<a href="tac.html">TERMS AND CONDITIONS</a>
-				<a href="faq.html">FAQ</a>
+				{{-- <a href="{{ route('cmspage.about-us') }}">ABOUT US</a --}}
+				{{-- <a href="">TERMS AND CONDITIONS</a>
+                <a href="">CONTACT US</a>
+				<a href="">FAQ</a> --}}
+                @foreach ($cmsUrls as $url)
+                    <a href="{{ route('cmspage.' . $url) }}">{{ strtoupper(str_replace('-', ' ', $url)) }}</a>
+                @endforeach
 			</div>
 			<div class="span3">
 				<h5>OUR OFFERS</h5>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Category;
+use App\CmsPage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\IndexController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\ProductsController;
 use App\Http\Controllers\Front\PaypalController;
 use App\Http\Controllers\Front\PayumoneyController;
+use App\Http\Controllers\Front\CmsPageController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CouponController;
@@ -115,8 +117,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 
         // cms pages
         Route::get('/cms_pages', [CmsController::class, 'cmsPages'])->name('admin.cms.pages');
-        Route::match(['get', 'post'],'/add-edit-cms-pages/{id?}',[CmsController::class, 'updateCmsPage'])->name('admin.add.edit.cms.pages');
+        Route::match(['get', 'post'],'/add-edit-cms-pages/{id?}',[CmsController::class, 'addEditCmsPage'])->name('admin.add.edit.cms.pages');
         Route::post('/update-cms-pages-status', [CmsController::class, 'updateCmsPageStatus']);
+        Route::get('delete_cmspage/{id}', [CmsController::class,'deleteCmsPages'])->name('admin.delete.cms.pages');
 
 
     });
@@ -131,6 +134,13 @@ Route::group(['namespace' => 'Front'], function () {
     foreach($catUrls as $url){
         Route::get('/'.$url, [ProductsController::class, 'listing'])->name('index'.$url);
     }
+
+       // Cms Page route
+       $cmsUrls = CmsPage::select('url')->where('status',1)->get()->pluck('url')->toArray();
+       foreach($cmsUrls as $url){
+           Route::get('/'.$url, [CmsPageController::class, 'cmsPage'])->name('cmspage'. '.' .$url);
+       }
+
 
     // product detail route
     Route::get('/product/{id}', [ProductsController::class, 'detail'])->name('product');
