@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Front;
 
 use App\CmsPage;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
 class CmsPageController extends Controller
 {
@@ -32,68 +34,56 @@ class CmsPageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for contactUs.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function contactUs(Request $request)
     {
-        //
+
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+
+            $rules = [
+                'name' => 'required',
+                'email' => 'required|email',
+                'subject' => 'required',
+                'comment' => 'required',
+            ];
+            $customMessage = [
+                'name.required' => 'Name is Required',
+                'email.required' => 'Email is Required',
+                'email.email' => 'Valid email is Required',
+                'subject.required' => 'Subject is Required',
+                'comment.required' => 'Message is Required',
+            ];
+            $validator = Validator::make($data, $rules, $customMessage);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $email = "moshiurcse888@gmail.com";
+            $messageData = [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'subject' => $data['subject'],
+                'comment' => $data['comment'],
+            ];
+
+            Mail::send('emails.enquiry', $messageData, function ($message) use ($email) {
+                $message->to($email)->subject('Enquiry from e-commerce website');
+            });
+
+            $message = 'Thanks for your enquiry. we will get back to you soon';
+            Session::flash('success_message', $message);
+            return redirect()->back();
+
+        }
+
+        return view('front.pages.contact');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

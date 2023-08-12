@@ -14,9 +14,9 @@ $cmsUrls = CmsPage::select('url')->where('status',1)->get()->pluck('url')->toArr
 			<div class="span3">
 				<h5>INFORMATION</h5>
 				{{-- <a href="{{ route('cmspage.about-us') }}">ABOUT US</a --}}
-				{{-- <a href="">TERMS AND CONDITIONS</a>
-                <a href="">CONTACT US</a>
-				<a href="">FAQ</a> --}}
+				{{-- <a href="">TERMS AND CONDITIONS</a> --}}
+				{{-- <a href="">FAQ</a>   --}}
+                <a href="{{ route('front.contactus') }}">CONTACT US</a>
                 @foreach ($cmsUrls as $url)
                     <a href="{{ route('cmspage.' . $url) }}">{{ strtoupper(str_replace('-', ' ', $url)) }}</a>
                 @endforeach

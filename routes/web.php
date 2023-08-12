@@ -135,11 +135,11 @@ Route::group(['namespace' => 'Front'], function () {
         Route::get('/'.$url, [ProductsController::class, 'listing'])->name('index'.$url);
     }
 
-       // Cms Page route
-       $cmsUrls = CmsPage::select('url')->where('status',1)->get()->pluck('url')->toArray();
-       foreach($cmsUrls as $url){
-           Route::get('/'.$url, [CmsPageController::class, 'cmsPage'])->name('cmspage'. '.' .$url);
-       }
+    // Cms Page route
+    $cmsUrls = CmsPage::select('url')->where('status',1)->get()->pluck('url')->toArray();
+    foreach($cmsUrls as $url){
+        Route::get('/'.$url, [CmsPageController::class, 'cmsPage'])->name('cmspage'. '.' .$url);
+    }
 
 
     // product detail route
@@ -173,6 +173,9 @@ Route::group(['namespace' => 'Front'], function () {
     Route::post('/check-pincode',[ProductsController::class, 'checkPincode'])->name('front.check.pincode');
     // Search Product
     Route::get('/search/product', [ProductsController::class, 'listing'])->name('front.product.search');
+
+    // Contact us
+    Route::match(['get','post'],'/contact',[CmsPageController::class, 'contactUs'])->name('front.contactus');
 
 
 
