@@ -22,10 +22,20 @@ class CmsPageController extends Controller
         $currentRoute = url()->current();
         $currentRoute = str_replace('http://127.0.0.1:8000/','', $currentRoute);
         $cmsPagePoute = CmsPage::where(['status' => 1])->get()->pluck('url')->toArray();
+
         if (in_array($currentRoute, $cmsPagePoute)) {
+
             $cmsPageDetails = CmsPage::where('url', $currentRoute)->first()->toArray();
+
+            $meta_title = $cmsPageDetails['meta_title'];
+            $meta_description = $cmsPageDetails['meta_description'];
+            $meta_keywords = $cmsPageDetails['meta_keywords'];
+
             return view('front.pages.cms_pages',[
                 'cmsPageDetails' => $cmsPageDetails,
+                'meta_title' => $meta_title,
+                'meta_description' => $meta_description,
+                'meta_keywords' => $meta_keywords,
             ]);
         }else{
             abort(404);

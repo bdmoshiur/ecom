@@ -69,9 +69,17 @@ class ProductsController extends Controller
                     $categoryProducts->orderBy('id', 'desc');
                 }
                 $categoryProducts = $categoryProducts->paginate(30);
+
+                $meta_title = $categoryDetails['catDetails']['meta_title'];
+                $meta_description = $categoryDetails['catDetails']['meta_description'];
+                $meta_keywords = $categoryDetails['catDetails']['meta_keywords'];
+
                 return view('front.products.ajax_products_listing', [
                     'categoryDetails' => $categoryDetails,
                     'categoryProducts' => $categoryProducts,
+                    'meta_title' => $meta_title,
+                    'meta_description' => $meta_description,
+                    'meta_keywords' => $meta_keywords,
                     'url' => $url,
                 ]);
             } else {
@@ -116,11 +124,20 @@ class ProductsController extends Controller
                 $patternArray = $productFilters['patternArray'];
                 $fitArray = $productFilters['fitArray'];
                 $occasionArray = $productFilters['occasionArray'];
+
                 $page_name = 'listing';
+
+                $meta_title = $categoryDetails['catDetails']['meta_title'];
+                $meta_description = $categoryDetails['catDetails']['meta_description'];
+                $meta_keywords = $categoryDetails['catDetails']['meta_keywords'];
+
                 return view('front.products.listing', [
                     'page_name' => $page_name,
                     'categoryDetails' => $categoryDetails,
                     'categoryProducts' => $categoryProducts,
+                    'meta_title' => $meta_title,
+                    'meta_description' => $meta_description,
+                    'meta_keywords' => $meta_keywords,
                     'url' => $url,
                     'fabricArray' => $fabricArray,
                     'sleeveArray' => $sleeveArray,
@@ -148,11 +165,19 @@ class ProductsController extends Controller
         if (!empty($productDetails['group_code'])) {
             $groupProducts = Product::select('id', 'main_image')->where('id' ,'!=', $id)->where(['group_code' =>$productDetails['group_code'] , 'status' => 1 ])->get()->toArray();
         }
+
+        $meta_title = $productDetails['product_name'];
+        $meta_description = $productDetails['description'];
+        $meta_keywords = $productDetails['product_name'];
+
         return view('front.products.detail', [
             'productDetails' => $productDetails,
             'total_stock' => $total_stock,
             'relatedProducts' => $relatedProducts,
             'groupProducts' => $groupProducts,
+            'meta_title' => $meta_title,
+            'meta_description' => $meta_description,
+            'meta_keywords' => $meta_keywords,
         ]);
     }
 
@@ -228,8 +253,16 @@ class ProductsController extends Controller
     {
         $userCartItems = Cart::userCartItrms();
         // dd($userCartItems);
+
+        $meta_title = 'Shopping Cart E-commerce website';
+        $meta_description = 'View shopping cart of E-commerce website';
+        $meta_keywords = 'shopping cart, e-commerce website';
+
         return view('front.products.cart', [
             'userCartItems' => $userCartItems,
+            'meta_title' => $meta_title,
+            'meta_description' => $meta_description,
+            'meta_keywords' => $meta_keywords,
         ]);
     }
 
@@ -613,11 +646,13 @@ class ProductsController extends Controller
             echo "Order Placed"; die;
         }
 
+        $meta_title = 'Checkout Page E-commerce website';
 
         return view('front.products.checkout',[
             'userCartItems' => $userCartItems,
             'deliveryAddress' => $deliveryAddress,
-            'total_price' => $total_price
+            'total_price' => $total_price,
+            'meta_title' => $meta_title,
         ]);
     }
 

@@ -11,14 +11,14 @@
     @if (!empty($meta_description))
         <meta name="description" content="{{ $meta_description }}">
     @else
-        <meta name="description" content="this is the ecomerce website">
+        <meta name="description" content="this is the ecomerce website description">
     @endif
 
 
     @if (!empty($meta_keywords))
         <meta name="keywords" content="{{ $meta_keywords }}">
     @else
-        <meta name="keywords" content="this is the ecomerce website">
+        <meta name="keywords" content="this is the ecomerce website keywords">
     @endif
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
