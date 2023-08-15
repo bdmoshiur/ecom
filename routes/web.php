@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrderssController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\CmsController;
+use App\Http\Controllers\Admin\AdminController;
 
 
 
@@ -122,6 +123,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('delete_cmspage/{id}', [CmsController::class,'deleteCmsPages'])->name('admin.delete.cms.pages');
 
 
+        // Admins subadmins
+        Route::get('/admins-subadmins', [AdminController::class, 'adminsSubadmins'])->name('admin.admins.subadmins');
+        Route::post('/update-admin-status', [AdminController::class, 'updatAdminsStatus']);
+        Route::get('delete_admin/{id}', [AdminController::class,'deleteAdmin'])->name('admin.delete.admins');
     });
 });
 
