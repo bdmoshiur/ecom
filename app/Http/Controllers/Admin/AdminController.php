@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Admin;
+use App\AdminRole;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -168,7 +169,7 @@ class AdminController extends Controller
     }
 
     public function addEditAdminSubadmin(Request $request, $id = null) {
-
+        Session::put('page', "admins_subadmins");
         if ($id == "") {
             //Add Admin/Sub-Admin Functionality
             $title = "Add Admin/Sub-Admin";
@@ -243,4 +244,58 @@ class AdminController extends Controller
             'admindata' => $admindata,
         ]);
     }
+
+    public function updateRole(Request $request, $id ) {
+
+        Session::put('page', "admins_subadmins");
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            unset($data['_token']);
+
+            foreach ($data as $key => $value) {
+                if (isset($value['view'])) {
+                    $view =  $value['view'];
+                } else {
+                    $view = 0;
+                }
+
+                if (isset($value['edit'])) {
+                    $edit =  $value['edit'];
+                } else {
+                    $edit = 0;
+                }
+
+                if (isset($value['full'])) {
+                    $full =  $value['full'];
+                } else {
+                    $full = 0;
+                }
+
+                AdminRole::where('admin_id', $id)->insert([
+                    'admin_id' => $id ,
+                    'module' => $key ,
+                    'view_access' => $view ,
+                    'edit_access' => $edit,
+                    'full_access' => $full,
+                ]);
+            }
+
+            $message = "Roles Update Successfully";
+            Session::flash('success_message', $message);
+            return redirect()->back();
+        }
+
+        $adminDetails = Admin::where('id', $id)->first()->toArray();
+        $adminRoles = AdminRole::where('admin_id', $id)->get()->toArray();
+
+        $title = "Update " . $adminDetails['name'] . "(" . $adminDetails['type'] . " ) roles/permissions";
+        return view('admin.admins_subadmins.update_role',[
+            'title' => $title,
+            'adminDetails' => $adminDetails,
+            'adminRoles' => $adminRoles,
+        ]);
+    }
+
+
+
 }
