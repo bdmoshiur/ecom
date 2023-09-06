@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Admin;
 use App\AdminRole;
+use App\OtherSetting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -296,6 +297,27 @@ class AdminController extends Controller
         ]);
     }
 
+    public function updateOtherSetting(Request $request) {
+
+        Session::put('page', "update_other_setting");
+        $title = "Others Setting";
+        $otherSetting = otherSetting::where('id', 1)->first()->toArray();
+
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            otherSetting::where('id', 1)->update(['min_cart_value' => $data['min_cart_value'], 'max_cart_value' => $data['max_cart_value'] ]);
+
+            $message = "Min / Max cart value updated successfully";
+            Session::flash('success_message', $message);
+            return redirect()->back();
+        }
+
+        return view('admin.other_setting',[
+            'title' => $title,
+            'otherSetting' => $otherSetting,
+        ]);
+
+    }
 
 
 }

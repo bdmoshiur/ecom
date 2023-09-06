@@ -80,31 +80,39 @@
                                             <td>{{ $product->category->category_name ?? '' }}</td>
                                             <td>{{ $product->section->name ?? '' }}</td>
                                             <td>
-                                                @if ($product->status == 1)
-                                                    <a href="javascript:void(0)" class="updateProductStatus"
-                                                        id="product-{{ $product->id }}"
-                                                        product_id="{{ $product->id }}"><i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
-                                                @else
-                                                    <a href="javascript:void(0)" class="updateProductStatus"
-                                                        id="product-{{ $product->id }}"
-                                                        product_id="{{ $product->id }}"><i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
+                                                @if ($productModule['edit_access'] == 1 || $productModule['full_access'] == 1 )
+                                                    @if ($product->status == 1)
+                                                        <a href="javascript:void(0)" class="updateProductStatus"
+                                                            id="product-{{ $product->id }}"
+                                                            product_id="{{ $product->id }}"><i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
+                                                    @else
+                                                        <a href="javascript:void(0)" class="updateProductStatus"
+                                                            id="product-{{ $product->id }}"
+                                                            product_id="{{ $product->id }}"><i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
+                                                    @endif
                                                 @endif
                                             </td>
-                                            <td style="width: 120px"><a title="Add/Edit Attributes"
-                                                    href="{{ route('admin.add_attributes', $product->id) }}"><i
-                                                        class="fas fa-plus"></i></a>
-                                                &nbsp;
-                                                <a title="Add Imagess"
-                                                    href="{{ route('admin.add_images', $product->id) }}"><i
-                                                        class="fas fa-plus-circle"></i></a>
-                                                &nbsp;
-                                                <a title="Edit Product"
-                                                    href="{{ route('admin.add.edit.products', $product->id) }}"><i
-                                                        class="fas fa-edit"></i></a>
-                                                &nbsp;
+                                            <td style="width: 120px">
+                                                @if ($productModule['edit_access'] == 1 || $productModule['full_access'] == 1 )
+                                                    <a title="Add/Edit Attributes"
+                                                        href="{{ route('admin.add_attributes', $product->id) }}"><i
+                                                            class="fas fa-plus"></i></a>
+                                                    &nbsp;
+                                                    <a title="Add Imagess"
+                                                        href="{{ route('admin.add_images', $product->id) }}"><i
+                                                            class="fas fa-plus-circle"></i></a>
+                                                    &nbsp;
+                                                    <a title="Edit Product"
+                                                        href="{{ route('admin.add.edit.products', $product->id) }}"><i
+                                                            class="fas fa-edit"></i></a>
+                                                    &nbsp;
+                                                @endif
+
+                                                @if ($productModule['full_access'] == 1 )
                                                 <a title="Delete Product" href="javascript:void(0)" class="confirmDelete"
                                                     record="product" recordid="{{ $product->id }}"><i
                                                         class="fas fa-trash"></i></a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

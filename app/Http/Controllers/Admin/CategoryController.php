@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Section;
 use App\Category;
+use App\AdminRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
@@ -16,7 +18,18 @@ class CategoryController extends Controller
         Session::put('page', "categories");
         $categories = Category::with(['section','parentcategory'])->get();
         $categories = json_decode(json_encode($categories));
-        return view('admin.categories.categories', compact('categories'));
+
+        $categoryModuleCount = AdminRole::where(['admin_id'=> Auth::guard('admin')->user()->id, 'module' => 'categories'])->count();
+
+        if ($categoryModuleCount == 0) {
+            $message =  "This feature is restrected for you!";
+            Session::flash('error_message', $message);
+            return redirect()->route('admin.dashboard');
+        }else{
+            $categoryModule = AdminRole::where(['admin_id'=> Auth::guard('admin')->user()->id, 'module' => 'categories'])->first()->toArray();
+        }
+
+        return view('admin.categories.categories', compact('categories','categoryModule'));
     }
 
     public function updateCategoryStatus(Request $request)

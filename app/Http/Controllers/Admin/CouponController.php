@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Section;
 use App\Coupon;
+use App\AdminRole;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 use Illuminate\Support\Facades\Session;
 
@@ -16,8 +18,19 @@ class CouponController extends Controller
 
         $coupons = Coupon::get();
         Session::put('page', "coupons");
+
+        $couponModuleCount = AdminRole::where(['admin_id'=> Auth::guard('admin')->user()->id, 'module' => 'coupons'])->count();
+
+        if ($couponModuleCount == 0) {
+            $message =  "This feature is restrected for you!";
+            Session::flash('error_message', $message);
+            return redirect()->route('admin.dashboard');
+        }else{
+            $couponModule = AdminRole::where(['admin_id'=> Auth::guard('admin')->user()->id, 'module' => 'coupons'])->first()->toArray();
+        }
         return view('admin.coupons.coupons',[
             'coupons' => $coupons,
+            'couponModule' => $couponModule,
         ]);
     }
 

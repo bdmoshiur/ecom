@@ -66,22 +66,28 @@
                                             </td>
                                             <td>{{ $coupon->expiry_date }}</td>
                                             <td>
-                                                <a title="Edit coupon"
-                                                    href="{{ route('admin.add.edit.coupons', $coupon->id) }}"><i
-                                                        class="fas fa-edit"></i></a>
-                                                &nbsp; &nbsp;
-                                                <a title="Delete coupon" href="javascript:void(0)" class="confirmDelete"
-                                                    record="coupon" recordid="{{ $coupon->id }}"><i
-                                                        class="fas fa-trash"></i></a>
-                                                &nbsp; &nbsp;
-                                                @if ($coupon->status == 1)
-                                                    <a href="javascript:void(0)" class="updateCouponStatus"
-                                                        id="coupon-{{ $coupon->id }}"
-                                                        coupon_id="{{ $coupon->id }}"><i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
-                                                @else
-                                                    <a href="javascript:void(0)" class="updateCouponStatus"
-                                                        id="coupon-{{ $coupon->id }}"
-                                                        coupon_id="{{ $coupon->id }}"><i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
+                                                @if ($couponModule['edit_access'] == 1 || $couponModule['full_access'] == 1 )
+                                                    <a title="Edit coupon"
+                                                        href="{{ route('admin.add.edit.coupons', $coupon->id) }}"><i
+                                                            class="fas fa-edit"></i></a>
+                                                    &nbsp; &nbsp;
+                                                @endif
+                                                @if ( $couponModule['full_access'] == 1 )
+                                                    <a title="Delete coupon" href="javascript:void(0)" class="confirmDelete"
+                                                        record="coupon" recordid="{{ $coupon->id }}"><i
+                                                            class="fas fa-trash"></i></a>
+                                                    &nbsp; &nbsp;
+                                                @endif
+                                                @if ($couponModule['edit_access'] == 1 || $couponModule['full_access'] == 1 )
+                                                    @if ($coupon->status == 1)
+                                                        <a href="javascript:void(0)" class="updateCouponStatus"
+                                                            id="coupon-{{ $coupon->id }}"
+                                                            coupon_id="{{ $coupon->id }}"><i class="fas fa-toggle-on" aria-hidden="true" status="Active"></i></a>
+                                                    @else
+                                                        <a href="javascript:void(0)" class="updateCouponStatus"
+                                                            id="coupon-{{ $coupon->id }}"
+                                                            coupon_id="{{ $coupon->id }}"><i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
+                                                    @endif
                                                 @endif
 
                                             </td>

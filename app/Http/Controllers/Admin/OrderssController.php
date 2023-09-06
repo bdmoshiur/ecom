@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Order;
 use App\User;
 use App\OrdersLog;
+use App\AdminRole;
+use Illuminate\Support\Facades\Auth;
 use App\Sms;
 use Dompdf\Dompdf;
 use App\OrderStatus;
@@ -25,8 +27,19 @@ class OrderssController extends Controller
         Session::put('page', "orders");
         $orders = Order::with('orders_products')->orderBy('id','desc')->get()->toArray();
 
+        $orderModuleCount = AdminRole::where(['admin_id'=> Auth::guard('admin')->user()->id, 'module' => 'orders'])->count();
+
+        if ($orderModuleCount == 0) {
+            $message =  "This feature is restrected for you!";
+            Session::flash('error_message', $message);
+            return redirect()->route('admin.dashboard');
+        }else{
+            $orderModule = AdminRole::where(['admin_id'=> Auth::guard('admin')->user()->id, 'module' => 'orders'])->first()->toArray();
+        }
+
         return  view('admin.orders.orders',[
             'orders' => $orders,
+            'orderModule' => $orderModule
         ]);
     }
 

@@ -6,6 +6,8 @@ use App\Brand;
 use App\Product;
 use App\Section;
 use App\Category;
+use App\AdminRole;
+use Illuminate\Support\Facades\Auth;
 use App\ProductsImage;
 use App\ProductsAttribute;
 use Illuminate\Http\Request;
@@ -23,7 +25,17 @@ class ProductController extends Controller
         }, 'section' => function ($query) {
             $query->select('id', 'name');
         }])->get();
-        return view('admin.products.products', compact('products'));
+
+        $productModuleCount = AdminRole::where(['admin_id'=> Auth::guard('admin')->user()->id, 'module' => 'products'])->count();
+
+        if ($productModuleCount == 0) {
+            $message =  "This feature is restrected for you!";
+            Session::flash('error_message', $message);
+            return redirect()->route('admin.dashboard');
+        }else{
+            $productModule = AdminRole::where(['admin_id'=> Auth::guard('admin')->user()->id, 'module' => 'products'])->first()->toArray();
+        }
+        return view('admin.products.products', compact('products','productModule'));
     }
 
     public function updateProductStatus(Request $request)
@@ -49,7 +61,7 @@ class ProductController extends Controller
 
     public function addEditProduct(Request $request, $id = null)
     {
-        // dd($request->all());
+
         if ($id == "") {
             //Add Product Functionality
             $title = "Add Product";

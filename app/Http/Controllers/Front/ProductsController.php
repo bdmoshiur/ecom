@@ -9,6 +9,7 @@ use App\Country;
 use App\Coupon;
 use App\OrderProduct;
 use App\Order;
+use App\OtherSetting;
 use App\User;
 use App\Sms;
 use App\ShippingCharge;
@@ -461,15 +462,18 @@ class ProductsController extends Controller
             $total_price = $total_price + $attrPrice['final_price'] * $item['quantity'];
         }
 
-        if ($total_price < 500) {
-            $message = "Min Cart Amount Must be Tk.500";
+        // Min / Max cart value check
+        $otherSetting = otherSetting::where('id', 1)->first()->toArray();
+
+        if ($total_price < $otherSetting['min_cart_value']) {
+            $message = "Min Cart Amount Must be Tk. " . $otherSetting['min_cart_value'] ;
             Session::flash('error_message',$message);
 
             return redirect()->back();
         }
 
-        if ($total_price > 50000) {
-            $message = "Max Cart Amount Must be Tk.50000";
+        if ($total_price > $otherSetting['max_cart_value']) {
+            $message = "Max Cart Amount Must be Tk. " . $otherSetting['max_cart_value'];
             Session::flash('error_message',$message);
 
             return redirect()->back();
