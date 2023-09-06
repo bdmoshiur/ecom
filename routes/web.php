@@ -125,6 +125,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 
         // Admins subadmins
         Route::get('/admins-subadmins', [AdminController::class, 'adminsSubadmins'])->name('admin.admins.subadmins');
+        Route::match(['get', 'post'],'/add-edit-admin-subadmin/{id?}',[AdminController::class, 'addEditAdminSubadmin'])->name('admin.add.edit.admin.subadmin');
         Route::post('/update-admin-status', [AdminController::class, 'updatAdminsStatus']);
         Route::get('delete_admin/{id}', [AdminController::class,'deleteAdmin'])->name('admin.delete.admins');
     });

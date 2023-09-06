@@ -95,13 +95,16 @@ class ProductsController extends Controller
                 $categoryDetails['catDetails']['category_name'] = $search_product;
                 $categoryDetails['catDetails']['description'] = "Search Results for " . $search_product;
 
-                $categoryProducts = Product::with('brand')->where(function($query) use ($search_product){
-                    $query->where('product_name' , 'like', '%' .$search_product . '%' )
-                    ->orWhere('product_code' , 'like', '%' .$search_product . '%' )
-                    ->orWhere('product_color' , 'like', '%' .$search_product . '%' )
-                    ->orWhere('description' , 'like', '%' .$search_product . '%' );
-
-                })->where('status',1);
+                $categoryProducts = Product::with('brand')
+                ->join('categories', 'categories.id', '=', 'products.category_id')
+                ->where(function($query) use ($search_product) {
+                    $query->where('products.product_name', 'like', '%' . $search_product . '%')
+                        ->orWhere('products.product_code', 'like', '%' . $search_product . '%')
+                        ->orWhere('products.product_color', 'like', '%' . $search_product . '%')
+                        ->orWhere('products.description', 'like', '%' . $search_product . '%')
+                        ->orWhere('categories.category_name', 'like', '%' . $search_product . '%');
+                })
+                ->where('products.status', 1);
 
                 $categoryProducts = $categoryProducts->get();
 
@@ -456,6 +459,20 @@ class ProductsController extends Controller
             $total_weight = $total_weight + ($product_weight * $item['quantity']) ;
             $attrPrice = Product::getDiscountAttrPrice($item['product_id'], $item['size']);
             $total_price = $total_price + $attrPrice['final_price'] * $item['quantity'];
+        }
+
+        if ($total_price < 500) {
+            $message = "Min Cart Amount Must be Tk.500";
+            Session::flash('error_message',$message);
+
+            return redirect()->back();
+        }
+
+        if ($total_price > 50000) {
+            $message = "Max Cart Amount Must be Tk.50000";
+            Session::flash('error_message',$message);
+
+            return redirect()->back();
         }
 
         $deliveryAddress = Delivery_address::deliveryAddress();

@@ -67,9 +67,44 @@ class Order extends Model
         $orderDetails['height'] = 1;
         $orderDetails['weight'] = 1;
 
-        echo "<pre>"; print_r(json_encode($orderDetails)); die;
 
-        // return response()->json(['orderDetails' => $orderDetails]);
+        $orderDetails = json_encode($orderDetails);
+
+        // generate access token
+        $c = curl_init();
+        $url = "https://apiv2.shiprocket.in/v1/external/auth/login";
+        curl_setopt($c, CURLOPT_URL, $url);
+        curl_setopt($c, CURLOPT_POST, 1);
+        curl_setopt($c, CURLOPT_POSTFIELDS, 'email=moshiurcse888@gmail.com&password=12345678');
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+
+        $server_output = curl_exec($c);
+        curl_close($c);
+        $server_output = json_decode($server_output, true);
+
+        // Check if access token is retrieved successfully
+        if (isset($server_output['token'])) {
+            // Create order in shiprocket
+            $orderUrl = "https://apiv2.shiprocket.in/v1/external/orders/create";
+            $c = curl_init($orderUrl);
+            curl_setopt($c, CURLOPT_POST, 1);
+            curl_setopt($c, CURLOPT_POSTFIELDS, $orderDetails);
+            curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($c, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($c, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . $server_output['token']
+            ]);
+
+            $result = curl_exec($c);
+            curl_close($c);
+
+            echo "<pre>"; print_r($result); die;
+        } else {
+            echo "Failed to retrieve access token.";
+        }
+
 
     }
 }

@@ -35,7 +35,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Admins/Subadmins</h3>
-                            <a href="" class="btn btn-success btn-block"
+                            <a href="{{ route('admin.add.edit.admin.subadmin') }}" class="btn btn-success btn-block"
                                 style="max-width:200px; float:right; display:inline-block;">Add Admins/Subadmins</a>
                         </div>
                         <!-- /.card-header -->
@@ -77,7 +77,7 @@
                                                 @if ($admin->type != "superadmin")
                                                     <a title="Set Roles/Permissions" href=""><i class="fas fa-unlock"></i></a>
                                                     &nbsp;
-                                                    <a title="Edit Admin/Sub-Admin" href=""><i class="fas fa-edit"></i></a>
+                                                    <a title="Edit Admin/Sub-Admin" href="{{ route('admin.add.edit.admin.subadmin',$admin->id) }}"><i class="fas fa-edit"></i></a>
                                                     &nbsp;
                                                     <a title="Delete Admin/Sub-Admin" href="javascript:void(0)" class="confirmDelete"
                                                         record="admin" recordid="{{ $admin->id }}"><i
