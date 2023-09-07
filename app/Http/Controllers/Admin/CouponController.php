@@ -21,7 +21,11 @@ class CouponController extends Controller
 
         $couponModuleCount = AdminRole::where(['admin_id'=> Auth::guard('admin')->user()->id, 'module' => 'coupons'])->count();
 
-        if ($couponModuleCount == 0) {
+        if(Auth::guard('admin')->user()->type == 'superadmin'){
+            $couponModule['view_access'] = 1;
+            $couponModule['edit_access'] = 1;
+            $couponModule['full_access'] = 1;
+        }else if ($couponModuleCount == 0) {
             $message =  "This feature is restrected for you!";
             Session::flash('error_message', $message);
             return redirect()->route('admin.dashboard');

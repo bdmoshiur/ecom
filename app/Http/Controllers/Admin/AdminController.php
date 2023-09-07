@@ -252,6 +252,7 @@ class AdminController extends Controller
         if ($request->isMethod('post')) {
             $data = $request->all();
             unset($data['_token']);
+            AdminRole::where('admin_id', $id)->delete();
 
             foreach ($data as $key => $value) {
                 if (isset($value['view'])) {

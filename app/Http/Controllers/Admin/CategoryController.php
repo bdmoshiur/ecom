@@ -21,7 +21,11 @@ class CategoryController extends Controller
 
         $categoryModuleCount = AdminRole::where(['admin_id'=> Auth::guard('admin')->user()->id, 'module' => 'categories'])->count();
 
-        if ($categoryModuleCount == 0) {
+        if(Auth::guard('admin')->user()->type == 'superadmin'){
+            $categoryModule['view_access'] = 1;
+            $categoryModule['edit_access'] = 1;
+            $categoryModule['full_access'] = 1;
+        }else if ($categoryModuleCount == 0) {
             $message =  "This feature is restrected for you!";
             Session::flash('error_message', $message);
             return redirect()->route('admin.dashboard');
