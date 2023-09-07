@@ -28,6 +28,13 @@ $sections = Section::sections();
     <br>
     @if (isset($page_name) && ($page_name = 'listing') && !isset($_REQUEST['search']) )
         <div class="well well-small">
+            <h5>Brand</h5>
+            @foreach ($brandArray as $brand)
+                <input class="brand" style="margin-top: -3px" type="checkbox" name="brand[]" id="{{ $brand }}"
+                    value="{{ $brand }}">&nbsp;&nbsp;{{ $brand }} <br>
+            @endforeach
+        </div>
+        <div class="well well-small">
             <h5>Fabric</h5>
             @foreach ($fabricArray as $fabric)
                 <input class="fabric" style="margin-top: -3px" type="checkbox" name="fabric[]" id="{{ $fabric }}"

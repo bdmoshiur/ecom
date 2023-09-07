@@ -11,6 +11,7 @@ use App\OrderProduct;
 use App\Order;
 use App\OtherSetting;
 use App\User;
+use App\Brand;
 use App\Sms;
 use App\ShippingCharge;
 use App\Delivery_address;
@@ -36,6 +37,11 @@ class ProductsController extends Controller
             if ($categoryCount > 0) {
                 $categoryDetails = Category::catDetails($url);
                 $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
+
+                if (isset($data['brand']) && !empty($data['brand'])) {
+                    $brandIds = Brand::select('id')->whereIn('name', $data['brand'])->pluck('id');
+                    $categoryProducts->whereIn('products.brand_id', $brandIds);
+                }
 
                 if (isset($data['fabric']) && !empty($data['fabric'])) {
                     $categoryProducts->whereIn('products.fabric', $data['fabric']);
@@ -121,13 +127,18 @@ class ProductsController extends Controller
                 $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
                 $categoryProducts = $categoryProducts->paginate(30);
 
-                //products Filters
+                //Products Filters
                 $productFilters = Product::productFilters();
                 $fabricArray = $productFilters['fabricArray'];
                 $sleeveArray = $productFilters['sleeveArray'];
                 $patternArray = $productFilters['patternArray'];
                 $fitArray = $productFilters['fitArray'];
                 $occasionArray = $productFilters['occasionArray'];
+
+
+                //Brands Filters
+
+                $brandArray =  Brand::select('name')->where('status',1)->pluck('name');
 
                 $page_name = 'listing';
 
@@ -148,6 +159,7 @@ class ProductsController extends Controller
                     'patternArray' => $patternArray,
                     'fitArray' => $fitArray,
                     'occasionArray' => $occasionArray,
+                    'brandArray' => $brandArray,
                 ]);
             } else {
                 abort(404);
