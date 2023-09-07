@@ -104,6 +104,7 @@ class ProductsController extends Controller
 
                 $categoryProducts = Product::with('brand')
                 ->join('categories', 'categories.id', '=', 'products.category_id')
+                ->select('products.*','categories.category_name')
                 ->where(function($query) use ($search_product) {
                     $query->where('products.product_name', 'like', '%' . $search_product . '%')
                         ->orWhere('products.product_code', 'like', '%' . $search_product . '%')
