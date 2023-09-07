@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\OrderssController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CurrencyController;
 
 
 
@@ -134,6 +135,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         // Others Settings
         Route::match(['get', 'post'], 'update-other-setting', [AdminController::class,'updateOtherSetting'])->name('admin.update.other.settings');
 
+        // Currency Conver route
+        Route::get('/currencies', [CurrencyController::class, 'currencies'])->name('admin.currencies');
+        Route::match(['get', 'post'], 'add-edit-currency', [CurrencyController::class,'adminAddEditCurrency'])->name('admin.add.edit.currency');
+        Route::post('/update-currency-status', [CurrencyController::class, 'updatCurrencyStatus']);
 
     });
 });

@@ -10,6 +10,8 @@ use Database\Seeders\ProductsImagesTableSeeder;
 use Database\Seeders\ProductsAttributesTableSeeder;
 use Database\Seeders\OrderStatusTableSeeder;
 use Database\Seeders\CmsPagesTableSeeder;
+use Database\Seeders\CurrencyTableSeeder;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,6 +34,7 @@ class DatabaseSeeder extends Seeder
         //  $this->call(DeliveryAddressTableSeeder::class);
         //  $this->call(OrderStatusTableSeeder::class);
         //  $this->call(CmsPagesTableSeeder::class);
+         $this->call(CurrencyTableSeeder::class);
 
 
     }
