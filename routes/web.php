@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CurrencyController;
+use App\Http\Controllers\Admin\RatingController;
 
 
 
@@ -141,6 +142,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::post('/update-currency-status', [CurrencyController::class, 'updatCurrencyStatus']);
         Route::get('delete_currency/{id}', [CurrencyController::class, 'deleteCurrencies'])->name('admin.delete.currency');
 
+
+        // Ratings Routes
+        Route::get('/ratings', [RatingController::class, 'ratings'])->name('admin.ratings');
+        Route::post('/update-rating-status', [RatingController::class, 'updatRatingStatus']);
 
     });
 });
