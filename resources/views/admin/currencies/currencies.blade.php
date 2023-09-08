@@ -56,14 +56,6 @@
                                             <td>{{ $currency->currency_code }}</td>
                                             <td>{{ $currency->exchange_rate }}</td>
                                             <td>
-                                                <a title="Edit Currency"
-                                                    href="{{ route('admin.add.edit.currency', $currency->id) }}"><i
-                                                        class="fas fa-edit"></i></a>
-                                                &nbsp; &nbsp;
-                                                <a title="Delete currency" href="javascript:void(0)" class="confirmDelete"
-                                                    record="currency" recordid="{{ $currency->id }}"><i
-                                                        class="fas fa-trash"></i></a>
-                                                &nbsp; &nbsp;
                                                 @if ($currency->status == 1)
                                                     <a href="javascript:void(0)" class="updateCurrencyStatus"
                                                         id="currency-{{ $currency->id }}"
@@ -73,7 +65,14 @@
                                                         id="currency-{{ $currency->id }}"
                                                         currency_id="{{ $currency->id }}"><i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
                                                 @endif
-
+                                                &nbsp; &nbsp;
+                                                <a title="Edit Currency"
+                                                    href="{{ route('admin.add.edit.currency', $currency->id) }}"><i
+                                                        class="fas fa-edit"></i></a>
+                                                &nbsp; &nbsp;
+                                                <a title="Delete currency" href="javascript:void(0)" class="confirmDelete"
+                                                    record="currency" recordid="{{ $currency->id }}"><i
+                                                        class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

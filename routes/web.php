@@ -137,8 +137,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 
         // Currency Conver route
         Route::get('/currencies', [CurrencyController::class, 'currencies'])->name('admin.currencies');
-        Route::match(['get', 'post'], 'add-edit-currency', [CurrencyController::class,'adminAddEditCurrency'])->name('admin.add.edit.currency');
+        Route::match(['get', 'post'], 'add-edit-currency/{id?}', [CurrencyController::class,'addEditCurrency'])->name('admin.add.edit.currency');
         Route::post('/update-currency-status', [CurrencyController::class, 'updatCurrencyStatus']);
+        Route::get('delete_currency/{id}', [CurrencyController::class, 'deleteCurrencies'])->name('admin.delete.currency');
+
 
     });
 });
