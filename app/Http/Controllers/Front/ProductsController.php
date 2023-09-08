@@ -11,6 +11,7 @@ use App\OrderProduct;
 use App\Order;
 use App\OtherSetting;
 use App\User;
+use App\Currency;
 use App\Brand;
 use App\Sms;
 use App\ShippingCharge;
@@ -183,6 +184,8 @@ class ProductsController extends Controller
             $groupProducts = Product::select('id', 'main_image')->where('id' ,'!=', $id)->where(['group_code' =>$productDetails['group_code'] , 'status' => 1 ])->get()->toArray();
         }
 
+        $getCurrencies = Currency::select('currency_code', 'exchange_rate')->where('status',1)->get()->toArray();
+
         $meta_title = $productDetails['product_name'];
         $meta_description = $productDetails['description'];
         $meta_keywords = $productDetails['product_name'];
@@ -195,6 +198,7 @@ class ProductsController extends Controller
             'meta_title' => $meta_title,
             'meta_description' => $meta_description,
             'meta_keywords' => $meta_keywords,
+            'getCurrencies' => $getCurrencies,
         ]);
     }
 
@@ -203,6 +207,17 @@ class ProductsController extends Controller
         if ($request->ajax()) {
             $data = $request->all();
             $getDiscountAttrPrice = Product::getDiscountAttrPrice($data['product_id'], $data['size']);
+
+            $getCurrencies = Currency::select('currency_code', 'exchange_rate')->where('status',1)->get()->toArray();
+
+            $getDiscountAttrPrice['currency'] = "<span style='font-weight:normal !important; font-size:14px'>";
+
+            foreach ($getCurrencies as $key => $currency) {
+                $getDiscountAttrPrice['currency'] .= "<br>";
+                $getDiscountAttrPrice['currency'] .= $currency['currency_code'] ." ";
+                $getDiscountAttrPrice['currency'] .= round( $getDiscountAttrPrice['final_price'] / $currency['exchange_rate'],2);
+            }
+            $getDiscountAttrPrice['currency'] .= "</span>";
             return $getDiscountAttrPrice;
         }
     }

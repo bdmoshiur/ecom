@@ -220,15 +220,17 @@ $(document).ready(function () {
             type: "post",
             data: { size: size, product_id: product_id },
             success: function (resp) {
+                $(".mainCurrencyPrice").hide();
                 if (resp["discount"] > 0) {
                     $(".getAttrPrice").html(
                         "<del>Tk ." +
                             resp["product_price"] +
                             "</del> Tk ." +
-                            resp["final_price"]
+                            resp["final_price"] +
+                            resp["currency"]
                     );
                 } else {
-                    $(".getAttrPrice").html("Tk ." + resp["product_price"]);
+                    $(".getAttrPrice").html("Tk ." + resp["product_price"] + resp["currency"]);
                 }
             },
             error: function (error) {
