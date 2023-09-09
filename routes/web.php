@@ -11,6 +11,7 @@ use App\Http\Controllers\Front\ProductsController;
 use App\Http\Controllers\Front\PaypalController;
 use App\Http\Controllers\Front\PayumoneyController;
 use App\Http\Controllers\Front\CmsPageController;
+use App\Http\Controllers\Front\RatingsController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CouponController;
@@ -166,7 +167,6 @@ Route::group(['namespace' => 'Front'], function () {
         Route::get('/'.$url, [CmsPageController::class, 'cmsPage'])->name('cmspage'. '.' .$url);
     }
 
-
     // product detail route
     Route::get('/product/{id}', [ProductsController::class, 'detail'])->name('product');
 
@@ -202,6 +202,8 @@ Route::group(['namespace' => 'Front'], function () {
     // Contact us
     Route::match(['get','post'],'/contact',[CmsPageController::class, 'contactUs'])->name('front.contactus');
 
+    Route::match(['get','post'],'/add-rating', [RatingsController::class, 'addRating'])->name('front.add.rating');
+
 
 
     Route::group(['middleware' =>['auth']],function () {
@@ -211,9 +213,6 @@ Route::group(['namespace' => 'Front'], function () {
 
         Route::get('/orders',[OrdersController::class,'orders'])->name('front.orders');
         Route::get('/orders-details/{id}',[OrdersController::class,'ordersDetails'])->name('front.orders.details');
-
-
-
 
         Route::post('/apply-coupon',[ProductsController::class, 'applyCoupon']);
         Route::match(['get','post'],'/checkout',[ProductsController::class, 'checkOut'])->name('front.checkout');
@@ -233,9 +232,9 @@ Route::group(['namespace' => 'Front'], function () {
 
 
 
-
-
     });
+
+
 
 
 

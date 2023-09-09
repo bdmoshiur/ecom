@@ -14,6 +14,7 @@ use App\User;
 use App\Currency;
 use App\Brand;
 use App\Sms;
+USE App\Rating;
 use App\ShippingCharge;
 use App\Delivery_address;
 use App\ProductsAttribute;
@@ -186,6 +187,23 @@ class ProductsController extends Controller
 
         $getCurrencies = Currency::select('currency_code', 'exchange_rate')->where('status',1)->get()->toArray();
 
+        //get all rating of products
+        $ratings = Rating::with('user')->where(['status' => 1, 'product_id' => $id])->orderBy('id', 'DESC')->get()->toArray();
+
+
+
+        //get Average rating of products
+        $ratingSum = Rating::where(['status' => 1, 'product_id' => $id])->sum('rating');
+        $ratingCount = Rating::where(['status' => 1, 'product_id' => $id])->count();
+        if ($ratingCount > 0) {
+            $averRating = round($ratingSum / $ratingCount, 2);
+            $averStarRating = round($ratingSum / $ratingCount);
+        } else{
+            $averRating = 0;
+            $averStarRating = 0;
+        }
+
+
         $meta_title = $productDetails['product_name'];
         $meta_description = $productDetails['description'];
         $meta_keywords = $productDetails['product_name'];
@@ -199,6 +217,9 @@ class ProductsController extends Controller
             'meta_description' => $meta_description,
             'meta_keywords' => $meta_keywords,
             'getCurrencies' => $getCurrencies,
+            'ratings' => $ratings,
+            'averRating' => $averRating,
+            'averStarRating' => $averStarRating
         ]);
     }
 

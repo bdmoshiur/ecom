@@ -213,7 +213,7 @@
                             @endif
                             <li class="nav-item">
                                 <a href="{{ route('admin.users') }}" class="nav-link {{ $active }}">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class="far fa-user nav-icon"></i>
                                     <p>Users</p>
                                 </a>
                             </li>
@@ -264,7 +264,7 @@
                           @endif
                           <li class="nav-item">
                               <a href="{{ route('admin.ratings') }}" class="nav-link {{ $active }}">
-                                  <i class="far fa-circle nav-icon"></i>
+                                  <i class="far fa-eye nav-icon"></i>
                                   <p>Ratings / Reviews</p>
                               </a>
                           </li>

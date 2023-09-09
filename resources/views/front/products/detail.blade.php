@@ -3,6 +3,49 @@ use App\Product;
 @endphp
 @extends('layouts.front_layout.front_layout')
 @section('content')
+
+<style>
+    *{
+    margin: 0;
+    padding: 0;
+}
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+</style>
     <div class="span9">
         <ul class="breadcrumb">
             <li><a href="{{ route('index') }}">Home</a> <span class="divider">/</span></li>
@@ -38,10 +81,6 @@ use App\Product;
                             @endforeach
                         </div>
                     </div>
-                    <!--
-                                                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
-                                        <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
-                                        -->
                 </div>
 
                 <div class="btn-toolbar">
@@ -76,6 +115,16 @@ use App\Product;
                 @endif
                 <h3>{{ $productDetails['product_name'] }}</h3>
                 <small>- {{ $productDetails['brand']['name'] }}</small>
+                    <div>&nbsp;</div>
+                    @if ($averStarRating > 0 )
+                        <div>
+                            <?php
+                                $star = 1;
+                                while ($star <= $averStarRating) { ?>
+                                    <span>&#9733;</span>
+                                <?php $star++;  } ?>( {{ $averRating }} )
+                        </div>
+                    @endif
                 <hr class="soft" />
 
 
@@ -150,6 +199,7 @@ use App\Product;
                 @if (isset($productDetails['product_video']) && !empty($productDetails['product_video'] ))
                     <li><a href="#video" data-toggle="tab">Product Video</a></li>
                 @endif
+                <li><a href="#review" data-toggle="tab">Product Review & Rating</a></li>
             </ul>
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane fade active in" id="home">
@@ -318,6 +368,59 @@ use App\Product;
                         </video>
                     </div>
                 @endif
+
+                <div class="tab-pane fade" id="review">
+                    <div class="row">
+                        <div class="span4">
+                            <h3>Write a Review</h3>
+                            <form action="{{ route('front.add.rating') }}" method="post" name="ratingForm" id="ratingForm" class="form-horizontal">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
+                                <div class="rate">
+                                    <input type="radio" id="star5" name="rating" value="5" />
+                                    <label for="star5" title="text">5 stars</label>
+                                    <input type="radio" id="star4" name="rating" value="4" />
+                                    <label for="star4" title="text">4 stars</label>
+                                    <input type="radio" id="star3" name="rating" value="3" />
+                                    <label for="star3" title="text">3 stars</label>
+                                    <input type="radio" id="star2" name="rating" value="2" />
+                                    <label for="star2" title="text">2 stars</label>
+                                    <input type="radio" id="star1" name="rating" value="1" />
+                                    <label for="star1" title="text">1 star</label>
+                                </div>
+                                <div class="control-group"></div>
+                                <div class="form-group">
+                                    <label for="">Your Review *</label>
+                                    <textarea name="review" style="width: 300px; height:50px" required></textarea>
+                                </div>
+                                <div>&nbsp;</div>
+                                <div class="form-group">
+                                    <input class="btn btn-large" type="submit" name="submit">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="span4">
+                            <h3>Users Reviews</h3>
+                            @if (count($ratings) > 0)
+                                @foreach ($ratings as $rating)
+                                    <div>
+                                        <?php
+                                            $count = 1;
+                                            while ( $count <= $rating['rating'] ) { ?>
+                                                    <span>&#9733;</span>
+                                            <?php $count++; } ?>
+                                        <p>{{ $rating['review'] }}</p>
+                                        <p>{{ $rating['user']['name'] }}</p>
+                                        <p>{{ date('d-m-Y H:i:s', strtotime($rating['created_at'])) }}</p>
+
+                                    </div>
+                                @endforeach
+                            @else
+                                <p><b>Reviews are not available for this product.</b></p>
+                            @endif
+                        </div>
+                   </div>
+                </div>
             </div>
         </div>
     </div>
