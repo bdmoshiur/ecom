@@ -109,6 +109,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('/view/orders/invoice/{id}',[OrderssController::class,'viewOrdersInvoice'])->name('admin.view.orders.invoice');
         Route::get('/print/pdf/invoice/{id}',[OrderssController::class,'printPdfInvoice'])->name('admin.print.pdf.invoice');
 
+
+        // view orders charts
+        Route::get('view-orders-charts', [OrderssController::class, 'viewOrdersCharts'])->name('view.orders.charts');
+
+
         // shipping charges
         Route::get('/view/shipping/charges',[ShippingController::class, 'viewShippingCharges'])->name('admin.shipping.charges');
         Route::match(['get', 'post'],'/edit/shipping/charges/{id}',[ShippingController::class, 'updateShippingCharges'])->name('admin.update.shipping.charges');
@@ -118,6 +123,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         // Users
         Route::get('/users', [UserController::class, 'users'])->name('admin.users');
         Route::post('/update-user-status', [UserController::class,'updateUserStatus']);
+
+        // view users charts
+        Route::get('view-users-charts', [UserController::class, 'viewUsersCharts'])->name('view.users.charts');
+        Route::get('view-users-countries', [UserController::class, 'viewUsersCountries'])->name('view.users.countries');
+
 
         // cms pages
         Route::get('/cms_pages', [CmsController::class, 'cmsPages'])->name('admin.cms.pages');

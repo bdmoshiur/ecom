@@ -46,7 +46,7 @@ use App\Product;
 }
 
 </style>
-    <div class="span9">
+<div class="span9">
         <ul class="breadcrumb">
             <li><a href="{{ route('index') }}">Home</a> <span class="divider">/</span></li>
             <li><a
@@ -178,6 +178,7 @@ use App\Product;
                         <input style="width: 120px" type="text" name="pincode" id="pincode" placeholder="Check pincode">
                         <button type="button" id="checkPincode">Go</button>
                     </div>
+                    <div class="sharethis-inline-share-buttons"></div>
             </div>
             </form>
 
@@ -425,4 +426,5 @@ use App\Product;
         </div>
     </div>
     </div>
+
 @endsection

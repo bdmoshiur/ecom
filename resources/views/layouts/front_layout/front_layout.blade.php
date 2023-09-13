@@ -47,6 +47,15 @@
             font-style: italic
         }
     </style>
+
+    <!-- BEGIN SHAREAHOLIC CODE -->
+<link rel="preload" href="https://cdn.shareaholic.net/assets/pub/shareaholic.js" as="script" />
+<meta name="shareaholic:site_id" content="27cc7b6af6cbdb82bb9240784f1bf4e6" />
+<script data-cfasync="false" async src="https://cdn.shareaholic.net/assets/pub/shareaholic.js"></script>
+<!-- END SHAREAHOLIC CODE -->
+
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=64fddb62d0137a0012e89d6a&product=inline-share-buttons&source=platform" async="async"></script>
+
 </head>
 <body>
 @include('layouts.front_layout.front_header')

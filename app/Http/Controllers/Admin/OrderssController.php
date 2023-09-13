@@ -10,6 +10,7 @@ use App\OrdersLog;
 use App\AdminRole;
 use Illuminate\Support\Facades\Auth;
 use App\Sms;
+use Carbon\Carbon;
 use Dompdf\Dompdf;
 use App\OrderStatus;
 use Illuminate\Support\Facades\Session;
@@ -437,6 +438,37 @@ class OrderssController extends Controller
             'orders_details' => $orders_details,
             'users_details' => $users_details,
         ]);
+    }
+
+     public function viewOrdersCharts() {
+
+        $current_month_orders = Order::whereYear('created_at', Carbon::now()->year)
+        ->whereMonth('created_at', Carbon::now()->month)
+        ->count();
+
+        $before_1_month_orders = Order::whereYear('created_at', Carbon::now()->year)
+        ->whereMonth('created_at', Carbon::now()->subMonth(1))
+        ->count();
+
+        $before_2_month_orders = Order::whereYear('created_at', Carbon::now()->year)
+        ->whereMonth('created_at', Carbon::now()->subMonth(2))
+        ->count();
+
+        $before_3_month_orders = Order::whereYear('created_at', Carbon::now()->year)
+        ->whereMonth('created_at', Carbon::now()->subMonth(3))
+        ->count();
+
+        $ordersCount = [
+          $current_month_orders,
+           $before_1_month_orders,
+           $before_2_month_orders,
+           $before_3_month_orders,
+        ];
+
+        return view('admin.orders.view_orders_charts', [
+            'ordersCount' => $ordersCount,
+        ]);
+
     }
 
 }
