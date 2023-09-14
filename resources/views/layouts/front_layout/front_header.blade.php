@@ -54,6 +54,7 @@ $sections = Section::sections();
                                 <button type="submit">Go</button>
                             </form>
                             <ul class="nav pull-right">
+                                <li><a href="{{ route('front.wishlist.list') }}">Wishlist</a></li>
                                 <li><a href="{{ route('front.orders') }}">Orders</a></li>
                                 <li class="divider-vertical"></li>
                                 @if (Auth::check())

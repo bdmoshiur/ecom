@@ -245,7 +245,8 @@ Route::group(['namespace' => 'Front'], function () {
 
         // Wishlist
         Route::post('/update-wishlist',[ProductsController::class, 'updateWishList'])->name('front.update.wishlist');
-
+        Route::get('/wishlist/list', [ProductsController::class, 'wishlistList'])->name('front.wishlist.list');
+        Route::post('/delete-wishlist-item', [ProductsController::class, 'deleteWishlishItem'])->name('front.delete.wishlist.item');
 
 
         // Bkash

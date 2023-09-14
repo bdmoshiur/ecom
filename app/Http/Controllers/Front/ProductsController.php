@@ -869,5 +869,37 @@ class ProductsController extends Controller
         }
     }
 
+    public function wishlistList()
+    {
+        $userWishListItems= Wishlist::userWishListItems();
+        $meta_title  = "Wish list - E-Commerce website";
+        $meta_description = 'View Wish list of E-commerce website';
+        $meta_keywords = 'Wish list, e-commerce website';
+
+        return view('front.products.wishlist', [
+            'userWishListItems' => $userWishListItems,
+            'meta_title' => $meta_title,
+            'meta_description' => $meta_description,
+            'meta_keywords' => $meta_keywords,
+        ]);
+
+    }
+
+    public function deleteWishlishItem( Request $request) {
+        if ($request->ajax()) {
+            $data = $request->all();
+
+            Wishlist::where('id' ,$data['wishlist_id'])->delete();
+            $userWishListItems= Wishlist::userWishListItems();
+            $totalWishlistItems = totalWishlistItems();
+
+            return response()->json([
+                'totalWishlistItems' => $totalWishlistItems,
+                'view' => (string)View::make('front.products.wishlist_items', ['userWishListItems' => $userWishListItems]),
+            ]);
+
+        }
+    }
+
 
 }
