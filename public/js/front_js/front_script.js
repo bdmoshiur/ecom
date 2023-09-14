@@ -524,6 +524,34 @@ $(document).ready(function () {
 
     });
 
+    $(".userlogin").click(function(){
+        alert('Login to add products in you wishlists');
+     });
+
+
+    $(".updateWishlist").click(function(){
+       var product_id = $(this).data('productid');
+       $.ajax({
+            type: 'post',
+            data: { product_id:product_id },
+            url:'/update-wishlist',
+            success:function(resp){
+                if(resp.action == 'add'){
+                    $('button[data-productid=' + product_id + ']').html('wishlist <i class="icon-heart"></i>');
+                    alert('Product added in your wishlist');
+                }else if(resp.action == 'remove') {
+                    $('button[data-productid=' + product_id + ']').html('wishlist <i class="icon-heart-empty"></i>');
+                    alert('Product remove from your wishlist');
+                }
+            },
+            error:function(){
+                alert('Error');
+            }
+        });
+    });
+
+
+
 
 
 });

@@ -237,6 +237,17 @@ Route::group(['namespace' => 'Front'], function () {
         Route::get('/paypal/fail',[PaypalController::class, 'fail'])->name('front.paypal.fail');
         Route::post('/paypal/ipn',[PaypalController::class, 'ipn'])->name('front.paypal.ipn');
 
+
+
+        //Paymoney
+
+
+
+        // Wishlist
+        Route::post('/update-wishlist',[ProductsController::class, 'updateWishList'])->name('front.update.wishlist');
+
+
+
         // Bkash
         Route::post('/bkash',[PaypalController::class, 'bkash'])->name('front.bkash');
 

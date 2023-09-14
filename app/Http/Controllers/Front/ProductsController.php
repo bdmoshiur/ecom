@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use DB;
+use App\Wishlist;
 
 class ProductsController extends Controller
 {
@@ -835,6 +836,37 @@ class ProductsController extends Controller
 
         }
 
+    }
+
+    public function updateWishList( Request $request) {
+        if ($request->ajax()) {
+            $data = $request->all();
+
+            $countWishList =  Wishlist::countWishList($data['product_id']);
+
+            if($countWishList == 0){
+                // add product in wishlist
+                $wishLish = new Wishlist();
+
+                $wishLish->user_id = Auth::user()->id;
+                $wishLish->product_id  = $data['product_id'];
+                $wishLish->save();
+
+                return response()->json([
+                    'status' => true,
+                    'action' => 'add'
+                ]);
+            }else {
+                // remove product from wishlist
+                $countWishList =  Wishlist::where(['user_id' => Auth::user()->id, 'product_id' => $data['product_id'] ])->delete();
+
+                return response()->json([
+                    'status' => true,
+                    'action' => 'remove'
+                ]);
+            }
+
+        }
     }
 
 

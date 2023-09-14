@@ -1,5 +1,6 @@
 @php
-use App\Product;
+    use App\Product;
+    use App\Wishlist;
 @endphp
 @extends('layouts.front_layout.front_layout')
 @section('content')
@@ -171,12 +172,33 @@ use App\Product;
                             @endforeach
                         </select>
                         <input type="number" class="span1" name="quantity" placeholder="Qty." />
-                        <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i
+
+                        <div>&nbsp;</div>
+                        <button type="submit" class="btn btn-large btn-primary btn-space"> Add to cart <i
                                 class=" icon-shopping-cart"></i></button>
-                                <br><br>
+
+                        @php
+                            $countWishList = 0
+                        @endphp
+                         @if (Auth::check())
+                         @php
+                             $countWishList = Wishlist::countWishList($productDetails['id'])
+                         @endphp
+                            <button type="button" class="btn btn-large btn-primary btn-space updateWishlist" data-productid="{{ $productDetails['id'] }}">Wishlist<i
+                                class="@if ($countWishList > 0)
+                                    icon-heart
+                                @else
+                                    icon-heart-empty
+                                @endif"></i></button>
+                        @else
+                            <button type="button" class="btn btn-large btn-primary btn-space userlogin">Wishlist<i
+                                class="icon-heart-empty"></i></button>
+                        @endif
+
+                        <br><br>
                         <strong>Delivery</strong>
                         <input style="width: 120px" type="text" name="pincode" id="pincode" placeholder="Check pincode">
-                        <button type="button" id="checkPincode">Go</button>
+                        <button type="button" class="btn btn-medium" id="checkPincode">Go</button>
                     </div>
                     <div class="sharethis-inline-share-buttons"></div>
             </div>

@@ -12,6 +12,7 @@ use Database\Seeders\OrderStatusTableSeeder;
 use Database\Seeders\CmsPagesTableSeeder;
 use Database\Seeders\CurrencyTableSeeder;
 use Database\Seeders\RatingTableSeeder;
+use Database\Seeders\WishlistsTableSeeder;
 
 
 
@@ -37,7 +38,8 @@ class DatabaseSeeder extends Seeder
         //  $this->call(OrderStatusTableSeeder::class);
         //  $this->call(CmsPagesTableSeeder::class);
         //  $this->call(CurrencyTableSeeder::class);
-         $this->call(RatingTableSeeder::class);
+        // $this->call(RatingTableSeeder::class);
+        $this->call(WishlistsTableSeeder::class);
 
 
     }
