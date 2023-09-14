@@ -1,4 +1,9 @@
-<?php use App\Product; ?>
+<?php
+    use App\Product;
+    use App\Order;
+
+    $getOrderStatus = Order::getOrderStatus($orders_details['id']);
+ ?>
 @extends('layouts.front_layout.front_layout')
 @section('content')
     <div class="span9">
@@ -6,7 +11,12 @@
             <li><a href="{{ route('index')}}">Home</a> <span class="divider">/</span></li>
             <li class="active"><a href="{{ route('front.orders')}}">Orders</a></li>
         </ul>
-        <h3> Orders #{{ $orders_details['id']}} Details</h3>
+        <h3>
+            Orders #{{ $orders_details['id']}} Details
+            @if ($getOrderStatus == 'New')
+            <span style="float: right"><a href="{{ route('front.orders.cancel',$orders_details['id'] ) }}"><button type="button" class="btn btn-block btnCancelOrder">Cancel Order</button></a></span>
+            @endif
+        </h3>
         <hr class="soft" />
 
         <div class="row">

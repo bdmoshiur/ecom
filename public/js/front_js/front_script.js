@@ -568,6 +568,14 @@ $(document).ready(function () {
          });
      });
 
+      $(".btnCancelOrder").click(function(){
+            $results =  confirm('Want to cancel this order?');
+
+            if (!$results) {
+                return false;
+            }
+     });
+
 
 
 

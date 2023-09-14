@@ -224,6 +224,8 @@ Route::group(['namespace' => 'Front'], function () {
         Route::get('/orders',[OrdersController::class,'orders'])->name('front.orders');
         Route::get('/orders-details/{id}',[OrdersController::class,'ordersDetails'])->name('front.orders.details');
 
+        Route::get('/orders-cancel/{id}',[OrdersController::class,'ordersCancel'])->name('front.orders.cancel');
+
         Route::post('/apply-coupon',[ProductsController::class, 'applyCoupon']);
         Route::match(['get','post'],'/checkout',[ProductsController::class, 'checkOut'])->name('front.checkout');
         Route::match(['get','post'],'/add-edit-delivery-address/{id?}',[ProductsController::class, 'addEditDeliveryAddress'])->name('front.add.edit.delivery.address');

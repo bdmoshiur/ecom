@@ -37,6 +37,19 @@ class OrdersController extends Controller
         return view('front.orders.orders_details', [
             'orders_details' => $orders_details,
         ]);
+
+
     }
+
+    public function ordersCancel($id)
+    {
+        dd($id);
+        $orders_details = Order::with('orders_products')->where('id', $id)->first()->toArray();
+
+        return view('front.orders.orders_cancel', [
+            'orders_details' => $orders_details,
+        ]);
+    }
+
 
 }
