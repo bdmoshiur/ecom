@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Order;
+use App\OrdersLog;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class OrdersController extends Controller
 {
@@ -41,14 +43,42 @@ class OrdersController extends Controller
 
     }
 
-    public function ordersCancel($id)
+    public function ordersCancel(Request $request, $id)
     {
-        dd($id);
-        $orders_details = Order::with('orders_products')->where('id', $id)->first()->toArray();
+        if ($request->isMethod('post')) {
+            $data = $request->all();
 
-        return view('front.orders.orders_cancel', [
-            'orders_details' => $orders_details,
-        ]);
+            if (isset($data['reason']) && empty('reason')) {
+                return redirect()->back();
+            }
+
+            $user_id_auth = Auth::user()->id;
+            $user_id_order = Order::select('user_id')->where('id', $id)->first();
+
+            if ($user_id_auth == $user_id_order->user_id ) {
+
+                $cancelOrder = Order::where('id', $id)->update(['order_status' => 'Cancelled']);
+
+                //update oder log
+                $log = new OrdersLog();
+
+                $log->order_id = $id;
+                $log->order_status = 'User Cancelled';
+                $log->reason = $data['reason'];
+                $log->updated_by = "User";
+                $log->save();
+
+                $message = "Order has been Cancelled";
+                Session::flash('success_message', $message);
+
+                return redirect()->back();
+            }else{
+                $message = "Your order cancellation request is not valid !";
+                Session::flash('error_message', $message);
+
+                return redirect()->route('front.orders');
+            }
+        }
     }
 
 

@@ -569,8 +569,13 @@ $(document).ready(function () {
      });
 
       $(".btnCancelOrder").click(function(){
-            $results =  confirm('Want to cancel this order?');
+            var reason = $('#cancelReason').val();
+            if (reason == '') {
+                alert('Please Select Reason for Cancelling the Order');
+                return false;
+            }
 
+            $results =  confirm('Want to cancel this order?');
             if (!$results) {
                 return false;
             }

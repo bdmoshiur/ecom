@@ -14,9 +14,31 @@
         <h3>
             Orders #{{ $orders_details['id']}} Details
             @if ($getOrderStatus == 'New')
-            <span style="float: right"><a href="{{ route('front.orders.cancel',$orders_details['id'] ) }}"><button type="button" class="btn btn-block btnCancelOrder">Cancel Order</button></a></span>
+                <!-- Button trigger modal -->
+                <button style="float: right" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Cancel Order
+                </button>
             @endif
         </h3>
+
+                @if (Session::has('success_message'))
+                    <div class="alert alert-success" role="alert">
+                        {{ Session::get('success_message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <?php Session::forget('success_message'); ?>
+                @endif
+                @if (Session::has('error_message'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ Session::get('error_message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <?php Session::forget('error_message'); ?>
+                @endif
         <hr class="soft" />
 
         <div class="row">
@@ -132,4 +154,32 @@
             </div>
         </div>
     </div>
+
+   <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form method="post" action="{{ route('front.orders.cancel',$orders_details['id'] ) }}">
+        @csrf
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                 <h5 class="modal-title" id="exampleModalLabel">Reason for Cancellation</h5>
+            </div>
+            <div class="modal-body">
+                <select name="reason" id="cancelReason">
+                    <option value="">Select Reason</option>
+                    <option value="Order Created by Mistake">Order Created by Mistake</option>
+                    <option value="Item not Arrive on Time">Item not Arrive on Time</option>
+                    <option value="Shipping Cost too High">Shipping Cost too High</option>
+                    <option value="Found Cheaper Somewhere Else">Found Cheaper Somewhere Else</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary btnCancelOrder">Cancel Order</button>
+            </div>
+        </div>
+        </div>
+    </form>
+  </div>
 @endsection

@@ -234,8 +234,13 @@
                     <tr>
                         <td colspan="2">
                             @foreach ($orders_log as $log)
-                                <strong> {{$log['order_status'] }}</strong><br>
-                                {{ date('j F, Y, G:i a', strtotime($log['created_at'])) }}
+                                <strong> {{ $log['order_status'] }}</strong>
+                                <br>
+                                    @if ($log['reason'] != '')
+                                        <strong> {{ $log['reason'] }}</strong>
+                                    @endif
+                                <br>
+                                    {{ date('j F, Y, G:i a', strtotime($log['created_at'])) }}
                                 <br>
                             @endforeach
                         </td>

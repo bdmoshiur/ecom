@@ -6,6 +6,15 @@
             <li class="active">Orders</li>
         </ul>
         <h3> Orders </h3>
+        @if (Session::has('error_message'))
+            <div class="alert alert-danger" role="alert">
+                {{ Session::get('error_message') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <?php Session::forget('error_message'); ?>
+        @endif
         <hr class="soft" />
         <div class="row">
             <div class="span8">

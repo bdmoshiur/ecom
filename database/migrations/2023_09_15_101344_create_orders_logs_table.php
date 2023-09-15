@@ -17,6 +17,8 @@ class CreateOrdersLogsTable extends Migration
             $table->id();
             $table->integer('order_id');
             $table->string('order_status');
+            $table->string('reason');
+            $table->string('updated_by');
             $table->timestamps();
         });
     }

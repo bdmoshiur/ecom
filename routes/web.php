@@ -102,7 +102,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('delete_coupon/{id}', [CouponController::class,'deleteCoupon'])->name('admin.delete.coupon');
 
 
-        // Orders
+        // Admin Orders
         Route::get('/orders',[OrderssController::class,'orders'])->name('admin.orders');
         Route::get('/orders/details/{id}',[OrderssController::class,'ordersDetails'])->name('admin.orders.details');
         Route::post('/update/orders/status',[OrderssController::class,'updateOrdersStaus'])->name('admin.update.orderstatus');
@@ -224,7 +224,7 @@ Route::group(['namespace' => 'Front'], function () {
         Route::get('/orders',[OrdersController::class,'orders'])->name('front.orders');
         Route::get('/orders-details/{id}',[OrdersController::class,'ordersDetails'])->name('front.orders.details');
 
-        Route::get('/orders-cancel/{id}',[OrdersController::class,'ordersCancel'])->name('front.orders.cancel');
+        Route::match(['get','post'],'/orders-cancel/{id}',[OrdersController::class,'ordersCancel'])->name('front.orders.cancel');
 
         Route::post('/apply-coupon',[ProductsController::class, 'applyCoupon']);
         Route::match(['get','post'],'/checkout',[ProductsController::class, 'checkOut'])->name('front.checkout');
