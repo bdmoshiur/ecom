@@ -1,5 +1,6 @@
 <?php
 use App\Section;
+use App\Product;
 $sections = Section::sections();
 ?>
 
@@ -11,13 +12,16 @@ $sections = Section::sections();
             @if (count($section['categories']) > 0)
                 <li class="subMenu"><a>{{ $section['name'] }}</a>
                     @foreach ($section['categories'] as $category)
+                        @php
+                            $productCount = Product::productsCount($category['id']);
+                        @endphp
                         <ul>
-                            <li><a href="{{ url($category['url']) }}"><i
-                                        class="icon-chevron-right"></i><strong>{{ $category['category_name'] }}</strong></a>
-                            </li>
+                            <li><a href="{{ url($category['url']) }}"><i class="icon-chevron-right"></i><strong>{{ $category['category_name'] }} ( {{ $productCount }} )</strong></a></li>
                             @foreach ($category['subcategories'] as $subcategory)
-                                <li><a href="{{ url($subcategory['url']) }}"><i
-                                            class="icon-chevron-right"></i>{{ $subcategory['category_name'] }}</a></li>
+                                @php
+                                    $productsCountForSubCategories = Product::productsCountForSubCategories($subcategory['id']);
+                                @endphp
+                                <li><a href="{{ url($subcategory['url']) }}"><i class="icon-chevron-right"></i>{{ $subcategory['category_name'] }} ( {{ $productsCountForSubCategories }} )</a></li>
                             @endforeach
                         </ul>
                     @endforeach
