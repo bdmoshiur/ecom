@@ -13,6 +13,7 @@ use App\Sms;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use App\ReturnRequest;
+use App\OrderProduct;
 use App\OrderStatus;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
@@ -484,31 +485,43 @@ class OrderssController extends Controller
     public function returnRequestUpdate(Request $request) {
         if ($request->isMethod('post')) {
             $data = $request->all();
+
+            //get return details
+            $returnDetails = ReturnRequest::where('id',$data['return_id'])->first()->toArray();
+
+            // update return status in return_requests table
+            ReturnRequest::where('id',$data['return_id'])->update(['return_status' => $data['return_status']]);
+
+            // Update return_staus in orders_products table
+            OrderProduct::where([
+                'order_id'     => $returnDetails['order_id'],
+                'product_code' => $returnDetails['product_code'],
+                'product_size' => $returnDetails['product_size']
+            ])->update([
+                'item_status' => 'Return '.$data['return_status']
+            ]);
+
+            // User Deatails
+            $userDetails = User::select('name','email')->where('id', $returnDetails['user_id'])->first()->toArray();
+
+
+            //Send return status email
+            $email       = $userDetails['email'];
+            $return_status = $data['return_status'];
+            $messageData = [
+                'userDetails' => $userDetails,
+                'returnDetails' => $returnDetails,
+                'return_status' => $return_status,
+            ];
+
+            Mail::send('emails.return_requests', $messageData, function ($message) use ($email, $return_status ) {
+                $message->to($email)->subject('Return Request ' .$return_status);
+            });
+
+            $message = 'Return request has been '.$return_status. ' and email send to user';
+            Session::put('success_message', $message);
+            return redirect()->route('admin.return.requests');
         }
-        //get return details
-        $returnDetails = ReturnRequest::where('id',$data['return_id'])->first()->toArray();
-
-        // update return status in return_requests table
-        ReturnRequest::where('id',$data['return_id'])->update(['return_status' => $data['return_status']]);
-
-        // Update return_staus in orders_products table
-        OrderProduct::where(['order_id', $returnDetails['order_id'], 'product_code' => $returnDetails['product_code'], 'product_size' => $returnDetails['product_size']])->update(['item_status' =>'return '. $returnDetails['return_status']]);
-
-        // User Deatails
-        $userDetails = User::select('name','email')->where('id', $returnDetails['user_id'])->first()->toArra();
-
-
-        //Send return status email
-        $email       = $userDetails['email'];
-        $returnStats = $data['return_status'];
-        $messageData = [
-            'userDetails' => $userDetails,
-            'returnDetails' => $returnDetails,
-        ];
-
-        Mail::send('emails.order_status', $messageData, function ($message) use ($email) {
-            $message->to($email)->subject('Order Status Update E-commerce website');
-        });
 
 
     }
