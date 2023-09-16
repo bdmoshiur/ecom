@@ -66,11 +66,16 @@
                                             <td>{{ $request['comment'] }}</td>
                                             <td>{{ date('d-m-Y h:i:s', strtotime($request['created_at']) ) }}</td>
                                             <td>
-                                               <select class="form-control" name="return_status">
-                                                    <option @if ($request['return_status'] == 'Approved') selected="" @endif value="Approved">Approved</option>
-                                                    <option @if ($request['return_status'] == 'Rejected') selected="" @endif value="Rejected">Rejected</option>
-                                                    <option @if ($request['return_status'] == 'Pending') selected="" @endif value="Pending">Pending</option>
-                                               </select>
+                                                <form action="{{ route('admin.return.requests.update') }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="return_id" value="{{ $request['id'] }}">
+                                                    <select class="form-control" name="return_status">
+                                                            <option @if ($request['return_status'] == 'Approved') selected="" @endif value="Approved">Approved</option>
+                                                            <option @if ($request['return_status'] == 'Rejected') selected="" @endif value="Rejected">Rejected</option>
+                                                            <option @if ($request['return_status'] == 'Pending') selected="" @endif value="Pending">Pending</option>
+                                                    </select> <br>
+                                                    <input style="margin-top: -20px" type="submit" value="Update">
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

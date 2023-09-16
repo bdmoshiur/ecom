@@ -481,5 +481,38 @@ class OrderssController extends Controller
     }
 
 
+    public function returnRequestUpdate(Request $request) {
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+        }
+        //get return details
+        $returnDetails = ReturnRequest::where('id',$data['return_id'])->first()->toArray();
+
+        // update return status in return_requests table
+        ReturnRequest::where('id',$data['return_id'])->update(['return_status' => $data['return_status']]);
+
+        // Update return_staus in orders_products table
+        OrderProduct::where(['order_id', $returnDetails['order_id'], 'product_code' => $returnDetails['product_code'], 'product_size' => $returnDetails['product_size']])->update(['item_status' =>'return '. $returnDetails['return_status']]);
+
+        // User Deatails
+        $userDetails = User::select('name','email')->where('id', $returnDetails['user_id'])->first()->toArra();
+
+
+        //Send return status email
+        $email       = $userDetails['email'];
+        $returnStats = $data['return_status'];
+        $messageData = [
+            'userDetails' => $userDetails,
+            'returnDetails' => $returnDetails,
+        ];
+
+        Mail::send('emails.order_status', $messageData, function ($message) use ($email) {
+            $message->to($email)->subject('Order Status Update E-commerce website');
+        });
+
+
+    }
+
+
 
 }

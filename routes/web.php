@@ -160,6 +160,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 
         //Return Requests
         Route::get('/return-requests',[OrderssController::class,'returnRequest'])->name('admin.return.requests');
+        Route::post('/return-requests-update',[OrderssController::class,'returnRequestUpdate'])->name('admin.return.requests.update');
 
     });
 });
