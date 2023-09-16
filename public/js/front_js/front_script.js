@@ -579,7 +579,28 @@ $(document).ready(function () {
             if (!$results) {
                 return false;
             }
-     });
+        });
+
+
+        $(".btnReturnOrder").click(function(){
+            var product = $('#returnProduct').val();
+
+            if (product == '') {
+                alert('Please select which product you want to return');
+                return false;
+            }
+
+            var reason = $('#returnReason').val();
+            if (reason == '') {
+                alert('Please select reason for returning the order');
+                return false;
+            }
+
+            $results =  confirm('Want to return this order?');
+            if (!$results) {
+                return false;
+            }
+        });
 
 
 

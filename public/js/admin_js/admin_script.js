@@ -431,7 +431,7 @@ $(document).ready(function () {
     $("#section_id").change(function () {
         var section_id = $(this).val();
         $.ajax({
-            type: "POST",
+            type: "get",
             url: "/admin/append-categories-lavel",
             data: { section_id: section_id },
             success: function (data) {

@@ -285,6 +285,7 @@
                     <td>Product Size</td>
                     <td>Product Color</td>
                     <td>Product Qty</td>
+                    <td>Item Status</td>
                 </tr>
             </tr>
             </thead>
@@ -300,6 +301,7 @@
                         <td>{{ $product['product_size'] }}</td>
                         <td>{{ $product['product_color'] }}</td>
                         <td>{{ $product['product_quantity'] }}</td>
+                        <td>{{ $product['item_status'] }}</td>
                     </tr>
                 @endforeach
 

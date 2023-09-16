@@ -270,6 +270,19 @@
                           </li>
 
 
+                          @if (Session::get('page') == 'return_requests')
+                              <?php $active = 'active'; ?>
+                          @else
+                              <?php $active = ''; ?>
+                          @endif
+                          <li class="nav-item">
+                              <a href="{{ route('admin.return.requests') }}" class="nav-link {{ $active }}">
+                                  <i class="far fa-eye nav-icon"></i>
+                                  <p>Return / Requests</p>
+                              </a>
+                          </li>
+
+
 
                       </ul>
                   </li>

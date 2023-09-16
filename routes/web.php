@@ -61,7 +61,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::post('update-category-status', 'CategoryController@updateCategoryStatus');
         Route::match(['get', 'post'], 'add-edit-category/{id?}', 'CategoryController@addEditCategory')->name('admin.add.edit.categories');
 
-        Route::post('append-categories-lavel', 'CategoryController@appendCategoryLevel')->name('admin.append.category.level');
+        Route::get('append-categories-lavel', 'CategoryController@appendCategoryLevel')->name('admin.append.category.level');
         Route::get('delete_category_image/{id}', 'CategoryController@deleteCategoryImage')->name('admin.delete.category.image');
         Route::get('delete_category/{id}', 'CategoryController@deleteCategories')->name('admin.delete.category');
 
@@ -153,10 +153,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::post('/update-currency-status', [CurrencyController::class, 'updatCurrencyStatus']);
         Route::get('delete_currency/{id}', [CurrencyController::class, 'deleteCurrencies'])->name('admin.delete.currency');
 
-
-        // Ratings Routes
+        //Ratings Routes
         Route::get('/ratings', [RatingController::class, 'ratings'])->name('admin.ratings');
         Route::post('/update-rating-status', [RatingController::class, 'updatRatingStatus']);
+
+
+        //Return Requests
+        Route::get('/return-requests',[OrderssController::class,'returnRequest'])->name('admin.return.requests');
 
     });
 });
@@ -225,6 +228,9 @@ Route::group(['namespace' => 'Front'], function () {
         Route::get('/orders-details/{id}',[OrdersController::class,'ordersDetails'])->name('front.orders.details');
 
         Route::match(['get','post'],'/orders-cancel/{id}',[OrdersController::class,'ordersCancel'])->name('front.orders.cancel');
+
+        Route::match(['get','post'],'/orders-return/{id}',[OrdersController::class,'ordersReturn'])->name('front.orders.return');
+
 
         Route::post('/apply-coupon',[ProductsController::class, 'applyCoupon']);
         Route::match(['get','post'],'/checkout',[ProductsController::class, 'checkOut'])->name('front.checkout');

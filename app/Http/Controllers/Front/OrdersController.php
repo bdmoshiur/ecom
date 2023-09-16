@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Order;
 use App\OrdersLog;
+use App\ReturnRequest;
+use App\OrderProduct;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -74,6 +76,46 @@ class OrdersController extends Controller
                 return redirect()->back();
             }else{
                 $message = "Your order cancellation request is not valid !";
+                Session::flash('error_message', $message);
+
+                return redirect()->route('front.orders');
+            }
+        }
+    }
+
+
+    public function ordersReturn(Request $request, $id)
+    {
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+
+            $user_id_auth = Auth::user()->id;
+            $user_id_order = Order::select('user_id')->where('id', $id)->first();
+
+            if ($user_id_auth == $user_id_order->user_id ) {
+
+                $productArr = explode('-', $data['product_info'] );
+                $product_code = $productArr[0];
+                $product_size = $productArr[1];
+
+                OrderProduct::where(['order_id' => $id, 'product_code' => $product_code, 'product_size' => $product_size])->update(['item_status' => 'Return Initiated']);
+
+                $return = new ReturnRequest();
+
+                $return->order_id = $id;
+                $return->user_id = $user_id_auth;
+                $return->product_size = $product_size;
+                $return->product_code = $product_code;
+                $return->return_reason = $data['return_reason'];
+                $return->return_status = 'Pending';
+                $return->comment = $data['comment'];
+                $return->save();
+
+                $message = "Return request has been placed for the ordered product";
+                Session::flash('success_message', $message);
+                return redirect()->back();
+            }else{
+                $message = "Your order return request is not valid!";
                 Session::flash('error_message', $message);
 
                 return redirect()->route('front.orders');

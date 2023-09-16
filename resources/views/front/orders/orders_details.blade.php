@@ -15,8 +15,15 @@
             Orders #{{ $orders_details['id']}} Details
             @if ($getOrderStatus == 'New')
                 <!-- Button trigger modal -->
-                <button style="float: right" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <button style="float: right" type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal">
                     Cancel Order
+                </button>
+            @endif
+
+            @if ($getOrderStatus == 'Delivered')
+                <!-- Button trigger modal -->
+                <button style="float: right" type="button" class="btn btn-primary" data-toggle="modal" data-target="#returnModal">
+                    Return Order
                 </button>
             @endif
         </h3>
@@ -136,6 +143,7 @@
                         <td>Product Size</td>
                         <td>Product Color</td>
                         <td>Product Qty</td>
+                        <td>Item Status</td>
                     </tr>
                     @foreach ($orders_details['orders_products'] as $product)
                     <tr>
@@ -148,6 +156,7 @@
                         <td>{{ $product['product_size'] }}</td>
                         <td>{{ $product['product_color'] }}</td>
                         <td>{{ $product['product_quantity'] }}</td>
+                        <td>{{ $product['item_status'] }}</td>
                     </tr>
                     @endforeach
                 </table>
@@ -156,30 +165,72 @@
     </div>
 
    <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form method="post" action="{{ route('front.orders.cancel',$orders_details['id'] ) }}">
-        @csrf
-        <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">Reason for Cancellation</h5>
+    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
+        <form method="post" action="{{ route('front.orders.cancel',$orders_details['id'] ) }}">
+            @csrf
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cancelModalLabel">Reason for Cancellation</h5>
+                </div>
+                <div class="modal-body">
+                    <select name="reason" id="cancelReason">
+                        <option value="">Select Reason</option>
+                        <option value="Order Created by Mistake">Order Created by Mistake</option>
+                        <option value="Item not Arrive on Time">Item not Arrive on Time</option>
+                        <option value="Shipping Cost too High">Shipping Cost too High</option>
+                        <option value="Found Cheaper Somewhere Else">Found Cheaper Somewhere Else</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btnCancelOrder">Cancel Order</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <select name="reason" id="cancelReason">
-                    <option value="">Select Reason</option>
-                    <option value="Order Created by Mistake">Order Created by Mistake</option>
-                    <option value="Item not Arrive on Time">Item not Arrive on Time</option>
-                    <option value="Shipping Cost too High">Shipping Cost too High</option>
-                    <option value="Found Cheaper Somewhere Else">Found Cheaper Somewhere Else</option>
-                    <option value="Other">Other</option>
-                </select>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary btnCancelOrder">Cancel Order</button>
+        </form>
+    </div>
+
+    <!-- Return Modal -->
+    <div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="returnModalLabel" aria-hidden="true" style="width: 380px">
+        <form method="post" action="{{ route('front.orders.return',$orders_details['id'] ) }}">
+            @csrf
+            <div class="modal-dialog" role="document" align="center">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="returnModalLabel">Reason for Return</h5>
+                </div>
+                <div class="modal-body">
+                    <select name="product_info" id="returnProduct">
+                        <option value="">Select Product</option>
+                        @foreach ($orders_details['orders_products'] as $product)
+                            @if ($product['item_status'] != 'Return Initiated')
+                                <option value="{{ $product['product_code'] }}-{{ $product['product_size'] }}">{{ $product['product_code'] }}-{{ $product['product_size'] }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+                <div class="modal-body">
+                    <select name="return_reason" id="returnReason">
+                        <option value="">Select Reason</option>
+                        <option value="Performance or Auality not Adequate">Performance or Auality not Adequate</option>
+                        <option value="Product Damaged but Shipping Box ok">Product Damaged but Shipping Box ok</option>
+                        <option value="Item Arrived too Late">Item Arrived too Late</option>
+                        <option value="Wrong Item was Sent">Wrong Item was Sent</option>
+                        <option value="Item Defective or doesn't Work">Item Defective or doesn't Work</option>
+                    </select>
+                </div>
+                <div class="modal-body">
+                    <textarea name="comment" id="" placeholder="Comment"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btnReturnOrder">Return Order</button>
+                </div>
             </div>
-        </div>
-        </div>
-    </form>
-  </div>
-@endsection
+            </div>
+        </form>
+    </div>
+
+  @endsection

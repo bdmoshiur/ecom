@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Sms;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
+use App\ReturnRequest;
 use App\OrderStatus;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
@@ -440,7 +441,7 @@ class OrderssController extends Controller
         ]);
     }
 
-     public function viewOrdersCharts() {
+    public function viewOrdersCharts() {
 
         $current_month_orders = Order::whereYear('created_at', Carbon::now()->year)
         ->whereMonth('created_at', Carbon::now()->month)
@@ -468,7 +469,17 @@ class OrderssController extends Controller
         return view('admin.orders.view_orders_charts', [
             'ordersCount' => $ordersCount,
         ]);
-
     }
+
+    public function returnRequest() {
+        Session::put('page', "return_requests");
+        $return_requests = ReturnRequest::get()->toArray();
+
+        return view('admin.orders.return_requests',[
+            'return_requests' => $return_requests,
+        ]);
+    }
+
+
 
 }
