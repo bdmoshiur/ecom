@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $('.productSize').hide();
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -581,8 +582,44 @@ $(document).ready(function () {
             }
         });
 
+        $("#returnExchange").change(function(){
+            var return_exchange = $(this).val();
+            if (return_exchange == 'Exchange') {
+                $('.productSize').show();
+            } else{
+                $('.productSize').hide();
+            }
+        });
+
+
+
+        $("#returnProduct").change(function(){
+
+            var product_info = $(this).val();
+            var return_exchange = $('#returnExchange').val();
+            if (return_exchange == 'Exchange') {
+                $.ajax({
+                    type: 'post',
+                    data: { product_info:product_info },
+                    url:'/get-product-size',
+                    success:function(resp){
+                      $("#productSize").html(resp);
+                    },
+                    error:function(){
+                        alert('Error');
+                    }
+                });
+            }
+        });
+
+
 
         $(".btnReturnOrder").click(function(){
+            var return_exchange = $('#returnExchange').val();
+            if (return_exchange == "") {
+                alert('Please select if you want to return or exchange');
+                return false;
+            }
             var product = $('#returnProduct').val();
 
             if (product == '') {
@@ -596,7 +633,7 @@ $(document).ready(function () {
                 return false;
             }
 
-            $results =  confirm('Want to return this order?');
+            $results =  confirm('Want to return/exchange this order?');
             if (!$results) {
                 return false;
             }

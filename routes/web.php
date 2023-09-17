@@ -231,6 +231,7 @@ Route::group(['namespace' => 'Front'], function () {
         Route::match(['get','post'],'/orders-cancel/{id}',[OrdersController::class,'ordersCancel'])->name('front.orders.cancel');
 
         Route::match(['get','post'],'/orders-return/{id}',[OrdersController::class,'ordersReturn'])->name('front.orders.return');
+        Route::post('/get-product-size',[OrdersController::class,'getProductSize'])->name('front.get.product.size');
 
 
         Route::post('/apply-coupon',[ProductsController::class, 'applyCoupon']);

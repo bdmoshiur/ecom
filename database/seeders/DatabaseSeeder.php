@@ -13,6 +13,7 @@ use Database\Seeders\CmsPagesTableSeeder;
 use Database\Seeders\CurrencyTableSeeder;
 use Database\Seeders\RatingTableSeeder;
 use Database\Seeders\WishlistsTableSeeder;
+use Database\Seeders\ExchangeRequestTableSeeder;
 use Database\Seeders\ReturnRequestTableSeeder;
 
 
@@ -42,7 +43,9 @@ class DatabaseSeeder extends Seeder
         //  $this->call(CurrencyTableSeeder::class);
         // $this->call(RatingTableSeeder::class);
         // $this->call(WishlistsTableSeeder::class);
-        $this->call(ReturnRequestTableSeeder::class);
+        // $this->call(ReturnRequestTableSeeder::class);
+        $this->call(ExchangeRequestTableSeeder::class);
+
 
 
     }

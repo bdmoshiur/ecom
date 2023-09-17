@@ -23,7 +23,7 @@
             @if ($getOrderStatus == 'Delivered')
                 <!-- Button trigger modal -->
                 <button style="float: right" type="button" class="btn btn-primary" data-toggle="modal" data-target="#returnModal">
-                    Return Order
+                    Return / Exchange Order
                 </button>
             @endif
         </h3>
@@ -199,7 +199,14 @@
             <div class="modal-dialog" role="document" align="center">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="returnModalLabel">Reason for Return</h5>
+                    <h5 class="modal-title" id="returnModalLabel">Reason for Return / Exchange</h5>
+                </div>
+                <div class="modal-body">
+                    <select name="return_exchange" id="returnExchange">
+                        <option value="">Select Return/Exchange</option>
+                        <option value="Return">Return</option>
+                        <option value="Exchange">Exchange</option>
+                    </select>
                 </div>
                 <div class="modal-body">
                     <select name="product_info" id="returnProduct">
@@ -219,6 +226,13 @@
                         <option value="Item Arrived too Late">Item Arrived too Late</option>
                         <option value="Wrong Item was Sent">Wrong Item was Sent</option>
                         <option value="Item Defective or doesn't Work">Item Defective or doesn't Work</option>
+                        <option value="Require Smaller Size">Require Smaller Size</option>
+                        <option value="Require Larger Size">Require Larger Size</option>
+                    </select>
+                </div>
+                <div class="modal-body productSize">
+                    <select name="required_size" id="productSize">
+                        <option value="">Select Required Size</option>
                     </select>
                 </div>
                 <div class="modal-body">
