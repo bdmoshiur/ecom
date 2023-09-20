@@ -530,6 +530,7 @@ $(document).ready(function () {
      });
 
 
+
     $(".updateWishlist").click(function(){
        var product_id = $(this).data('productid');
        $.ajax({
@@ -643,3 +644,32 @@ $(document).ready(function () {
 
 
 });
+
+
+function addSubscriber(){
+    var subscriber_email = $('#subscriber_email').val();
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if ( regex.test(subscriber_email) == false) {
+        alert('Please Enter Valid Email');
+        return false;
+    }
+    $.ajax({
+        type: 'post',
+        data: { subscriber_email:subscriber_email },
+        url:'/add-subscriber-email',
+        success:function(resp){
+          if (resp == 'exists') {
+            alert('Subscriber email already exists!');
+          }else if(resp == 'inserted'){
+            alert('Thanks for Subscribing!');
+          }
+        },
+        error:function(){
+            alert('Error');
+        }
+    });
+
+}
+
+
+

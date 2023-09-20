@@ -11,6 +11,7 @@ use Database\Seeders\ProductsAttributesTableSeeder;
 use Database\Seeders\OrderStatusTableSeeder;
 use Database\Seeders\CmsPagesTableSeeder;
 use Database\Seeders\CurrencyTableSeeder;
+use Database\Seeders\NewsletterSubscriberTableSeeder;
 use Database\Seeders\RatingTableSeeder;
 use Database\Seeders\WishlistsTableSeeder;
 use Database\Seeders\ExchangeRequestTableSeeder;
@@ -44,7 +45,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(RatingTableSeeder::class);
         // $this->call(WishlistsTableSeeder::class);
         // $this->call(ReturnRequestTableSeeder::class);
-        $this->call(ExchangeRequestTableSeeder::class);
+        // $this->call(ExchangeRequestTableSeeder::class);
+        $this->call(NewsletterSubscriberTableSeeder::class);
 
 
 

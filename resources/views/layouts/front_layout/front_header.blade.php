@@ -9,6 +9,7 @@ $sections = Section::sections();
             <div class="span6">Welcome!<strong> User</strong></div>
             <div class="span6">
                 <div class="pull-right">
+                    <input type="email" name="subscriber_email" id="subscriber_email" placeholder="Enter Email..." style="margin-top: 10px" height="13px" width="150px" required="">&nbsp;<button class="btn btn-mini btn-primary" onclick="addSubscriber();">Subscribe</button>&nbsp;
                     <a href="{{ route('cart')}}"><span class="btn btn-mini btn-primary"><i
                                 class="icon-shopping-cart icon-white"></i> [ <span class="totalCartItems">{{ totalCartItems() }} </span> ] Items in your cart </span> </a>
                 </div>

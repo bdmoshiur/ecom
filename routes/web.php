@@ -12,6 +12,10 @@ use App\Http\Controllers\Front\PaypalController;
 use App\Http\Controllers\Front\PayumoneyController;
 use App\Http\Controllers\Front\CmsPageController;
 use App\Http\Controllers\Front\RatingsController;
+
+use App\Http\Controllers\Front\NewsletterSubscriberController as FrontSubscriberController;
+use App\Http\Controllers\Admin\NewsletterSubscriberController as AdminSubscriberController;
+
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CouponController;
@@ -162,6 +166,19 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('/return-requests',[OrderssController::class,'returnRequest'])->name('admin.return.requests');
         Route::post('/return-requests-update',[OrderssController::class,'returnRequestUpdate'])->name('admin.return.requests.update');
 
+
+        //Exchange Requests
+        Route::get('/exchange-requests',[OrderssController::class,'exchangeRequest'])->name('admin.exchange.requests');
+        Route::post('/exchange-requests-update',[OrderssController::class,'exchangeRequestUpdate'])->name('admin.exchange.requests.update');
+
+
+        //Exchange Requests
+        Route::get('/newsletter-subscriber',[AdminSubscriberController::class,'newsletterSubscriber'])->name('admin.newsletter.subscriber');
+        Route::post('/update-subscriber-status', [AdminSubscriberController::class, 'updateSubscriberStatus'])->name('admin.update.subscriber.status');
+        Route::get('delete_subscriber/{id}', [AdminSubscriberController::class, 'deleteSubscriber'])->name('admin.delete.subscriber');
+
+
+
     });
 });
 
@@ -217,6 +234,9 @@ Route::group(['namespace' => 'Front'], function () {
     Route::match(['get','post'],'/contact',[CmsPageController::class, 'contactUs'])->name('front.contactus');
 
     Route::match(['get','post'],'/add-rating', [RatingsController::class, 'addRating'])->name('front.add.rating');
+
+    //Subscriber route
+    Route::post('/add-subscriber-email',[FrontSubscriberController::class,'addSubscriber'])->name('admin.add.subscriber.email');
 
 
 

@@ -81,6 +81,36 @@ $(document).ready(function () {
     });
 
 
+     //Update Subscriber Status
+    $(document).on("click", ".updatesubscriberStatus", function () {
+        var status = $(this).children("i").attr("status");
+        var subscriber_id = $(this).attr("subscriber_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-subscriber-status",
+            data: { status: status, subscriber_id: subscriber_id },
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#subscriber-" + subscriber_id).html(
+                        "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#subscriber-" + subscriber_id).html(
+                        "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                    );
+                }
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    });
+
+
+
     //Update Currency Status
     $(document).on("click", ".updateCurrencyStatus", function () {
         var status = $(this).children("i").attr("status");

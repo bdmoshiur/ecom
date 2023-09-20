@@ -13,6 +13,7 @@ use App\Sms;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use App\ReturnRequest;
+use App\ExchangeRequest;
 use App\OrderProduct;
 use App\OrderStatus;
 use Illuminate\Support\Facades\Session;
@@ -474,10 +475,19 @@ class OrderssController extends Controller
 
     public function returnRequest() {
         Session::put('page', "return_requests");
-        $return_requests = ReturnRequest::get()->toArray();
+        $return_requests = ReturnRequest::orderBy('created_at','DESC')->get()->toArray();
 
         return view('admin.orders.return_requests',[
             'return_requests' => $return_requests,
+        ]);
+    }
+
+    public function exchangeRequest() {
+        Session::put('page', "exchange_requests");
+        $exchange_requests = ExchangeRequest::orderBy('created_at','DESC')->get()->toArray();
+
+        return view('admin.orders.exchange_requests',[
+            'exchange_requests' => $exchange_requests,
         ]);
     }
 
@@ -523,8 +533,49 @@ class OrderssController extends Controller
             return redirect()->route('admin.return.requests');
         }
 
-
     }
+
+        public function exchangeRequestUpdate(Request $request) {
+            if ($request->isMethod('post')) {
+                $data = $request->all();
+
+                //get exchange details
+                $exchangeDetails = ExchangeRequest::where('id',$data['exchange_id'])->first()->toArray();
+
+                // update exchange status in exchange_requests table
+                ExchangeRequest::where('id',$data['exchange_id'])->update(['exchange_status' => $data['exchange_status']]);
+
+                // Update exchange_staus in orders_products table
+                OrderProduct::where([
+                    'order_id'     => $exchangeDetails['order_id'],
+                    'product_code' => $exchangeDetails['product_code'],
+                    'product_size' => $exchangeDetails['product_size']
+                ])->update([
+                    'item_status' => 'Exchange '.$data['exchange_status']
+                ]);
+
+                // User Deatails
+                $userDetails = User::select('name','email')->where('id', $exchangeDetails['user_id'])->first()->toArray();
+
+
+                //Send exchange status email
+                $email       = $userDetails['email'];
+                $exchange_status = $data['exchange_status'];
+                $messageData = [
+                    'userDetails' => $userDetails,
+                    'exchangeDetails' => $exchangeDetails,
+                    'exchange_status' => $exchange_status,
+                ];
+
+                Mail::send('emails.exchange_requests', $messageData, function ($message) use ($email, $exchange_status ) {
+                    $message->to($email)->subject('Exchange Request ' .$exchange_status);
+                });
+
+                $message = 'Exchange request has been '.$exchange_status. ' and email send to user';
+                Session::put('success_message', $message);
+                return redirect()->route('admin.exchange.requests');
+            }
+        }
 
 
 

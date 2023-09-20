@@ -283,6 +283,33 @@
                           </li>
 
 
+                          @if (Session::get('page') == 'exchange_requests')
+                              <?php $active = 'active'; ?>
+                          @else
+                              <?php $active = ''; ?>
+                          @endif
+                          <li class="nav-item">
+                              <a href="{{ route('admin.exchange.requests') }}" class="nav-link {{ $active }}">
+                                  <i class="far fa-eye nav-icon"></i>
+                                  <p>Exchange / Requests</p>
+                              </a>
+                          </li>
+
+
+
+                          @if (Session::get('page') == 'newsletter_subscriber')
+                              <?php $active = 'active'; ?>
+                          @else
+                              <?php $active = ''; ?>
+                          @endif
+                          <li class="nav-item">
+                              <a href="{{ route('admin.newsletter.subscriber') }}" class="nav-link {{ $active }}">
+                                  <i class="far fa-eye nav-icon"></i>
+                                  <p>Newsletter Subscriber</p>
+                              </a>
+                          </li>
+
+
                       </ul>
                   </li>
 
