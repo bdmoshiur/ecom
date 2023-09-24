@@ -3,7 +3,7 @@
       <!-- Brand Logo -->
       <a href="#" class="brand-link">
           <img src="" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-          <span class="brand-text font-weight-light">Website</span>
+          {{-- <span class="brand-text font-weight-light">Website</span> --}}
       </a>
 
       <!-- Sidebar -->
@@ -277,7 +277,7 @@
                           @endif
                           <li class="nav-item">
                               <a href="{{ route('admin.return.requests') }}" class="nav-link {{ $active }}">
-                                  <i class="far fa-eye nav-icon"></i>
+                                  <i class="far fa-circle nav-icon"></i>
                                   <p>Return / Requests</p>
                               </a>
                           </li>
@@ -290,7 +290,7 @@
                           @endif
                           <li class="nav-item">
                               <a href="{{ route('admin.exchange.requests') }}" class="nav-link {{ $active }}">
-                                  <i class="far fa-eye nav-icon"></i>
+                                  <i class="far fa-circle nav-icon"></i>
                                   <p>Exchange / Requests</p>
                               </a>
                           </li>
@@ -304,7 +304,7 @@
                           @endif
                           <li class="nav-item">
                               <a href="{{ route('admin.newsletter.subscriber') }}" class="nav-link {{ $active }}">
-                                  <i class="far fa-eye nav-icon"></i>
+                                  <i class="far fa-circle nav-icon"></i>
                                   <p>Newsletter Subscriber</p>
                               </a>
                           </li>

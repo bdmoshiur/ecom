@@ -41,7 +41,7 @@
 #accordion2, #legalNotice, .justify, #mainCol{text-align:justify}
 #myCarousel .carousel-control{display:none}
 #myCarousel:hover .carousel-control{display:block}
-.navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {color:#fff; background-color: #CF0007;text-shadow: none;}
+.navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {color:#fff; background-color: blue;text-shadow: none;}
 /* Footer section--------------- */
 #footerSection {background: #202020;color: white;padding: 28px 0 44px;margin-top: 20px;border-top: 1px solid #444;}
 #footerSection a{color:#ccc; font-size:11px; padding:0; line-height:24px; display:block; }
