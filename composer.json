@@ -17,6 +17,7 @@
         "laravel/framework": "^8.12",
         "laravel/helpers": "^1.6",
         "laravel/tinker": "^2.5",
+        "maatwebsite/excel": "^3.1",
         "milon/barcode": "^10.0"
     },
     "require-dev": {

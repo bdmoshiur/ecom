@@ -35,7 +35,15 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Orders</h3>
+                            <h3 class="card-title">Orders</h3>| &nbsp;<a href="{{ route('view.orders.charts')}}">View Reports</a>
+                            <table align="right">
+                                <tr>
+                                    <td>
+                                        <a href="{{ route('admin.export.orders') }}" class="btn btn-primary btn-block"
+                                        style="max-width:150px; float:right; display:inline-block;">Export Order</a>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">

@@ -198,14 +198,14 @@
                                         @endif
                                     </div>
                                     <div class="form-group">
-                                        <label for="description">product Description</label>
-                                        <textarea class="form-control" name="description" id="description" rows="3" placeholder="Enter Discription ...">@if (!empty($productdata['description'])) {{ $productdata['description'] }}@else {{ old('description') }}@endif</textarea>
+                                        <label for="description">Product Description</label>
+                                        <textarea class="form-control textarea" name="description" id="description" rows="3" placeholder="Enter Discription ...">@if (!empty($productdata['description'])) {{ $productdata['description'] }}@else {{ old('description') }}@endif</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="wash_care">Wash Care</label>
-                                        <textarea class="form-control" name="wash_care" id="wash_care" rows="3" placeholder="Enter Wash Care ...">@if (!empty($productdata['wash_care'])){{ $productdata['wash_care'] }} @else {{ old('wash_care') }}@endif</textarea>
+                                        <textarea class="form-control textarea" name="wash_care" id="wash_care" rows="3" placeholder="Enter Wash Care ...">@if (!empty($productdata['wash_care'])){{ $productdata['wash_care'] }} @else {{ old('wash_care') }}@endif</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Select Fabric</label>

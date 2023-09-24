@@ -33,6 +33,7 @@
 	<link href="{{ asset('css/front_css') }}/font-awesome.css" rel="stylesheet" type="text/css">
 	<!-- Google-code-prettify -->
 	<link href="{{ asset('js/front_js') }}/google-code-prettify/prettify.css" rel="stylesheet"/>
+    <link href="{{ url('plugins/summernote/summernote-bs4.min.css') }}" rel="stylesheet"/>
 	<!-- fav and touch icons -->
 	<link rel="shortcut icon" href="{{ asset('images/front_images') }}/ico/favicon.ico">
 	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('images/front_images') }}/ico/apple-touch-icon-144-precomposed.png">
@@ -82,6 +83,14 @@
 <script src="{{ asset('js/front_js') }}/front.js"></script>
 <script src="{{ asset('js/front_js') }}/front_script.js"></script>
 <script src="{{ asset('js/front_js') }}/jquery.lightbox-0.5.js"></script>
+<script src="{{ url('plugins/summernote/summernote-bs4.min.js') }}"></script>
+
+<script>
+    $(function() {
+        $('.textarea').summernote();
+    });
+
+</script>
 
 </body>
 </html>

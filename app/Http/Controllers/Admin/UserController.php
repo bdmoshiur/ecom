@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use Carbon\Carbon;
+use App\Exports\UsersExport;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -79,4 +81,10 @@ class UserController extends Controller
         ]);
 
     }
+    public function exportUsers() {
+
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
+
 }

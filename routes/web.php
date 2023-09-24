@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\RatingController;
+use App\Http\Controllers\Admin\ImportController;
 
 
 
@@ -113,6 +114,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('/view/orders/invoice/{id}',[OrderssController::class,'viewOrdersInvoice'])->name('admin.view.orders.invoice');
         Route::get('/print/pdf/invoice/{id}',[OrderssController::class,'printPdfInvoice'])->name('admin.print.pdf.invoice');
 
+        //Orders Exports
+        Route::get('export/orders', [OrderssController::class, 'exportOrders'])->name('admin.export.orders');
+
 
         // view orders charts
         Route::get('view-orders-charts', [OrderssController::class, 'viewOrdersCharts'])->name('view.orders.charts');
@@ -131,6 +135,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         // view users charts
         Route::get('view-users-charts', [UserController::class, 'viewUsersCharts'])->name('view.users.charts');
         Route::get('view-users-countries', [UserController::class, 'viewUsersCountries'])->name('view.users.countries');
+
+        //User exports
+        Route::get('export/users', [UserController::class, 'exportUsers'])->name('admin.export.users');
+
+
 
 
         // cms pages
@@ -176,6 +185,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('/newsletter-subscriber',[AdminSubscriberController::class,'newsletterSubscriber'])->name('admin.newsletter.subscriber');
         Route::post('/update-subscriber-status', [AdminSubscriberController::class, 'updateSubscriberStatus'])->name('admin.update.subscriber.status');
         Route::get('delete_subscriber/{id}', [AdminSubscriberController::class, 'deleteSubscriber'])->name('admin.delete.subscriber');
+        Route::get('export-newsletter-emails', [AdminSubscriberController::class, 'exportNewslettermails'])->name('admin.export.newsletter.emails');
+
+
+        // import COD pincode
+        Route::match(['get', 'post'], 'update-cod-pincodes', [ImportController::class,'addEditCodPincode'])->name('admin.add.edit.cod.pincodes');
 
 
 

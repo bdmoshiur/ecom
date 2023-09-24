@@ -34,9 +34,19 @@
                     @endif
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Users</h3>
-                            <a href="{{ route('admin.users') }}" class="btn btn-success btn-block"
-                                style="max-width:150px; float:right; display:inline-block;">Add User</a>
+                            <h3 class="card-title">Users</h3> | &nbsp;<a href="{{ route('view.users.charts')}}">View Reports</a>
+                            <table align="right">
+                                <tr>
+                                    <td>
+                                        <a href="{{ route('admin.users') }}" class="btn btn-success btn-block"
+                                        style="max-width:150px; float:right; display:inline-block;">Add User</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('admin.export.users') }}" class="btn btn-primary btn-block"
+                                        style="max-width:150px; float:right; display:inline-block;">Export User</a>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">

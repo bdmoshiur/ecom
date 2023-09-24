@@ -35,7 +35,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Newsletter Subscriber</h3>
-                            <a href="#" class="btn btn-success btn-block"
+                            <a href="{{ route('admin.export.newsletter.emails') }}" class="btn btn-success btn-block"
                                 style="max-width:150px; float:right; display:inline-block;">Export</a>
                         </div>
                         <!-- /.card-header -->

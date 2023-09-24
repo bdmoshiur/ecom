@@ -122,13 +122,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="description">Category Description</label>
-                                        <textarea class="form-control" name="description" id="description" rows="3" placeholder="Enter Discription ...">
-@if (!empty($categorydata['description']))
-{{ $categorydata['description'] }}
-@else
-{{ old('description') }}
-@endif
-</textarea>
+                                        <textarea class="form-control textarea" name="description" id="description" rows="3" placeholder="Enter Discription ...">
+                                            @if (!empty($categorydata['description']))
+                                            {{ $categorydata['description'] }}
+                                            @else
+                                            {{ old('description') }}
+                                            @endif
+                                        </textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
@@ -143,35 +143,35 @@
                                     <div class="form-group">
                                         <label for="meta_title">Meta Title</label>
                                         <textarea class="form-control" name="meta_title" id="meta_title" rows="3" placeholder="Enter ...">
-@if (!empty($categorydata['meta_title']))
-{{ $categorydata['meta_title'] }}
-@else
-{{ old('meta_title') }}
-@endif
-</textarea>
+                                            @if (!empty($categorydata['meta_title']))
+                                            {{ $categorydata['meta_title'] }}
+                                            @else
+                                            {{ old('meta_title') }}
+                                            @endif
+                                        </textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="meta_description">Meta Description</label>
                                         <textarea class="form-control" name="meta_description" id="meta_description" rows="3" placeholder="Enter ...">
-@if (!empty($categorydata['meta_description']))
-{{ $categorydata['meta_description'] }}
-@else
-{{ old('meta_description') }}
-@endif
-</textarea>
+                                            @if (!empty($categorydata['meta_description']))
+                                            {{ $categorydata['meta_description'] }}
+                                            @else
+                                            {{ old('meta_description') }}
+                                            @endif
+                                        </textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="meta_keywords">Meta Keywords</label>
                                         <textarea class="form-control" name="meta_keywords" id="meta_keywords" rows="3" placeholder="Enter ..."> @if (!empty($categorydata['meta_keywords']))
-{{ $categorydata['meta_keywords'] }}
-@else
-{{ old('meta_keywords') }}
-@endif
-</textarea>
+                                            {{ $categorydata['meta_keywords'] }}
+                                            @else
+                                            {{ old('meta_keywords') }}
+                                            @endif
+                                        </textarea>
                                     </div>
                                 </div>
                             </div>
