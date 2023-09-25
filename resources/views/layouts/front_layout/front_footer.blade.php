@@ -29,11 +29,11 @@ $cmsUrls = CmsPage::select('url')->where('status',1)->get()->pluck('url')->toArr
 			</div>
 			<div id="socialMedia" class="span3 pull-right">
 				<h5>SOCIAL MEDIA </h5>
-				<a href="https://www.facebook.com/groups/stackdevelopers"><img width="60" height="60" src="{{ asset('images/front_images') }}/facebook.png" title="facebook" alt="facebook"/></a>
+				<a href="#"><img width="60" height="60" src="{{ asset('images/front_images') }}/facebook.png" title="facebook" alt="facebook"/></a>
 				<a href="#"><img width="60" height="60" src="{{ asset('images/front_images') }}/twitter.png" title="twitter" alt="twitter"/></a>
-				<a href="https://www.youtube.com/StackDevelopers"><img width="60" height="60" src="{{ asset('images/front_images') }}/youtube.png" title="youtube" alt="youtube"/></a>
+				<a href="#"><img width="60" height="60" src="{{ asset('images/front_images') }}/youtube.png" title="youtube" alt="youtube"/></a>
 			</div>
 		</div>
-		<p class="pull-right"><a target="_blank" href="https://www.youtube.com/StackDevelopers">&copy; Moshiur Rahman</a></p>
+		<p class="pull-right"><a target="_blank" href="#">&copy; Moshiur Rahman</a></p>
 	</div><!-- Container End -->
 </div>
