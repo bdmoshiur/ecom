@@ -25,7 +25,7 @@ $sections = Section::sections();
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </a>
-                        <a class="brand" href="#">Ecommerce Website</a>
+                        <a class="brand" href="{{ route('index') }}">Ecommerce Website</a>
                         <div class="nav-collapse">
                             <ul class="nav">
                                 <li class="active"><a href="{{ route('index') }}">Home</a></li>
