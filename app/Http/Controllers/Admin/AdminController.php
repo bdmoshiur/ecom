@@ -4,6 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Admin;
 use App\AdminRole;
+use App\User;
+use App\Order;
+use App\Rating;
+use App\ReturnRequest;
+use App\ExchangeRequest;
+use App\NewsletterSubscriber;
+use App\Product;
+use App\Wishlist;
+use Carbon\Carbon;
 use App\OtherSetting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,7 +27,81 @@ class AdminController extends Controller
     public function dashboard()
     {
         Session::put('page', "dashboard");
-        return view('admin.admin_dashboard');
+
+        // users
+
+        $current_month_users = User::whereYear('created_at', Carbon::now()->year)
+        ->whereMonth('created_at', Carbon::now()->month)
+        ->count();
+
+        $before_1_month_users = User::whereYear('created_at', Carbon::now()->year)
+        ->whereMonth('created_at', Carbon::now()->subMonth(1))
+        ->count();
+
+        $before_2_month_users = User::whereYear('created_at', Carbon::now()->year)
+        ->whereMonth('created_at', Carbon::now()->subMonth(2))
+        ->count();
+
+        $before_3_month_users = User::whereYear('created_at', Carbon::now()->year)
+        ->whereMonth('created_at', Carbon::now()->subMonth(3))
+        ->count();
+
+        $usersCount = [
+          $current_month_users,
+           $before_1_month_users,
+           $before_2_month_users,
+           $before_3_month_users,
+        ];
+
+
+        //orders
+
+        $current_month_orders = Order::whereYear('created_at', Carbon::now()->year)
+        ->whereMonth('created_at', Carbon::now()->month)
+        ->count();
+
+        $before_1_month_orders = Order::whereYear('created_at', Carbon::now()->year)
+        ->whereMonth('created_at', Carbon::now()->subMonth(1))
+        ->count();
+
+        $before_2_month_orders = Order::whereYear('created_at', Carbon::now()->year)
+        ->whereMonth('created_at', Carbon::now()->subMonth(2))
+        ->count();
+
+        $before_3_month_orders = Order::whereYear('created_at', Carbon::now()->year)
+        ->whereMonth('created_at', Carbon::now()->subMonth(3))
+        ->count();
+
+        $ordersCount = [
+          $current_month_orders,
+           $before_1_month_orders,
+           $before_2_month_orders,
+           $before_3_month_orders,
+        ];
+
+        $newOrdersCount = Order::where('order_status', 'New')->count();
+        $userRegistrationsCount = User::count();
+        $ratingsCount = Rating::count();
+        $returnRequestsCount = ReturnRequest::count();
+        $exchangeRequestsCount = ExchangeRequest::count();
+        $newsletterSubscribersCount = NewsletterSubscriber::count();
+        $wishlistsCount = Wishlist::count();
+        $productsCount = Product::count();
+
+        return view('admin.admin_dashboard',[
+            'usersCount' => $usersCount,
+            'ordersCount' => $ordersCount,
+            'newOrdersCount' => $newOrdersCount,
+            'userRegistrationsCount' => $userRegistrationsCount,
+            'ratingsCount' => $ratingsCount,
+            'returnRequestsCount' => $returnRequestsCount,
+            'exchangeRequestsCount' => $exchangeRequestsCount,
+            'newsletterSubscribersCount' => $newsletterSubscribersCount,
+            'wishlistsCount' => $wishlistsCount,
+            'productsCount' => $productsCount
+
+
+        ]);
     }
 
     public function settings()

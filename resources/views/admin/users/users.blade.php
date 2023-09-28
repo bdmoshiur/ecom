@@ -37,10 +37,10 @@
                             <h3 class="card-title">Users</h3> | &nbsp;<a href="{{ route('view.users.charts')}}">View Reports</a>
                             <table align="right">
                                 <tr>
-                                    <td>
+                                    {{-- <td>
                                         <a href="{{ route('admin.users') }}" class="btn btn-success btn-block"
                                         style="max-width:150px; float:right; display:inline-block;">Add User</a>
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         <a href="{{ route('admin.export.users') }}" class="btn btn-primary btn-block"
                                         style="max-width:150px; float:right; display:inline-block;">Export User</a>
