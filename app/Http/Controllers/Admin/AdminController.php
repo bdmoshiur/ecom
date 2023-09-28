@@ -180,12 +180,16 @@ class AdminController extends Controller
         Session::put('page', "update-admin-details");
         if ($request->isMethod('post')) {
             $data = $request->all();
-            // echo "<pre>"; print_r($data); die;
+
+            // Initialize $imageName with an empty string
+            $imageName = '';
+
             $rules = [
                 'admin_name' => 'required|regex:/^[\pL\s\-]+$/u',
-                'admin_mobile'     => 'required|numeric',
-                'admin_image'     => 'image',
+                'admin_mobile' => 'required|numeric',
+                'admin_image' => 'image',
             ];
+
             $customMessage = [
                 'admin_name.required' => 'Admin Name is Required',
                 'admin_name.regex' => 'Valid Name is Required',
@@ -193,9 +197,9 @@ class AdminController extends Controller
                 'admin_mobile.numeric' => 'Valid Mobile is Required',
                 'admin_image.image' => 'Valid Image is Required',
             ];
+
             $this->validate($request, $rules, $customMessage);
 
-            //Upload Admin Iamge
             if ($request->hasFile('admin_image')) {
                 $image_tmp = $request->file('admin_image');
                 if ($image_tmp->isValid()) {
@@ -203,19 +207,23 @@ class AdminController extends Controller
                     $imageName = rand(111, 99999) . '.' . $extention;
                     $imagePath = 'images/admin_images/admin_photos/' . $imageName;
                     Image::make($image_tmp)->resize(300, 400)->save($imagePath);
-                } else if (!empty($data['current_admin_image'])) {
-                    $imageName = $data['current_admin_image'];
-                } else {
-                    $imageName = "";
                 }
+            } elseif (!empty($data['current_admin_image'])) {
+                $imageName = $data['current_admin_image'];
             }
 
-            Admin::where('email', Auth::guard('admin')->user()->email)->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile'], 'image' => $imageName]);
+            Admin::where('email', Auth::guard('admin')->user()->email)->update([
+                'name' => $data['admin_name'],
+                'mobile' => $data['admin_mobile'],
+                'image' => $imageName,
+            ]);
+
             Session::flash('success_message', "Admin Details Updated SuccessFully");
             return redirect()->back();
         }
         return view('admin.admin_update_details');
     }
+
 
     public function adminsSubadmins() {
 
@@ -277,16 +285,31 @@ class AdminController extends Controller
                     return redirect()->route('admin.admins.subadmins');
                 }
             }
-            $rules = [
-                'admin_name' => 'required|regex:/^[\pL\s\-]+$/u',
-                'admin_mobile'     => 'required|numeric',
-                'admin_image'     => 'image',
-            ];
+
+            if($id == ''){
+                $rules = [
+                    'admin_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                    'admin_mobile'     => 'required|numeric',
+                    'admin_email'     => 'required|email',
+                    'admin_type'     => 'required',
+                    'admin_image'     => 'image',
+                ];
+            }else{
+                $rules = [
+                    'admin_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                    'admin_mobile'     => 'required|numeric',
+                    'admin_image'     => 'image',
+                ];
+            }
+
             $customMessage = [
                 'admin_name.required' => 'Admin Name is Required',
                 'admin_name.regex' => 'Valid Name is Required',
                 'admin_mobile.required' => 'Mobile is Required',
                 'admin_mobile.numeric' => 'Valid Mobile is Required',
+                'admin_type.required' => 'Admin Type is Required',
+                'admin_email.required' => 'Admin Email is Required',
+                'admin_email.email' => 'Valid Email is Required',
                 'admin_image.image' => 'Valid Image is Required',
             ];
             $this->validate($request, $rules, $customMessage);

@@ -63,7 +63,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="currency_code">Currency Code</label>
+                                        <label for="currency_code">Currency Code <span>*</span></label>
                                         <input type="text" class="form-control" name="currency_code" id="currency_code"
                                             @if (!empty($currency['currency_code'])) value="{{ $currency['currency_code'] }}"
                                         @else
@@ -75,7 +75,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exchange_rate">Exchange Rate</label>
+                                        <label for="exchange_rate">Exchange Rate <span>*</span></label>
                                         <input type="text" class="form-control" name="exchange_rate" id="exchange_rate"
                                             @if (!empty($currency['exchange_rate'])) value="{{ $currency['exchange_rate'] }}"
                                         @else

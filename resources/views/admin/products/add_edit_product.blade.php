@@ -24,7 +24,7 @@
         <section class="content">
             <div class="container-fluid">
                 @if ($errors->any())
-                    <div class="alert alert-danger" style="margin-top: 10px">
+                    <div class="alert alert-warning" style="margin-top: 10px">
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -62,7 +62,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Select Category</label>
+                                        <label>Select Category <span>*</span></label>
                                         <select name="category_id" id="category_id" class="form-control select2"
                                             style="width: 100%;">
                                             <option value="">Select</option>
@@ -84,7 +84,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label>Select Brand</label>
+                                        <label>Select Brand <span>*</span></label>
                                         <select name="brand_id" id="brand_id" class="form-control select2"
                                             style="width: 100%;">
                                             <option value="">Select</option>
@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_name">Product Name</label>
+                                        <label for="product_name">Product Name <span>*</span></label>
                                         <input type="text" class="form-control" name="product_name" id="product_name"
                                             @if (!empty($productdata['product_name'])) value="{{ $productdata['product_name'] }}"
                                         @else
@@ -106,7 +106,7 @@
                                             placeholder="Enter product Name">
                                     </div>
                                     <div class="form-group">
-                                        <label for="product_code">Product Code</label>
+                                        <label for="product_code">Product Code <span>*</span></label>
                                         <input type="text" class="form-control" name="product_code" id="product_code"
                                             @if (!empty($productdata['product_code'])) value="{{ $productdata['product_code'] }}"
                                         @else
@@ -116,7 +116,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_color">Product Color</label>
+                                        <label for="product_color">Product Color <span>*</span></label>
                                         <input type="text" class="form-control" name="product_color" id="product_color"
                                             @if (!empty($productdata['product_color'])) value="{{ $productdata['product_color'] }}"
                                         @else
@@ -124,7 +124,7 @@
                                             placeholder="Enter product Color">
                                     </div>
                                     <div class="form-group">
-                                        <label for="product_price">Product Price</label>
+                                        <label for="product_price">Product Price <span>*</span></label>
                                         <input type="number" class="form-control" name="product_price" id="product_price"
                                             @if (!empty($productdata['product_price'])) value="{{ $productdata['product_price'] }}"
                                         @else

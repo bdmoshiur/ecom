@@ -39,13 +39,18 @@ class BannerController extends Controller
 
         if($request->isMethod('post')){
             $data = $request->all();
-            // $rules = [
-            //     'image' => 'required',
-            // ];
-            // $customMessage = [
-            //     'image.required' => 'Banner image is Required',
-            // ];
-            // $this->validate($request, $rules, $customMessage);
+            $rules = [
+                'title' => 'required',
+                'link' => 'required',
+                'alt' => 'required',
+            ];
+            $customMessage = [
+                'title.required' => 'Banner Title is Required',
+                'link.required' => 'Banner Link is Required',
+                'alt.required' => 'Banner Alt is Required',
+
+            ];
+            $this->validate($request, $rules, $customMessage);
 
             $banner->title = $data['title'];
             $banner->link = $data['link'];
@@ -94,7 +99,7 @@ class BannerController extends Controller
     {
         $bannerImage = Banner::find($id);
         $banner_Image_Path = 'images/banner_images/';
-        if(file_exists($banner_Image_Path.$bannerImage->image)){
+        if(!empty($bannerImage->image) && file_exists($banner_Image_Path.$bannerImage->image)){
             unlink($banner_Image_Path.$bannerImage->image);
         }
         Banner::find($id)->delete();

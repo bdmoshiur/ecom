@@ -62,7 +62,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="category_name">Category Name</label>
+                                        <label for="category_name">Category Name <span>*</span></label>
                                         <input type="text" class="form-control" name="category_name" id="category_name"
                                             @if (!empty($categorydata['category_name'])) value="{{ $categorydata['category_name'] }}"
                                         @else
@@ -75,7 +75,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Select Section</label>
+                                        <label>Select Section <span>*</span></label>
                                         <select name="section_id" id="section_id" class="form-control select2"
                                             style="width: 100%;">
                                             <option value="">Select</option>
@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                        <label for="url">Category Url</label>
+                                        <label for="url">Category Url <span>*</span></label>
                                         <input type="text" class="form-control" name="url" id="url"
                                             placeholder="Enter Category Url"
                                             @if (!empty($categorydata['url'])) value="{{ $categorydata['url'] }}"
