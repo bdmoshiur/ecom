@@ -83,7 +83,7 @@
                                         @endif
                                     </div>
                                     <div class="form-group">
-                                        <label for="title">Banner Title</label>
+                                        <label for="title">Banner Title <span>*</span></label>
                                         <input type="text" class="form-control" name="title" id="title"
                                             @if (!empty($bannerdata['title'])) value="{{ $bannerdata['title'] }}"
                                         @else
@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="link">Banner link</label>
+                                        <label for="link">Banner link <span>*</span></label>
                                         <input type="text" class="form-control" name="link" id="link"
                                             @if (!empty($bannerdata['link'])) value="{{ $bannerdata['link'] }}"
                                         @else
@@ -101,7 +101,7 @@
                                             placeholder="Enter banner link">
                                     </div>
                                     <div class="form-group">
-                                        <label for="alt">Banner Alternate Text</label>
+                                        <label for="alt">Banner Alternate Text <span>*</span></label>
                                         <input type="text" class="form-control" name="alt" id="alt"
                                             @if (!empty($bannerdata['alt'])) value="{{ $bannerdata['alt'] }}"
                                         @else

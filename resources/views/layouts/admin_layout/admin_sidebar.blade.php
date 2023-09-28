@@ -165,7 +165,7 @@
                           @endif
                           <li class="nav-item">
                               <a href="{{ route('admin.products') }}" class="nav-link {{ $active }}">
-                                  <i class="far fa-circle nav-icon"></i>
+                                  <i class="far fa-plus-square nav-icon"></i>
                                   <p>Products</p>
                               </a>
                           </li>
@@ -176,7 +176,7 @@
                           @endif
                           <li class="nav-item">
                               <a href="{{ route('admin.banners') }}" class="nav-link {{ $active }}">
-                                  <i class="far fa-circle nav-icon"></i>
+                                  <i class="nav-icon fas fa-columns"></i>
                                   <p>Banners</p>
                               </a>
                           </li>
@@ -200,7 +200,7 @@
                           @endif
                           <li class="nav-item">
                               <a href="{{ route('admin.orders') }}" class="nav-link {{ $active }}">
-                                  <i class="far fa-circle nav-icon"></i>
+                                  <i class="fas fa-table nav-icon"></i>
                                   <p>Orders</p>
                               </a>
                           </li>
@@ -226,7 +226,7 @@
                             @endif
                             <li class="nav-item">
                                 <a href="{{ route('admin.cms.pages') }}" class="nav-link {{ $active }}">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class="fas fa-book nav-icon"></i>
                                     <p>CMS Pages</p>
                                 </a>
                             </li>
@@ -304,7 +304,7 @@
                           @endif
                           <li class="nav-item">
                               <a href="{{ route('admin.newsletter.subscriber') }}" class="nav-link {{ $active }}">
-                                  <i class="far fa-circle nav-icon"></i>
+                                  <i class="nav-icon far fa-envelope"></i>
                                   <p>Newsletter Subscriber</p>
                               </a>
                           </li>

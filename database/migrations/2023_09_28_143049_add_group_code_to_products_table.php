@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnToProducts extends Migration
+class AddGroupCodeToProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddColumnToProducts extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->integer('brand_id')->after('section_id');
+            $table->string('group_code')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddColumnToProducts extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('brand_id');
+            $table->dropColumn('group_code');
         });
     }
 }

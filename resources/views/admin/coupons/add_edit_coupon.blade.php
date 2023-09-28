@@ -113,7 +113,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="amount">Amount</label>
+                                        <label for="amount">Amount <span>*</span></label>
                                         <input type="number" class="form-control" name="amount" id="amount" placeholder="Enter Amount" required="" @if (isset($coupon['amount']))
                                         value="{{ $coupon['amount'] }}"
                                         @endif>
@@ -123,7 +123,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="categories">Select Categories</label>
+                                    <label for="categories">Select Categories <span>*</span></label>
                                     <select name="categories[]" class="form-control select2" multiple="" required="">
                                         <option value="">Select</option>
                                         @foreach ($categories as $section)
@@ -160,7 +160,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="expiry_date">Expiry Date</label>
+                                    <label for="expiry_date">Expiry Date <span>*</span></label>
                                     <input type="text" class="form-control" name="expiry_date" id="expiry_date" @if (isset($coupon['expiry_date']))
                                     value="{{ $coupon['expiry_date'] }}"
                                     @endif  data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy/mm/dd" data-mask>

@@ -62,7 +62,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="admin_name">Admin Name</label>
+                                        <label for="admin_name">Admin Name <span>*</span></label>
                                         <input type="text" class="form-control" name="admin_name" id="admin_name"
                                             @if (!empty($admindata['name'])) value="{{ $admindata['name'] }}"
                                         @else
@@ -70,7 +70,7 @@
                                             placeholder="Enter Admin Name">
                                     </div>
                                     <div class="form-group">
-                                        <label for="admin_mobile">Admin Mobile</label>
+                                        <label for="admin_mobile">Admin Mobile <span>*</span></label>
                                         <input type="text" class="form-control" name="admin_mobile" id="admin_mobile"
                                             @if (!empty($admindata['mobile'])) value="{{ $admindata['mobile'] }}"
                                         @else
@@ -80,9 +80,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="admin_email">Admin Email</label>
+                                        <label for="admin_email">Admin Email @if ($admindata['id'] != '')
+                                            <span></span> @else <span>*</span>
+                                        @endif </label>
                                         <input type="email" class="form-control" name="admin_email" @if ($admindata['id'] != '')
-                                            disabled='' @else required=''
+                                            disabled=''
                                         @endif id="admin_email"
                                             @if (!empty($admindata['email'])) value="{{ $admindata['email'] }}"
                                         @else
@@ -90,10 +92,8 @@
                                             placeholder="Enter Admin Email">
                                     </div>
                                     <div class="form-group">
-                                        <label for="admin_type">Admin Type</label>
-                                        <select name="admin_type" @if ($admindata['type'] != '')
-                                        disabled='' @else required=''
-                                    @endif id="admin_type" class="form-control select2"
+                                        <label for="admin_type">Admin Type @if ($admindata['type'] != '') <span></span> @else <span>*</span> @endif </label>
+                                        <select name="admin_type" @if ($admindata['type'] != '') disabled='' @endif id="admin_type" class="form-control select2"
                                         style="width: 100%;">
                                         <option value="">Select</option>
                                             <option value="admin"

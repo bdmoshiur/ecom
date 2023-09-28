@@ -63,7 +63,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="brand_name">Brand Name</label>
+                                        <label for="brand_name">Brand Name <span>*</span></label>
                                         <input type="text" class="form-control" name="brand_name" id="brand_name"
                                             @if (!empty($brand['name'])) value="{{ $brand['name'] }}"
                                         @else
