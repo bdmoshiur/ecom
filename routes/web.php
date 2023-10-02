@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Admin\ImportController;
+use App\Http\Controllers\SslCommerzPaymentController;
 
 
 
@@ -35,6 +36,24 @@ use App\Http\Controllers\Admin\ImportController;
 // });
 
 // Auth::routes();
+
+
+
+
+// SSLCOMMERZ Start
+Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout'])->name('sslcommerz');
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
+
+
+
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -214,6 +233,13 @@ Route::group(['namespace' => 'Front'], function () {
 
     // product detail route
     Route::get('/product/{id}', [ProductsController::class, 'detail'])->name('product');
+
+    // new product route
+    Route::get('new/product', [ProductsController::class, 'newProduct'])->name('front.new.product');
+
+    // new product route
+    Route::get('topsellers/product', [ProductsController::class, 'topSellersProduct'])->name('front.top.sellers.product');
+
 
     // getproduct attribute price
     Route::post('/get-product-price', [ProductsController::class, 'getProductPrice']);

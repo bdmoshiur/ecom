@@ -35,7 +35,7 @@
             @csrf
             <table class="table table-bordered">
                 <tr>
-                    <td> <strong>DELIVERY ADDRESS</strong>  |  <a href="{{ route('front.add.edit.delivery.address') }}">Add</a></td>
+                    <td> <strong>DELIVERY ADDRESS</strong>  |  <a class="btn btn-info" href="{{ route('front.add.edit.delivery.address') }}">Add</a></td>
                 </tr>
                 @foreach ($deliveryAddress as $address)
                     <tr>
@@ -47,7 +47,7 @@
                                 <label class="control-label"> {{ $address['name'] }}, {{ $address['address'] }}, {{ $address['city'] }} -- {{ $address['pincode'] }}, {{ $address['state'] }}, {{ $address['country'] }} (M:{{ $address['mobile'] }})</label>
                             </div>
                         </td>
-                        <td><a href="{{ route('front.add.edit.delivery.address', $address['id'] ) }}">Edit</a> | <a href="{{ route('front.delete.delivery.address', $address['id'])}}" class="addressDelete">Delete</a> </td>
+                        <td><a class="btn btn-info" href="{{ route('front.add.edit.delivery.address', $address['id'] ) }}">Edit</a> | <a class="btn btn-danger" href="{{ route('front.delete.delivery.address', $address['id'])}}" class="addressDelete">Delete</a> </td>
                     </tr>
                 @endforeach
             </table>
@@ -126,12 +126,12 @@
                                 <div class="controls">
                                     <span>
                                         <span class="codMethod">
-                                            <input type="radio" name="payment_gateway" id="COD" value="COD"><strong>COD</strong>&nbsp;&nbsp;
+                                            <input type="radio" name="payment_gateway" id="COD" value="COD"><strong> Cash on Delivery</strong>&nbsp;&nbsp;
                                         </span>
 
                                         <span class="prepaidMethod">
-                                            <input type="radio" name="payment_gateway" id="Paypal" value="Paypal"><strong>Paypal</strong>
-                                            <input type="radio" name="payment_gateway" id="Bkash" value="Bkash"><strong>Bkash</strong>
+                                            {{-- <input type="radio" name="payment_gateway" id="Paypal" value="Paypal"><strong>Paypal</strong> --}}
+                                            <input type="radio" name="payment_gateway" id="sslcommerz" value="sslcommerz"><strong> Prepaid(Online)</strong>
                                         </span>
                                     </span>
                                 </div>

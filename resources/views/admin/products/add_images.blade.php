@@ -157,7 +157,7 @@
                             </table>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Update Images</button>
+                            {{-- <button type="submit" class="btn btn-primary">Update Images</button> --}}
                         </div>
                         <!-- /.card-body -->
                     </div>

@@ -7,9 +7,9 @@ $cmsUrls = CmsPage::select('url')->where('status',1)->get()->pluck('url')->toArr
 		<div class="row">
 			<div class="span3">
 				<h5>ACCOUNT</h5>
-				<a href="login.html">YOUR ACCOUNT</a>
-				<a href="login.html">PERSONAL INFORMATION</a>
-				<a href="login.html">ORDER HISTORY</a>
+				<a href="#">YOUR ACCOUNT</a>
+				<a href="#">PERSONAL INFORMATION</a>
+				<a href="{{ route('front.orders') }}">ORDER HISTORY</a>
 			</div>
 			<div class="span3">
 				<h5>INFORMATION</h5>
@@ -23,9 +23,9 @@ $cmsUrls = CmsPage::select('url')->where('status',1)->get()->pluck('url')->toArr
 			</div>
 			<div class="span3">
 				<h5>OUR OFFERS</h5>
-				<a href="#">NEW PRODUCTS</a>
-				<a href="#">TOP SELLERS</a>
-				<a href="special_offer.html">SPECIAL OFFERS</a>
+				<a href="{{ route('front.new.product') }}">LATEST PRODUCTS</a>
+				<a href="{{ route('front.top.sellers.product') }}">TOP SELLING PRODUCTS</a>
+				<a href="#">SPECIAL OFFERS</a>
 			</div>
 			<div id="socialMedia" class="span3 pull-right">
 				<h5>SOCIAL MEDIA </h5>
