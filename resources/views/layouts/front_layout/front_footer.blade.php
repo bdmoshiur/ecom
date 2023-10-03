@@ -1,6 +1,8 @@
 <?php
 use App\CmsPage;
+use App\Media;
 $cmsUrls = CmsPage::select('url')->where('status',1)->get()->pluck('url')->toArray();
+$medias = Media::where('status',1)->get();
 ?>
 <div  id="footerSection">
 	<div class="container">
@@ -29,9 +31,9 @@ $cmsUrls = CmsPage::select('url')->where('status',1)->get()->pluck('url')->toArr
 			</div>
 			<div id="socialMedia" class="span3 pull-right">
 				<h5>SOCIAL MEDIA </h5>
-				<a href="#"><img width="60" height="60" src="{{ asset('images/front_images') }}/facebook.png" title="facebook" alt="facebook"/></a>
-				<a href="#"><img width="60" height="60" src="{{ asset('images/front_images') }}/twitter.png" title="twitter" alt="twitter"/></a>
-				<a href="#"><img width="60" height="60" src="{{ asset('images/front_images') }}/youtube.png" title="youtube" alt="youtube"/></a>
+                @foreach ($medias as $media)
+                    <a href="{{ $media->link }}"><img width="60" height="60" src="{{ asset('images/media_images/' . $media['image']) }}" title="{{ $media->name }}" alt="{{ $media->name }}"/></a>
+                @endforeach
 			</div>
 		</div>
 		<p class="pull-right"><a target="_blank" href="#">&copy; Moshiur Rahman</a></p>

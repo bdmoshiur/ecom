@@ -27,6 +27,7 @@ class VerifyCsrfToken extends Middleware
         "/admin/update-currency-status", "/admin/update-rating-status",
         '/admin/update-fabric-status','/admin/update-sleeve-status','/admin/update-fit-status',
         '/admin/update-pattern-status','/admin/update-occasion-status','/admin/update-country-status',
+        '/admin/update-codpincode-status', '/admin/update-prepaidpincode-status',
         '/pay-via-ajax', '/success','/cancel','/fail','/ipn'
     ];
 }

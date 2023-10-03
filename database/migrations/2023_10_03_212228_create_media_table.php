@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCodPincodesTable extends Migration
+class CreateMediaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateCodPincodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cod_pincodes', function (Blueprint $table) {
+        Schema::create('media', function (Blueprint $table) {
             $table->id();
-            $table->string('pincode')->nullable();
-            $table->tinyInteger('status');
+            $table->string('name')->nullable();
+            $table->string('link')->nullable();
+            $table->string('image')->nullable();
+            $table->tinyInteger('status')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateCodPincodesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cod_pincodes');
+        Schema::dropIfExists('media');
     }
 }

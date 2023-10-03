@@ -642,7 +642,93 @@ $(document).ready(function () {
     });
 
 
+    //Update Codpincode Status
+    $(document).on("click", ".updateCodpincodeStatus", function () {
+        var status = $(this).children("i").attr("status");
+        var codpincode_id = $(this).attr("codpincode_id");
 
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-codpincode-status",
+            data: { status: status, codpincode_id: codpincode_id },
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#codpincode-" + codpincode_id).html(
+                        "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#codpincode-" + codpincode_id).html(
+                        "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                    );
+                }
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    });
+
+
+    //Update Prepaidpincode Status
+    $(document).on("click", ".updatePrepaidpincodeStatus", function () {
+        var status = $(this).children("i").attr("status");
+        var prepaidpincode_id = $(this).attr("prepaidpincode_id");
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-prepaidpincode-status",
+            data: { status: status, prepaidpincode_id: prepaidpincode_id },
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#prepaidpincode-" + prepaidpincode_id).html(
+                        "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#prepaidpincode-" + prepaidpincode_id).html(
+                        "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                    );
+                }
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    });
+
+    //Update Medias Status
+    $(document).on("click", ".updateMediaStatus", function () {
+        var status = $(this).children("i").attr("status");
+        var media_id = $(this).attr("media_id");
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-media-status",
+            data: { status: status, media_id: media_id },
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#media-" + media_id).html(
+                        "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#media-" + media_id).html(
+                        "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                    );
+                }
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    });
 
 
     // Append Category Level

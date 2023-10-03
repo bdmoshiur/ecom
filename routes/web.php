@@ -26,6 +26,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Admin\ImportController;
+use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\CodpincodeController;
 
 use App\Http\Controllers\Admin\FabricController;
 use App\Http\Controllers\Admin\SleeveController;
@@ -151,11 +153,31 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('delete_occasion/{id}', 'OccasionController@deleteOccasions')->name('admin.delete.occasion');
 
 
-         // Country routes
-         Route::get('country', 'CountryController@country')->name('admin.country');
-         Route::post('/update-country-status', 'CountryController@updateCountryStatus');
-         Route::match(['get', 'post'], 'add-edit-country/{id?}', 'CountryController@addEditCountry')->name('admin.add.edit.country');
-         Route::get('delete_country/{id}', 'CountryController@deleteCountry')->name('admin.delete.country');
+        // Country routes
+        Route::get('country', 'CountryController@country')->name('admin.country');
+        Route::post('/update-country-status', 'CountryController@updateCountryStatus');
+        Route::match(['get', 'post'], 'add-edit-country/{id?}', 'CountryController@addEditCountry')->name('admin.add.edit.country');
+        Route::get('delete_country/{id}', 'CountryController@deleteCountry')->name('admin.delete.country');
+
+
+        // Codpincodes routes
+        Route::get('codpincode', 'CodpincodeController@codpincode')->name('admin.codpincode');
+        Route::post('/update-codpincode-status', 'CodpincodeController@updateCodpincodeStatus');
+        Route::match(['get', 'post'], 'add-edit-codpincode/{id?}', 'CodpincodeController@addEditCodpincode')->name('admin.add.edit.codpincode');
+        Route::get('delete_codpincode/{id}', 'CodpincodeController@deleteCodpincode')->name('admin.delete.codpincode');
+
+
+        // Prepaidpincodes routes
+        Route::get('prepaidpincode', 'PrepaidpincodeController@prepaidpincode')->name('admin.prepaidpincode');
+        Route::post('/update-prepaidpincode-status', 'PrepaidpincodeController@updatePrepaidpincodeStatus');
+        Route::match(['get', 'post'], 'add-edit-prepaidpincode/{id?}', 'PrepaidpincodeController@addEditPrepaidpincode')->name('admin.add.edit.prepaidpincode');
+        Route::get('delete_prepaidpincode/{id}', 'PrepaidpincodeController@deletePrepaidpincode')->name('admin.delete.prepaidpincode');
+
+        // Media routes
+        Route::get('media', 'MediaController@media')->name('admin.media');
+        Route::post('/update-media-status', 'MediaController@updateMediaStatus');
+        Route::match(['get', 'post'], 'add-edit-media/{id?}', 'MediaController@addEditMedia')->name('admin.add.edit.media');
+        Route::get('delete_media/{id}', 'MediaController@deleteMedia')->name('admin.delete.media');
 
 
 

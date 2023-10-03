@@ -324,7 +324,9 @@
 
                 <!-- Product Tools -->
                 @if (Session::get('page') == 'fabric' || Session::get('page') == 'sleeve' || Session::get('page') == 'fit'
-                 || Session::get('page') == 'pattern' || Session::get('page') == 'occasion'|| Session::get('page') == 'country')
+                 || Session::get('page') == 'pattern' || Session::get('page') == 'occasion'|| Session::get('page') == 'country'
+                 || Session::get('page') == 'codpincode'|| Session::get('page') == 'prepaidpincode'|| Session::get('page') == 'media'
+                 )
                     <?php $active = 'active'; ?>
                 @else
                    <?php $active = ''; ?>
@@ -408,7 +410,44 @@
                             <i class="far fa-circle nav-icon"></i>
                             <p>Countrys</p>
                         </a>
-                    </li
+                    </li>
+
+                    @if (Session::get('page') == 'codpincode')
+                       <?php $active = 'active'; ?>
+                    @else
+                        <?php $active = ''; ?>
+                    @endif
+                    <li class="nav-item">
+                        <a href="{{ route('admin.codpincode') }}" class="nav-link {{ $active }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Codpincodes</p>
+                        </a>
+                    </li>
+
+                    @if (Session::get('page') == 'prepaidpincode')
+                    <?php $active = 'active'; ?>
+                    @else
+                        <?php $active = ''; ?>
+                    @endif
+                    <li class="nav-item">
+                        <a href="{{ route('admin.prepaidpincode') }}" class="nav-link {{ $active }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Prepaidpincode</p>
+                        </a>
+                    </li>
+
+
+                    @if (Session::get('page') == 'media')
+                    <?php $active = 'active'; ?>
+                    @else
+                        <?php $active = ''; ?>
+                    @endif
+                    <li class="nav-item">
+                        <a href="{{ route('admin.media') }}" class="nav-link {{ $active }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Media</p>
+                        </a>
+                    </li>
 
 
 
@@ -416,6 +455,15 @@
 
                    </ul>
                </li>
+
+                <!-- Empty Tools -->
+               <li class="nav-item has-treeview menu-open">
+                    <a href="#" class="nav-link">
+                        <p>
+
+                        </p>
+                    </a>
+                </li>
 
 
               </ul>
