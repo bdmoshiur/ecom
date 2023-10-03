@@ -457,6 +457,194 @@ $(document).ready(function () {
         });
     });
 
+
+
+
+
+    //Update Fabric Status
+    $(document).on("click", ".updateFabricStatus", function () {
+        var status = $(this).children("i").attr("status");
+        var fabric_id = $(this).attr("fabric_id");
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-fabric-status",
+            data: { status: status, fabric_id: fabric_id },
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#fabric-" + fabric_id).html(
+                        "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#fabric-" + fabric_id).html(
+                        "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                    );
+                }
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    });
+
+    //Update sleeve Status
+    $(document).on("click", ".updateSleeveStatus", function () {
+        var status = $(this).children("i").attr("status");
+        var sleeve_id = $(this).attr("sleeve_id");
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-sleeve-status",
+            data: { status: status, sleeve_id: sleeve_id },
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#sleeve-" + sleeve_id).html(
+                        "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#sleeve-" + sleeve_id).html(
+                        "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                    );
+                }
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    });
+
+
+
+    //Update fit Status
+    $(document).on("click", ".updateFitStatus", function () {
+        var status = $(this).children("i").attr("status");
+        var fit_id = $(this).attr("fit_id");
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-fit-status",
+            data: { status: status, fit_id: fit_id },
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#fit-" + fit_id).html(
+                        "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#fit-" + fit_id).html(
+                        "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                    );
+                }
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    });
+
+
+    //Update Pattern Status
+    $(document).on("click", ".updatePatternStatus", function () {
+        var status = $(this).children("i").attr("status");
+        var pattern_id = $(this).attr("pattern_id");
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-pattern-status",
+            data: { status: status, pattern_id: pattern_id },
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#pattern-" + pattern_id).html(
+                        "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#pattern-" + pattern_id).html(
+                        "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                    );
+                }
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    });
+
+    //Update occasion Status
+    $(document).on("click", ".updateOccasionStatus", function () {
+        var status = $(this).children("i").attr("status");
+        var occasion_id = $(this).attr("occasion_id");
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-occasion-status",
+            data: { status: status, occasion_id: occasion_id },
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#occasion-" + occasion_id).html(
+                        "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#occasion-" + occasion_id).html(
+                        "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                    );
+                }
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    });
+
+
+
+
+    //Update Country Status
+    $(document).on("click", ".updateCountryStatus", function () {
+        var status = $(this).children("i").attr("status");
+        var country_id = $(this).attr("country_id");
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-country-status",
+            data: { status: status, country_id: country_id },
+            success: function (resp) {
+                if (resp["status"] == 0) {
+                    $("#country-" + country_id).html(
+                        "<i class='fas fa-toggle-off' aria-hidden='true' status='Inactive'></i>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#country-" + country_id).html(
+                        "<i class='fas fa-toggle-on' aria-hidden='true' status='Active'></i>"
+                    );
+                }
+            },
+            error: function () {
+                alert("error");
+            },
+        });
+    });
+
+
+
+
+
     // Append Category Level
     $("#section_id").change(function () {
         var section_id = $(this).val();

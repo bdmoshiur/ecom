@@ -17,6 +17,12 @@ use Database\Seeders\WishlistsTableSeeder;
 use Database\Seeders\ExchangeRequestTableSeeder;
 use Database\Seeders\ReturnRequestTableSeeder;
 
+use Database\Seeders\FabricsTableSeeder;
+use Database\Seeders\SleevesTableSeeder;
+use Database\Seeders\FitsTableSeeder;
+use Database\Seeders\PatternsTableSeeder;
+use Database\Seeders\OccasionsTableSeeder;
+
 
 
 
@@ -30,7 +36,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         //  $this->call(AmdinsTableSeeder::class);
-         $this->call(SectionsTableSeeder::class);
+        //  $this->call(SectionsTableSeeder::class);
         //  $this->call(CategoryTableSeeder::class);
         //  $this->call(ProductsTableSeeder::class);
         //  $this->call(ProductsAttributesTableSeeder::class);
@@ -47,6 +53,12 @@ class DatabaseSeeder extends Seeder
         // $this->call(ReturnRequestTableSeeder::class);
         // $this->call(ExchangeRequestTableSeeder::class);
         // $this->call(NewsletterSubscriberTableSeeder::class);
+        // $this->call(FabricsTableSeeder::class);
+        // $this->call(SleevesTableSeeder::class);
+        // $this->call(FitsTableSeeder::class);
+        // $this->call(PatternsTableSeeder::class);
+        // $this->call(OccasionsTableSeeder::class);
+
 
 
 

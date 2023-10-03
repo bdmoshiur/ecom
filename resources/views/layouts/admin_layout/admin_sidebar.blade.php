@@ -39,7 +39,7 @@
                   </li>
 
                   <!-- Setting -->
-                  @if (Session::get('page') == 'settings' || Session::get('page') == 'update-admin-details')
+                  @if (Session::get('page') == 'settings' || Session::get('page') == 'update-admin-details' || Session::get('page') == 'update_other_setting' || Session::get('page') == 'admins_subadmins')
                       <?php $active = 'active'; ?>
                   @else
                       <?php $active = ''; ?>
@@ -110,8 +110,15 @@
                   </li>
 
                   <!-- Categories -->
-
-                  @if (Session::get('page') == 'sections' || Session::get('page') == 'brands' || Session::get('page') == 'categories'|| Session::get('page') == 'products')
+                  @if (Session::get('page') == 'sections' || Session::get('page') == 'brands'
+                   || Session::get('page') == 'categories'|| Session::get('page') == 'products'
+                   || Session::get('page') == 'banners'
+                   || Session::get('page') == 'coupons' || Session::get('page') == 'orders'
+                   || Session::get('page') == 'users' || Session::get('page') == 'cmsPages'
+                   || Session::get('page') == 'shipping-charges' || Session::get('page') == 'currencies'
+                   || Session::get('page') == 'ratings' || Session::get('page') == 'return_requests'
+                   || Session::get('page') == 'exchange_requests' || Session::get('page') == 'newsletter_subscriber'
+                   )
                       <?php $active = 'active'; ?>
                   @else
                       <?php $active = ''; ?>
@@ -312,6 +319,103 @@
 
                       </ul>
                   </li>
+
+
+
+                <!-- Product Tools -->
+                @if (Session::get('page') == 'fabric' || Session::get('page') == 'sleeve' || Session::get('page') == 'fit'
+                 || Session::get('page') == 'pattern' || Session::get('page') == 'occasion'|| Session::get('page') == 'country')
+                    <?php $active = 'active'; ?>
+                @else
+                   <?php $active = ''; ?>
+                @endif
+               <li class="nav-item has-treeview menu-open">
+                   <a href="#" class="nav-link {{ $active }}">
+                       <i class="nav-icon fas fa-th"></i>
+                       <p>
+                           Product Tools
+                           <i class="right fas fa-angle-left"></i>
+                       </p>
+                   </a>
+                   <ul class="nav nav-treeview">
+                       @if (Session::get('page') == 'fabric')
+                           <?php $active = 'active'; ?>
+                       @else
+                           <?php $active = ''; ?>
+                       @endif
+                       <li class="nav-item">
+                           <a href="{{ route('admin.fabric') }}" class="nav-link {{ $active }}">
+                               <i class="far fa-circle nav-icon"></i>
+                               <p>Fabric</p>
+                           </a>
+                       </li>
+
+                       @if (Session::get('page') == 'sleeve')
+                           <?php $active = 'active'; ?>
+                       @else
+                           <?php $active = ''; ?>
+                       @endif
+                       <li class="nav-item">
+                           <a href="{{ route('admin.sleeve') }}" class="nav-link {{ $active }}">
+                               <i class="far fa-circle nav-icon"></i>
+                               <p>Sleeve</p>
+                           </a>
+                       </li>
+
+                       @if (Session::get('page') == 'fit')
+                           <?php $active = 'active'; ?>
+                       @else
+                           <?php $active = ''; ?>
+                       @endif
+                       <li class="nav-item">
+                           <a href="{{ route('admin.fit') }}" class="nav-link {{ $active }}">
+                               <i class="far fa-circle nav-icon"></i>
+                               <p>Fit</p>
+                           </a>
+                       </li>
+
+                       @if (Session::get('page') == 'pattern')
+                           <?php $active = 'active'; ?>
+                       @else
+                           <?php $active = ''; ?>
+                       @endif
+                       <li class="nav-item">
+                           <a href="{{ route('admin.pattern') }}" class="nav-link {{ $active }}">
+                               <i class="far fa-circle nav-icon"></i>
+                               <p>Pattern</p>
+                           </a>
+                       </li>
+
+                       @if (Session::get('page') == 'occasion')
+                           <?php $active = 'active'; ?>
+                       @else
+                           <?php $active = ''; ?>
+                       @endif
+                       <li class="nav-item">
+                           <a href="{{ route('admin.occasion') }}" class="nav-link {{ $active }}">
+                               <i class="far fa-circle nav-icon"></i>
+                               <p>Occasion</p>
+                           </a>
+                       </li>
+
+                    @if (Session::get('page') == 'country')
+                       <?php $active = 'active'; ?>
+                    @else
+                        <?php $active = ''; ?>
+                    @endif
+                    <li class="nav-item">
+                        <a href="{{ route('admin.country') }}" class="nav-link {{ $active }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Countrys</p>
+                        </a>
+                    </li
+
+
+
+
+
+                   </ul>
+               </li>
 
 
               </ul>
