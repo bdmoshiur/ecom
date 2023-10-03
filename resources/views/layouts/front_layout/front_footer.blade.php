@@ -32,7 +32,7 @@ $medias = Media::where('status',1)->get();
 			<div id="socialMedia" class="span3 pull-right">
 				<h5>SOCIAL MEDIA </h5>
                 @foreach ($medias as $media)
-                    <a href="{{ $media->link }}"><img width="60" height="60" src="{{ asset('images/media_images/' . $media['image']) }}" title="{{ $media->name }}" alt="{{ $media->name }}"/></a>
+                    <a target="_blank" href="<?php echo $media->link ?>"><img width="60" height="60" src="{{ asset('images/media_images/' . $media['image']) }}" title="{{ $media->name }}" alt="{{ $media->name }}"/></a>
                 @endforeach
 			</div>
 		</div>
