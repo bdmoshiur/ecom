@@ -42,45 +42,56 @@ class MediaController extends Controller
             $media = new Media();
             $mediadata = array();
             $message = "Media Added Successfully";
+
+            $rules = [
+                'name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'link' => 'required',
+                'image' => 'required', // Image is required for new record
+            ];
         } else {
             //Edit Media Functionality
             $title = "Edit Media";
             $media = Media::find($id);
             $message = "Media Updated Successfully";
+
+            $rules = [
+                'name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'link' => 'required',
+                'image' => 'sometimes', // 'sometimes' means it's optional
+            ];
         }
 
         if($request->isMethod('post')){
             $data = $request->all();
-            $rules = [
-                'name' => 'required|regex:/^[\pL\s\-]+$/u',
-                'link' => 'required',
-            ];
             $customMessage = [
                 'name.required' => 'Media Name is Required',
                 'name.regex' => 'Valid Media Name is Required',
                 'link.required' => 'Media Link is Required',
+                'image.required' => 'Media Image is Required', // Add this custom message for image
             ];
             $this->validate($request, $rules, $customMessage);
 
 
-         // Upload media Image
-        if ($request->hasFile('image')) {
-            $image_tmp = $request->file('image');
-            if ($image_tmp->isValid()) {
-                $extention = $image_tmp->getClientOriginalExtension();
-                $imageName = rand(111, 99999) . '.' . $extention;
-                $imagePath = 'images/media_images/' . $imageName;
-                Image::make($image_tmp)->resize(60, 80)->save($imagePath);
+          // Check if a new image is uploaded
+           if ($request->hasFile('image')) {
+                $image_tmp = $request->file('image');
+                if ($image_tmp->isValid()) {
+                    $extention = $image_tmp->getClientOriginalExtension();
+                    $imageName = rand(111, 99999) . '.' . $extention;
+                    $imagePath = 'images/media_images/' . $imageName;
+                    Image::make($image_tmp)->resize(60, 80)->save($imagePath);
+
+                    // Remove the old image if it exists
+                    if (!empty($media->image) && file_exists($media->image) && !is_dir($media->image)) {
+                        unlink($media->image);
+                    }
+
+                    $media->image = $imageName;
+                }
             }
-        }else if (!empty($data['image'])) {
-            $imageName = $data['image'];
-        } else {
-            $imageName = "";
-        }
 
             $media->name = $data['name'];
             $media->link = $data['link'];
-            $media->image = $imageName;
             $media->save();
 
             Session::flash('success_message', $message);
