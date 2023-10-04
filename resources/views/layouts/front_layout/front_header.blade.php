@@ -32,7 +32,7 @@ $sections = Section::sections();
                                 @foreach ($sections as $section)
                                     @if (count($section['categories']) > 0)
                                         <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle"
+                                            <a href="javascript:void(0)" class="dropdown-toggle"
                                                 data-toggle="dropdown">{{ $section['name'] }} <b class="caret"></b></a>
                                             <ul class="dropdown-menu">
                                                 @foreach ($section['categories'] as $category)
@@ -48,10 +48,10 @@ $sections = Section::sections();
                                         </li>
                                     @endif
                                 @endforeach
-                                <li><a href="#">About</a></li>
+                                <li><a href="javascript:void(0)">About</a></li>
                             </ul>
                             <form class="navbar-search pull-left" action="{{ route('front.product.search') }}" method="get">
-                                <input type="text" name="search" class="search-query span2" placeholder="Search" />
+                                <input type="text" name="search" class="search-query span2" placeholder="Product Search" />
                                 <button type="submit">Go</button>
                             </form>
                             <ul class="nav pull-right">

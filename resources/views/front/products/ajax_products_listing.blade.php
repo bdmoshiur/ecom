@@ -28,8 +28,8 @@ use App\Product;
                         <h4 style="text-align:center">
                             {{--  <a class="btn" href="{{ route('product', $catProduct['id']) }}">
                                 <i class="icon-zoom-in"></i></a>  --}}
-                            <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a
-                                class="btn btn-secondary" href="#">
+                            <a class="btn" href="javascript:void(0)">Add to <i class="icon-shopping-cart"></i></a> <a
+                                class="btn btn-secondary" href="javascript:void(0)">
                                 @if ($discounted_price > 0)
                                     <del>Tk.{{ $catProduct['product_price'] }}</del>
                                     <font color='red'>Tk. {{ $discounted_price }}</font>

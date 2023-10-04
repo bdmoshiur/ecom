@@ -9,8 +9,8 @@ $medias = Media::where('status',1)->get();
 		<div class="row">
 			<div class="span3">
 				<h5>ACCOUNT</h5>
-				<a href="#">YOUR ACCOUNT</a>
-				<a href="#">PERSONAL INFORMATION</a>
+				<a href="javascript:void(0)">YOUR ACCOUNT</a>
+				<a href="javascript:void(0)">PERSONAL INFORMATION</a>
 				<a href="{{ route('front.orders') }}">ORDER HISTORY</a>
 			</div>
 			<div class="span3">
@@ -27,7 +27,7 @@ $medias = Media::where('status',1)->get();
 				<h5>OUR OFFERS</h5>
 				<a href="{{ route('front.new.product') }}">LATEST PRODUCTS</a>
 				<a href="{{ route('front.top.sellers.product') }}">TOP SELLING PRODUCTS</a>
-				<a href="#">SPECIAL OFFERS</a>
+				<a href="javascript:void(0)">SPECIAL OFFERS</a>
 			</div>
 			<div id="socialMedia" class="span3 pull-right">
 				<h5>SOCIAL MEDIA </h5>
@@ -35,7 +35,9 @@ $medias = Media::where('status',1)->get();
                     <a target="_blank" href="<?php echo $media->link ?>"><img width="25" height="25" src="{{ asset('images/media_images/' . $media['image']) }}" title="{{ $media->name }}" alt="{{ $media->name }}"/></a>
                 @endforeach
 			</div>
-		</div>
-		<p class="pull-right"><a target="_blank" href="#">&copy; Moshiur Rahman</a></p>
+            <div class="span3">
+                <p class="pull-right"><a target="_blank" href="javascript:void(0)">&copy; Moshiur Rahman</a></p>
+            </div>
+        </div>
 	</div><!-- Container End -->
 </div>

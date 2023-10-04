@@ -98,7 +98,7 @@
           var option = (typeof item === 'object') ? item.option : undefined;
           var dataValue = 'data-value="' + value + '"';
           var dataOption = (option !== undefined) ? ' data-option="' + option + '"' : '';
-          return '<li role="listitem" aria-label="' + value + '"><a href="#" ' + (dataValue + dataOption) + '>' + content + '</a></li>';
+          return '<li role="listitem" aria-label="' + value + '"><a vascript:void(0)" ' + (dataValue + dataOption) + '>' + content + '</a></li>';
       }).join('') : options.items;
       $node.html(markup).attr({ 'aria-label': options.title });
   });
@@ -109,7 +109,7 @@
       var markup = Array.isArray(options.items) ? options.items.map(function (item) {
           var value = (typeof item === 'string') ? item : (item.value || '');
           var content = options.template ? options.template(item) : item;
-          return '<li role="listitem" aria-label="' + item + '"><a href="#" data-value="' + value + '">' + icon(options.checkClassName) + ' ' + content + '</a></li>';
+          return '<li role="listitem" aria-label="' + item + '"><a vascript:void(0)" data-value="' + value + '">' + icon(options.checkClassName) + ' ' + content + '</a></li>';
       }).join('') : options.items;
       $node.html(markup).attr({ 'aria-label': options.title });
   });

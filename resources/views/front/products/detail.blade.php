@@ -211,7 +211,7 @@
             </p>
             <a class="btn btn-small pull-right" href="#detail">More Details</a>
             <br class="clr" />
-            <a href="#" name="detail"></a>
+            <a href="javascript:void(0)" name="detail"></a>
             <hr class="soft" />
         </div>
 
@@ -370,10 +370,10 @@
                                                 <h4 style="text-align:center"><a class="btn"
                                                         href="{{ route('product', $relatedProduct['id']) }}">
                                                         <i class="icon-zoom-in"></i></a> <a class="btn"
-                                                        href="#">Add
+                                                        href="javascript:void(0)">Add
                                                         to <i class="icon-shopping-cart"></i></a> <a
                                                         class="btn btn-primary"
-                                                        href="#">Tk.{{ $relatedProduct['product_price'] }}</a></h4>
+                                                        href="javascript:void(0)">Tk.{{ $relatedProduct['product_price'] }}</a></h4>
                                             </div>
                                         </div>
                                     </li>
