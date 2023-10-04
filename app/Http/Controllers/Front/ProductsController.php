@@ -707,10 +707,10 @@ class ProductsController extends Controller
 
 
                 return redirect()->route('front.thanks');
-            }elseif($data['payment_gateway'] == "Paypal"){
-                return redirect()->route('front.paypal');
-            }elseif($data['payment_gateway'] == "Bkash"){
-                return redirect()->route('front.bkash');
+            // }elseif($data['payment_gateway'] == "Paypal"){
+            //     return redirect()->route('front.paypal');
+            }elseif($data['payment_gateway'] == "sslcommerz"){
+                return redirect()->route('sslcommerz');
             }else{
                 echo "Others payment method comming soon"; die;
             }
@@ -899,6 +899,45 @@ class ProductsController extends Controller
             ]);
 
         }
+    }
+
+    public function newProduct()
+    {
+        $newProducts = Product::where('status', 1)->orderBy('created_at', 'desc')->take(12)->get()->toArray();
+
+        return view('front.products.new_product', [
+            'newProducts' => $newProducts,
+        ]);
+    }
+
+    public function topSellersProduct()
+    {
+        $topSellers = OrderProduct::select('product_id', DB::raw('SUM(product_quantity) as total_sold'))
+            ->groupBy('product_id')
+            ->orderBy('total_sold', 'desc')
+            ->take(12)
+            ->get();
+
+        $topSellingProductIds = $topSellers->pluck('product_id')->toArray();
+        $topSellingProducts = Product::whereIn('id', $topSellingProductIds)->get()->toArray();
+
+        foreach ($topSellingProducts as &$product) {
+            foreach ($topSellers as $topSeller) {
+                if ($product['id'] == $topSeller['product_id']) {
+                    $product['total_sold'] = $topSeller['total_sold'];
+                    break;
+                }
+            }
+        }
+
+        // Sort the array by total_sold in descending order
+        usort($topSellingProducts, function($a, $b) {
+            return $b['total_sold'] - $a['total_sold'];
+        });
+
+        return view('front.products.top_sellers_product', [
+            'topSellingProducts' => $topSellingProducts,
+        ]);
     }
 
 

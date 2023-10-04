@@ -15,7 +15,8 @@ class CreateCodPincodesTable extends Migration
     {
         Schema::create('cod_pincodes', function (Blueprint $table) {
             $table->id();
-            $table->string('pincode');
+            $table->string('pincode')->nullable();
+            $table->tinyInteger('status');
             $table->timestamps();
         });
     }

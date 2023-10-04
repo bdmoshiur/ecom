@@ -1,15 +1,17 @@
 <?php
 use App\CmsPage;
+use App\Media;
 $cmsUrls = CmsPage::select('url')->where('status',1)->get()->pluck('url')->toArray();
+$medias = Media::where('status',1)->get();
 ?>
 <div  id="footerSection">
 	<div class="container">
 		<div class="row">
 			<div class="span3">
 				<h5>ACCOUNT</h5>
-				<a href="login.html">YOUR ACCOUNT</a>
-				<a href="login.html">PERSONAL INFORMATION</a>
-				<a href="login.html">ORDER HISTORY</a>
+				<a href="#">YOUR ACCOUNT</a>
+				<a href="#">PERSONAL INFORMATION</a>
+				<a href="{{ route('front.orders') }}">ORDER HISTORY</a>
 			</div>
 			<div class="span3">
 				<h5>INFORMATION</h5>
@@ -23,15 +25,15 @@ $cmsUrls = CmsPage::select('url')->where('status',1)->get()->pluck('url')->toArr
 			</div>
 			<div class="span3">
 				<h5>OUR OFFERS</h5>
-				<a href="#">NEW PRODUCTS</a>
-				<a href="#">TOP SELLERS</a>
-				<a href="special_offer.html">SPECIAL OFFERS</a>
+				<a href="{{ route('front.new.product') }}">LATEST PRODUCTS</a>
+				<a href="{{ route('front.top.sellers.product') }}">TOP SELLING PRODUCTS</a>
+				<a href="#">SPECIAL OFFERS</a>
 			</div>
 			<div id="socialMedia" class="span3 pull-right">
 				<h5>SOCIAL MEDIA </h5>
-				<a href="#"><img width="60" height="60" src="{{ asset('images/front_images') }}/facebook.png" title="facebook" alt="facebook"/></a>
-				<a href="#"><img width="60" height="60" src="{{ asset('images/front_images') }}/twitter.png" title="twitter" alt="twitter"/></a>
-				<a href="#"><img width="60" height="60" src="{{ asset('images/front_images') }}/youtube.png" title="youtube" alt="youtube"/></a>
+                @foreach ($medias as $media)
+                    <a target="_blank" href="<?php echo $media->link ?>"><img width="25" height="25" src="{{ asset('images/media_images/' . $media['image']) }}" title="{{ $media->name }}" alt="{{ $media->name }}"/></a>
+                @endforeach
 			</div>
 		</div>
 		<p class="pull-right"><a target="_blank" href="#">&copy; Moshiur Rahman</a></p>

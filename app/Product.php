@@ -4,6 +4,11 @@ namespace App;
 
 use App\Section;
 use App\Category;
+use App\Fabric;
+use App\Sleeve;
+use App\Fit;
+use App\Pattern;
+use App\Occasion;
 use App\ProductsAttribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,11 +43,17 @@ class Product extends Model
     }
     public static function productFilters()
     {
-        $productFilters['fabricArray'] = array('Coton', 'Polyester', 'Wool', 'Pure Cotton');
-        $productFilters['sleeveArray'] = array('Full Sleeve', 'Half Sleeve', 'Short Sleeve', 'Sleeveless');
-        $productFilters['patternArray'] = array('Checked', 'Plain', 'Printed', 'Self', 'Solid');
-        $productFilters['fitArray'] = array('Regular', 'Slim');
-        $productFilters['occasionArray'] = array('Casual', 'Formal');
+        // $productFilters['fabricArray'] = array('Coton', 'Polyester', 'Wool', 'Pure Cotton');
+        // $productFilters['sleeveArray'] = array('Full Sleeve', 'Half Sleeve', 'Short Sleeve', 'Sleeveless');
+        // $productFilters['patternArray'] = array('Checked', 'Plain', 'Printed', 'Self', 'Solid');
+        // $productFilters['fitArray'] = array('Regular', 'Slim');
+        // $productFilters['occasionArray'] = array('Casual', 'Formal');
+
+        $productFilters['fabricArray'] = Fabric::where('status',1)->pluck('name');
+        $productFilters['sleeveArray'] = Sleeve::where('status',1)->pluck('name');
+        $productFilters['fitArray'] = Fit::where('status',1)->pluck('name');
+        $productFilters['patternArray'] = Pattern::where('status',1)->pluck('name');
+        $productFilters['occasionArray'] = Occasion::where('status',1)->pluck('name');
         return $productFilters;
     }
 

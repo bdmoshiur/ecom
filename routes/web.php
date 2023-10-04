@@ -26,6 +26,15 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Admin\ImportController;
+use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\CodpincodeController;
+
+use App\Http\Controllers\Admin\FabricController;
+use App\Http\Controllers\Admin\SleeveController;
+use App\Http\Controllers\Admin\FitController;
+use App\Http\Controllers\Admin\PatternController;
+use App\Http\Controllers\Admin\OccasionController;
+use App\Http\Controllers\SslCommerzPaymentController;
 
 
 
@@ -35,6 +44,24 @@ use App\Http\Controllers\Admin\ImportController;
 // });
 
 // Auth::routes();
+
+
+
+
+// SSLCOMMERZ Start
+Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout'])->name('sslcommerz');
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
+
+
+
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -93,6 +120,67 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('delete_image/{id}', 'ProductController@deleteImage')->name('admin.delete.image');
         Route::post('edit_images/{id}', 'ProductController@editImages')->name('admin.edit_images');
 
+
+        //Products Tools
+        // Fabric routes
+        Route::get('fabric', 'FabricController@fabric')->name('admin.fabric');
+        Route::post('/update-fabric-status', 'FabricController@updateFabricStatus');
+        Route::match(['get', 'post'], 'add-edit-fabric/{id?}', 'FabricController@addEditFabric')->name('admin.add.edit.fabric');
+        Route::get('delete_fabric/{id}', 'FabricController@deleteFabrics')->name('admin.delete.fabric');
+
+        // Sleeve routes
+        Route::get('sleeve', 'SleeveController@sleeve')->name('admin.sleeve');
+        Route::post('/update-sleeve-status', 'SleeveController@updateSleeveStatus');
+        Route::match(['get', 'post'], 'add-edit-sleeve/{id?}', 'SleeveController@addEditSleeve')->name('admin.add.edit.sleeve');
+        Route::get('delete_sleeve/{id}', 'SleeveController@deleteSleeve')->name('admin.delete.sleeve');
+
+        // Fit routes
+        Route::get('fit', 'FitController@fit')->name('admin.fit');
+        Route::post('/update-fit-status', 'FitController@updateFitStatus');
+        Route::match(['get', 'post'], 'add-edit-fit/{id?}', 'FitController@addEditFit')->name('admin.add.edit.fit');
+        Route::get('delete_fit/{id}', 'FitController@deleteFits')->name('admin.delete.fit');
+
+        // Pattern routes
+        Route::get('pattern', 'PatternController@pattern')->name('admin.pattern');
+        Route::post('/update-pattern-status', 'PatternController@updatePatternStatus');
+        Route::match(['get', 'post'], 'add-edit-pattern/{id?}', 'PatternController@addEditPattern')->name('admin.add.edit.pattern');
+        Route::get('delete_pattern/{id}', 'PatternController@deletePatterns')->name('admin.delete.pattern');
+
+        // Occasion routes
+        Route::get('occasion', 'OccasionController@occasion')->name('admin.occasion');
+        Route::post('/update-occasion-status', 'OccasionController@updateOccasionStatus');
+        Route::match(['get', 'post'], 'add-edit-occasion/{id?}', 'OccasionController@addEditOccasion')->name('admin.add.edit.occasion');
+        Route::get('delete_occasion/{id}', 'OccasionController@deleteOccasions')->name('admin.delete.occasion');
+
+
+        // Country routes
+        Route::get('country', 'CountryController@country')->name('admin.country');
+        Route::post('/update-country-status', 'CountryController@updateCountryStatus');
+        Route::match(['get', 'post'], 'add-edit-country/{id?}', 'CountryController@addEditCountry')->name('admin.add.edit.country');
+        Route::get('delete_country/{id}', 'CountryController@deleteCountry')->name('admin.delete.country');
+
+
+        // Codpincodes routes
+        Route::get('codpincode', 'CodpincodeController@codpincode')->name('admin.codpincode');
+        Route::post('/update-codpincode-status', 'CodpincodeController@updateCodpincodeStatus');
+        Route::match(['get', 'post'], 'add-edit-codpincode/{id?}', 'CodpincodeController@addEditCodpincode')->name('admin.add.edit.codpincode');
+        Route::get('delete_codpincode/{id}', 'CodpincodeController@deleteCodpincode')->name('admin.delete.codpincode');
+
+
+        // Prepaidpincodes routes
+        Route::get('prepaidpincode', 'PrepaidpincodeController@prepaidpincode')->name('admin.prepaidpincode');
+        Route::post('/update-prepaidpincode-status', 'PrepaidpincodeController@updatePrepaidpincodeStatus');
+        Route::match(['get', 'post'], 'add-edit-prepaidpincode/{id?}', 'PrepaidpincodeController@addEditPrepaidpincode')->name('admin.add.edit.prepaidpincode');
+        Route::get('delete_prepaidpincode/{id}', 'PrepaidpincodeController@deletePrepaidpincode')->name('admin.delete.prepaidpincode');
+
+        // Media routes
+        Route::get('media', 'MediaController@media')->name('admin.media');
+        Route::post('/update-media-status', 'MediaController@updateMediaStatus');
+        Route::match(['get', 'post'], 'add-edit-media/{id?}', 'MediaController@addEditMedia')->name('admin.add.edit.media');
+        Route::get('delete_media/{id}', 'MediaController@deleteMedia')->name('admin.delete.media');
+
+
+
         //Banners
         Route::get('banners', 'BannerController@banners')->name('admin.banners');
         Route::post('/update-banner-status', 'BannerController@updateBannerStatus');
@@ -122,7 +210,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('view-orders-charts', [OrderssController::class, 'viewOrdersCharts'])->name('view.orders.charts');
 
 
-        // shipping charges
+        // Shipping charges
         Route::get('/view/shipping/charges',[ShippingController::class, 'viewShippingCharges'])->name('admin.shipping.charges');
         Route::match(['get', 'post'],'/edit/shipping/charges/{id}',[ShippingController::class, 'updateShippingCharges'])->name('admin.update.shipping.charges');
         Route::post('/update-shipping-status', [ShippingController::class, 'updateShippingStatus']);
@@ -214,6 +302,13 @@ Route::group(['namespace' => 'Front'], function () {
 
     // product detail route
     Route::get('/product/{id}', [ProductsController::class, 'detail'])->name('product');
+
+    // new product route
+    Route::get('new/product', [ProductsController::class, 'newProduct'])->name('front.new.product');
+
+    // new product route
+    Route::get('topsellers/product', [ProductsController::class, 'topSellersProduct'])->name('front.top.sellers.product');
+
 
     // getproduct attribute price
     Route::post('/get-product-price', [ProductsController::class, 'getProductPrice']);
