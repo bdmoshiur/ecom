@@ -1,7 +1,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="#" class="brand-link">
+      <a href="javascript:void(0)" class="brand-link">
           <img src="https://img.freepik.com/premium-vector/abstract-modern-ecommerce-logo-design-colorful-gradient-happy-shopping-logo-template_467913-990.jpg" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
           <span class="brand-text font-weight-light">Website</span>
       </a>
@@ -15,7 +15,7 @@
                       class="img-circle elevation-2" alt="User Image">
               </div>
               <div class="info">
-                  <a href="#" class="d-block">{{ ucwords(Auth::guard('admin')->user()->name) }}</a>
+                  <a href="javascript:void(0)" class="d-block">{{ ucwords(Auth::guard('admin')->user()->name) }}</a>
               </div>
           </div>
           <!-- Sidebar Menu -->
@@ -45,7 +45,7 @@
                       <?php $active = ''; ?>
                   @endif
                   <li class="nav-item has-treeview menu-open">
-                      <a href="#" class="nav-link {{ $active }}">
+                      <a href="javascript:void(0)" class="nav-link {{ $active }}">
                           <i class="nav-icon fas fa-th"></i>
                           <p>
                               Setting
@@ -124,7 +124,7 @@
                       <?php $active = ''; ?>
                   @endif
                   <li class="nav-item has-treeview menu-open">
-                      <a href="#" class="nav-link {{ $active }}">
+                      <a href="javascript:void(0)" class="nav-link {{ $active }}">
                           <i class="nav-icon fas fa-th"></i>
                           <p>
                               Categories
@@ -332,7 +332,7 @@
                    <?php $active = ''; ?>
                 @endif
                <li class="nav-item has-treeview menu-open">
-                   <a href="#" class="nav-link {{ $active }}">
+                   <a href="javascript:void(0)" class="nav-link {{ $active }}">
                        <i class="nav-icon fas fa-th"></i>
                        <p>
                            Product Tools
@@ -458,7 +458,7 @@
 
                 <!-- Empty Tools -->
                <li class="nav-item has-treeview menu-open">
-                    <a href="#" class="nav-link">
+                    <a href="javascript:void(0)" class="nav-link">
                         <p>
 
                         </p>

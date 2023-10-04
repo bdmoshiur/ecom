@@ -127,7 +127,7 @@ var Lightbox = (function ($) {
 
 				// add the directional arrows to the modal
 				if (this._config.showArrows && this._$galleryItems.length > 1) {
-					this._$lightboxContainer.append('<div class="ekko-lightbox-nav-overlay"><a href="#">' + this._config.leftArrow + '</a><a href="#">' + this._config.rightArrow + '</a></div>');
+					this._$lightboxContainer.append('<div class="ekko-lightbox-nav-overlay"><a vascript:void(0)">' + this._config.lef '</a><a href="javascript:void(0)">' + this._config.rightArrow + '</a></div>');
 					this._$modalArrows = this._$lightboxContainer.find('div.ekko-lightbox-nav-overlay').first();
 					this._$lightboxContainer.on('click', 'a:first-child', function (event) {
 						event.preventDefault();
