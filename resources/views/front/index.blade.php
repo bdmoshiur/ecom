@@ -40,8 +40,7 @@ use App\Product;
                                                     @php
                                                         $discounted_price = Product::getDiscountPrice($item['id']);
                                                     @endphp
-                                                    <h4><a class="btn"
-                                                            href="{{ route('product', $item['id']) }}">VIEW</a>
+                                                    <h4><a class="btn" href="{{ route('product', $item['id']) }}">VIEW</a>
                                                         <span class="pull-right" style="font-size: 13px">
                                                             @if ($discounted_price > 0)
                                                                 <del>Tk.{{ $item['product_price'] }}</del>
