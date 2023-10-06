@@ -67,7 +67,7 @@
 .navbar-search .srchTxt {border-radius: 0;border: 1px solid #444;}
 [class^="icon-"], [class*=" icon-"] {background-image: none;}
 .navbar .nav > li > a {padding:10px;color: #DDD;text-shadow: none;font-size: 16px;}
-.navbar .nav > li > a:hover{color:#fff}
+.navbar .nav > li > a:hover{color: black}
 #logoArea, #logoArea a{outline:none;}
 .alignR .checkbox input[type="checkbox"] {float: right;margin: 4px 0 8px 11px;}
 

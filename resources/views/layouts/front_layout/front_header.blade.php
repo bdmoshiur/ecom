@@ -48,7 +48,6 @@ $sections = Section::sections();
                                         </li>
                                     @endif
                                 @endforeach
-                                <li><a href="#">About</a></li>
                             </ul>
                             <form class="navbar-search pull-left" action="{{ route('front.product.search') }}" method="get">
                                 <input type="text" name="search" class="search-query span2" placeholder="Search" />
