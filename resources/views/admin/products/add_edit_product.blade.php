@@ -90,7 +90,7 @@
                                             <option value="">Select</option>
                                             @foreach ($brands as $brand)
                                                 <option value="{{ $brand['id'] }}"
-                                                    @if (!empty($productdata['brand_id']) && $productdata['brand_id'] == $brand['id']) selected @endif>{{ $brand['name'] }}
+                                                @if (old('brand_id') == $brand['id']) selected @elseif (!empty($productdata['brand_id']) && $productdata['brand_id'] == $brand['id']) selected @endif>{{ $brand['name'] }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -214,7 +214,7 @@
                                             <option value="">Select</option>
                                             @foreach ($fabricArray as $fabric)
                                                 <option value="{{ $fabric }}"
-                                                    @if (!empty($productdata['fabric']) && $productdata['fabric'] == $fabric) selected @endif>{{ $fabric }}
+                                                @if (old('fabric') == $fabric) selected @elseif (!empty($productdata['fabric']) && $productdata['fabric'] == $fabric) selected @endif>{{ $fabric }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -228,7 +228,7 @@
                                             <option value="">Select</option>
                                             @foreach ($sleeveArray as $sleeve)
                                                 <option value="{{ $sleeve }}"
-                                                    @if (!empty($productdata['sleeve']) && $productdata['sleeve'] == $sleeve) selected @endif>{{ $sleeve }}
+                                                @if (old('sleeve') == $sleeve) selected @elseif (!empty($productdata['sleeve']) && $productdata['sleeve'] == $sleeve) selected @endif>{{ $sleeve }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -240,7 +240,7 @@
                                             <option value="">Select</option>
                                             @foreach ($patternArray as $pattern)
                                                 <option value="{{ $pattern }}"
-                                                    @if (!empty($productdata['pattern']) && $productdata['pattern'] == $pattern) selected @endif>{{ $pattern }}
+                                                @if (old('pattern') == $pattern) selected @elseif (!empty($productdata['pattern']) && $productdata['pattern'] == $pattern) selected @endif>{{ $pattern }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -253,7 +253,7 @@
                                             <option value="">Select</option>
                                             @foreach ($fitArray as $fit)
                                                 <option value="{{ $fit }}"
-                                                    @if (!empty($productdata['fit']) && $productdata['fit'] == $fit) selected @endif>{{ $fit }}
+                                                @if (old('fit') == $fit) selected @elseif (!empty($productdata['fit']) && $productdata['fit'] == $fit) selected @endif>{{ $fit }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -265,7 +265,7 @@
                                             <option value="">Select</option>
                                             @foreach ($occasionArray as $occasion)
                                                 <option value="{{ $occasion }}"
-                                                    @if (!empty($productdata['occasion']) && $productdata['occasion'] == $occasion) selected @endif>{{ $occasion }}
+                                                @if (old('occasion') == $occasion) selected @elseif (!empty($productdata['occasion']) && $productdata['occasion'] == $occasion) selected @endif>{{ $occasion }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -287,8 +287,7 @@
                                     <div class="form-group">
                                         <label for="meta_keywords">Featured Item</label>
                                         <input type="checkbox" name="is_featured" id="is_featured" value="Yes"
-                                            @if (!empty($productdata['is_featured']) && $productdata['is_featured'] == 'Yes') checked @endif>
-
+                                        @if (old('is_featured') == 'Yes' || (!empty($productdata['is_featured']) && $productdata['is_featured'] == 'Yes')) checked @endif>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
