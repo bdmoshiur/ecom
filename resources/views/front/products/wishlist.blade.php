@@ -3,7 +3,7 @@
 @section('content')
     <div class="span9">
         <ul class="breadcrumb">
-            <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+            <li><a href="{{ route('index') }}">Home</a> <span class="divider">/</span></li>
             <li class="active"> Wishlist</li>
         </ul>
         <h3> Wishlist [ <small><span class="totalWishlistItems"> {{ (totalWishlistItems()) }} Item(s) </span> </small>]<a href="{{ route('index') }}" class="btn btn-large pull-right"><i

@@ -5,7 +5,7 @@
 @section('content')
     <div class="span9">
         <ul class="breadcrumb">
-            <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+            <li><a href="{{ route('index') }}">Home</a> <span class="divider">/</span></li>
             <li class="active">CHECKOUT</li>
         </ul>
         <h3> CHECKOUT [ <small><span class="totalCartItems"> {{ totalCartItems() }} Item(s) </span> </small>]<a href="{{ route('cart') }}" class="btn btn-large pull-right"><i
