@@ -50,7 +50,7 @@ $sections = Section::sections();
                                 @endforeach
                             </ul>
                             <form class="navbar-search pull-left" action="{{ route('front.product.search') }}" method="get">
-                                <input type="text" name="search" class="search-query span2" placeholder="Search" />
+                                <input type="text" name="search" class="search-query span2" placeholder="Search" required/>
                                 <button type="submit">Go</button>
                             </form>
                             <ul class="nav pull-right">
