@@ -81,6 +81,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         //Sections
         Route::get('sections', 'SectionController@sections')->name('admin.sections');
         Route::post('/update-section-status', 'SectionController@updateSectionStatus');
+        Route::match(['get', 'post'], 'add-edit-section/{id?}', 'SectionController@addEditSection')->name('admin.add.edit.sections');
+        Route::get('delete_section/{id}', 'SectionController@deleteSections')->name('admin.delete.section');
+
 
         //Brands
         Route::get('brands', 'BrandController@brands')->name('admin.brands');
