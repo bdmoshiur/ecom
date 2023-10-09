@@ -18,12 +18,11 @@ class CmsController extends Controller
     {
         Session::put('page', "cmsPages");
         $cms_pages = CmsPage::get();
+
         return view('admin.pages.cms_pages',[
             'cms_pages' => $cms_pages,
         ]);
     }
-
-
 
     /**
      * Display the specified resource.
@@ -36,13 +35,15 @@ class CmsController extends Controller
     {
         if ($request->ajax()) {
             $data = $request->all();
-            // echo "<pre>"; print_r($data); die;
+
             if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
             }
+
             CmsPage::where('id', $data['cmspage_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'cmspage_id' => $data['cmspage_id']]);
         }
     }
@@ -97,8 +98,8 @@ class CmsController extends Controller
             $cms_page->save();
 
             Session::flash('success_message', $message);
-            return redirect()->route('admin.cms.pages');
 
+            return redirect()->route('admin.cms.pages');
         }
 
         return view('admin.pages.add_edit_cms_pages',[
@@ -111,8 +112,7 @@ class CmsController extends Controller
     {
         CmsPage::find($id)->delete();
         Session::flash('success_message', 'CMS Page Deleted Successfully');
+
         return redirect()->back();
     }
-
-
 }

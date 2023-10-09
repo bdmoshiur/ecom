@@ -18,7 +18,6 @@ class CouponController extends Controller
 
         $coupons = Coupon::get();
         Session::put('page', "coupons");
-
         $couponModuleCount = AdminRole::where(['admin_id'=> Auth::guard('admin')->user()->id, 'module' => 'coupons'])->count();
 
         if(Auth::guard('admin')->user()->type == 'superadmin'){
@@ -32,6 +31,7 @@ class CouponController extends Controller
         }else{
             $couponModule = AdminRole::where(['admin_id'=> Auth::guard('admin')->user()->id, 'module' => 'coupons'])->first()->toArray();
         }
+
         return view('admin.coupons.coupons',[
             'coupons' => $coupons,
             'couponModule' => $couponModule,
@@ -41,6 +41,7 @@ class CouponController extends Controller
     public function addEditCoupon( Request $request, $id = null)
     {
         Session::put('page', "coupons");
+
         if ($id == "") {
             //Add Coupon Functionality
             $title = "Add Coupon";
@@ -109,15 +110,13 @@ class CouponController extends Controller
             $coupon->save();
 
             Session::flash('success_message', $message);
-            return redirect()->route('admin.coupons');
 
+            return redirect()->route('admin.coupons');
         }
 
         $categories = Section::with('categories')->get();
         $categories = json_decode(json_encode($categories), true);
         $users = User::select('email')->where('status',1)->get()->toArray();
-
-
 
         return view('admin.coupons.add_edit_coupon',[
             'title' => $title,
@@ -139,16 +138,16 @@ class CouponController extends Controller
                 $status = 1;
             }
             Coupon::where('id', $data['coupon_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'coupon_id' => $data['coupon_id']]);
         }
     }
-
-
 
     public function deleteCoupon($id)
     {
         $deleteBrands = Coupon::find($id)->delete();
         Session::flash('success_message', 'Coupon Deleted Successfully');
+
         return redirect()->back();
     }
 }

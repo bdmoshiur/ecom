@@ -19,6 +19,7 @@ class ShippingController extends Controller
     }
 
     public function updateShippingCharges(Request $request, $id) {
+
         if ($request->isMethod('post')) {
             $data = $request->all();
             $updateData = [
@@ -48,12 +49,15 @@ class ShippingController extends Controller
     {
         if ($request->ajax()) {
             $data = $request->all();
+
             if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
             }
+
             ShippingCharge::where('id', $data['shipping_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'shipping_id' => $data['shipping_id']]);
         }
     }

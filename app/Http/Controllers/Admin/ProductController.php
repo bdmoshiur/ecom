@@ -39,6 +39,7 @@ class ProductController extends Controller
         }else{
             $productModule = AdminRole::where(['admin_id'=> Auth::guard('admin')->user()->id, 'module' => 'products'])->first()->toArray();
         }
+
         return view('admin.products.products', compact('products','productModule'));
     }
 
@@ -52,6 +53,7 @@ class ProductController extends Controller
                 $status = 1;
             }
             Product::where('id', $data['product_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'product_id' => $data['product_id']]);
         }
     }
@@ -60,6 +62,7 @@ class ProductController extends Controller
     {
         Product::find($id)->delete();
         Session::flash('success_message', 'Product Deleted Successfully');
+
         return redirect()->back();
     }
 
@@ -105,8 +108,6 @@ class ProductController extends Controller
             ];
 
             $this->validate($request, $rules, $customMessage);
-
-
 
             // Upload Product Image
             if ($request->hasFile('main_image')) {
@@ -170,6 +171,7 @@ class ProductController extends Controller
             $product->save();
 
             Session::flash('success_message', $message);
+
             return redirect()->route('admin.products');
         }
 
@@ -187,7 +189,6 @@ class ProductController extends Controller
         $brands = Brand::where('status', 1)->get();
         $brands = json_decode(json_encode($brands), true);
 
-
         return view('admin.products.add_edit_product', compact('title', 'fabricArray', 'sleeveArray', 'patternArray', 'fitArray', 'occasionArray', 'categories', 'productdata', 'brands'));
     }
 
@@ -202,25 +203,31 @@ class ProductController extends Controller
         if (file_exists($small_image_path . $product->main_image)) {
             unlink($small_image_path . $product->main_image);
         }
+
         if (file_exists($medium_image_path . $product->main_image)) {
             unlink($medium_image_path . $product->main_image);
         }
+
         if (file_exists($large_image_path . $product->main_image)) {
             unlink($large_image_path . $product->main_image);
         }
+
         $product->main_image = "";
         $product->save();
+
         return redirect()->back()->with('success_message', 'Product Image Deleted Successfully');
     }
 
     public function deleteProductVideo($id)
     {
         $product = Product::find($id);
+
         if (file_exists('videos/product_videos/' . $product->product_video)) {
             unlink('videos/product_videos/' . $product->product_video);
         }
         $product->product_video = "";
         $product->save();
+
         return redirect()->back()->with('success_message', 'Product Video Deleted Successfully');
     }
 
@@ -228,16 +235,17 @@ class ProductController extends Controller
     {
         if ($request->isMethod('post')) {
             $data = $request->all();
+
             foreach ($data['sku'] as $key => $val) {
                 if (!empty($val)) {
 
                     $attSku = ProductsAttribute::where(['sku' => $val]);
+
                     if ($attSku->count() > 0) {
                         $message = 'SKU already exists for this product. Please add another SKU.';
                         Session::flash('error_message', $message);
                         return redirect()->back();
                     }
-
 
                     $attSize = ProductsAttribute::where(['product_id' => $id, 'size' => $data['size'][$key]]);
                     if ($attSize->count() > 0) {
@@ -257,12 +265,12 @@ class ProductController extends Controller
                 }
             }
             Session::flash('success_message', 'Product attributes has been added successfully');
+
             return redirect()->back();
         }
 
         $productdata = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'main_image')->with('attributes')->find($id);
         $productdata = json_decode(json_encode($productdata), true);
-
         $title = "Product Attributes";
 
         return view('admin.products.add_attributes', compact('productdata', 'title'));
@@ -281,6 +289,7 @@ class ProductController extends Controller
 
             $success_message = 'Product Attributes updated successfully.';
             Session::flash('success_message', $success_message);
+
             return redirect()->back();
         }
     }
@@ -295,6 +304,7 @@ class ProductController extends Controller
                 $status = 1;
             }
             ProductsAttribute::where('id', $data['attribute_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'attribute_id' => $data['attribute_id']]);
         }
     }
@@ -303,6 +313,7 @@ class ProductController extends Controller
     {
         ProductsAttribute::find($id)->delete();
         Session::flash('success_message', 'Product Attribute Deleted Successfully');
+
         return redirect()->back();
     }
 
@@ -330,6 +341,7 @@ class ProductController extends Controller
                 }
                 $message = 'Product Images added successfully.';
                 Session::flash('success_message', $message);
+
                 return redirect()->back();
             }
         }
@@ -337,6 +349,7 @@ class ProductController extends Controller
         $productdata = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'main_image')->with('images')->find($id);
         $productdata = json_decode(json_encode($productdata), true);
         $title = "Add Images";
+
         return view('admin.products.add_images', compact('productdata', 'title'));
     }
 
@@ -344,12 +357,14 @@ class ProductController extends Controller
     {
         if ($request->ajax()) {
             $data = $request->all();
+
             if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
             }
             ProductsImage::where('id', $data['image_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'image_id' => $data['image_id']]);
         }
     }
@@ -366,13 +381,17 @@ class ProductController extends Controller
         if (file_exists($small_image_path . $product_image->image)) {
             unlink($small_image_path . $product_image->image);
         }
+
         if (file_exists($medium_image_path . $product_image->image)) {
             unlink($medium_image_path . $product_image->image);
         }
+
         if (file_exists($large_image_path . $product_image->image)) {
             unlink($large_image_path . $product_image->image);
         }
+
         $product_image->delete();
+
         return redirect()->back()->with('success_message', 'Product Image Deleted Successfully');
     }
 

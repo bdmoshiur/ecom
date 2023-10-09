@@ -14,6 +14,7 @@ class MediaController extends Controller
     {
         Session::put('page', "media");
         $medias = Media::get();
+
         return view('admin.media.media',[
             'medias' => $medias,
             ]);
@@ -23,12 +24,14 @@ class MediaController extends Controller
     {
         if ($request->ajax()) {
             $data = $request->all();
+
             if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
             }
             Media::where('id', $data['media_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'media_id' => $data['media_id']]);
         }
     }
@@ -71,10 +74,10 @@ class MediaController extends Controller
             ];
             $this->validate($request, $rules, $customMessage);
 
-
           // Check if a new image is uploaded
            if ($request->hasFile('image')) {
                 $image_tmp = $request->file('image');
+
                 if ($image_tmp->isValid()) {
                     $extention = $image_tmp->getClientOriginalExtension();
                     $imageName = rand(111, 99999) . '.' . $extention;
@@ -109,6 +112,7 @@ class MediaController extends Controller
     {
         $deletemedia = Media::find($id)->delete();
         Session::flash('success_message', 'Media Deleted Successfully');
+
         return redirect()->back();
     }
 }

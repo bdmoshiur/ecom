@@ -13,6 +13,7 @@ class FabricController extends Controller
     {
         Session::put('page', "fabric");
         $fabrics = Fabric::get();
+
         return view('admin.fabrics.fabrics',[
             'fabrics' => $fabrics,
             ]);
@@ -22,12 +23,14 @@ class FabricController extends Controller
     {
         if ($request->ajax()) {
             $data = $request->all();
+
             if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
             }
             Fabric::where('id', $data['fabric_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'fabric_id' => $data['fabric_id']]);
         }
     }
@@ -63,8 +66,8 @@ class FabricController extends Controller
             $fabric->save();
 
             Session::flash('success_message', $message);
-            return redirect()->route('admin.fabric');
 
+            return redirect()->route('admin.fabric');
         }
 
         return view('admin.fabrics.add_edit_fabric',[
@@ -77,6 +80,7 @@ class FabricController extends Controller
     {
         $deletefabrics = Fabric::find($id)->delete();
         Session::flash('success_message', 'Fabric Deleted Successfully');
+
         return redirect()->back();
     }
 }

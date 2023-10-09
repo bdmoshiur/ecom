@@ -14,6 +14,7 @@ class Section extends Model
     {
         $getSections = Section::with('categories')->where('status',1)->get();
         $getSections = json_decode(json_encode($getSections), true);
+
         return $getSections;
     }
 

@@ -13,6 +13,7 @@ class OccasionController extends Controller
     {
         Session::put('page', "occasion");
         $occasions = Occasion::get();
+
         return view('admin.occasions.occasions',[
             'occasions' => $occasions,
             ]);
@@ -22,12 +23,14 @@ class OccasionController extends Controller
     {
         if ($request->ajax()) {
             $data = $request->all();
+
             if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
             }
             Occasion::where('id', $data['occasion_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'occasion_id' => $data['occasion_id']]);
         }
     }
@@ -63,6 +66,7 @@ class OccasionController extends Controller
             $occasion->save();
 
             Session::flash('success_message', $message);
+
             return redirect()->route('admin.occasion');
 
         }
@@ -77,6 +81,7 @@ class OccasionController extends Controller
     {
         $deleteoccasions = Occasion::find($id)->delete();
         Session::flash('success_message', 'Occasion Deleted Successfully');
+
         return redirect()->back();
     }
 }

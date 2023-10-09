@@ -22,12 +22,14 @@ class PrepaidpincodeController extends Controller
     {
         if ($request->ajax()) {
             $data = $request->all();
+
             if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
             }
             PrepaidPincode::where('id', $data['prepaidpincode_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'prepaidpincode_id' => $data['prepaidpincode_id']]);
         }
     }
@@ -35,6 +37,7 @@ class PrepaidpincodeController extends Controller
     public function addEditprepaidpincode( Request $request, $id = null)
     {
         Session::put('page', "prepaidpincodes");
+
         if ($id == "") {
             //Add Prepaidpincode Functionality
             $title = "Add Prepaidpincode";
@@ -62,6 +65,7 @@ class PrepaidpincodeController extends Controller
             $prepaidpincode->save();
 
             Session::flash('success_message', $message);
+
             return redirect()->route('admin.prepaidpincode');
 
         }
@@ -76,6 +80,7 @@ class PrepaidpincodeController extends Controller
     {
         $deleteprepaidpincodes = PrepaidPincode::find($id)->delete();
         Session::flash('success_message', 'Prepaidpincode Deleted Successfully');
+
         return redirect()->back();
     }
 }

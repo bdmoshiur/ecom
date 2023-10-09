@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Cart extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+
     public static function userCartItrms()
     {
         if(Auth::check()){
@@ -24,7 +26,7 @@ class Cart extends Model
 
         return $userCartItems;
     }
-    //
+
     public function product()
     {
         return $this->belongsTo(Product::class,'product_id');
@@ -33,6 +35,7 @@ class Cart extends Model
     public static function getProductAttrPrice( $product_id, $size)
     {
         $attrPrice = ProductsAttribute::select('price')->where(['product_id'=>$product_id, 'size'=> $size])->first()->toarray();
+
         return $attrPrice['price'];
     }
 }

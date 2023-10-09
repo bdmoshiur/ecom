@@ -13,6 +13,7 @@ class SectionController extends Controller
     {
         Session::put('page', "sections");
         $sections = Section::get();
+
         return view('admin.sections.sections', compact('sections'));
     }
 
@@ -27,6 +28,7 @@ class SectionController extends Controller
                 $status = 1;
             }
             Section::where('id', $data['section_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'section_id' => $data['section_id']]);
         }
     }
@@ -62,8 +64,8 @@ class SectionController extends Controller
             $section->save();
 
             Session::flash('success_message', $message);
-            return redirect()->route('admin.sections');
 
+            return redirect()->route('admin.sections');
         }
 
         return view('admin.sections.add_edit_section',[
@@ -76,6 +78,7 @@ class SectionController extends Controller
     {
         $deleteSections = Section::find($id)->delete();
         Session::flash('success_message', 'Section Deleted Successfully');
+
         return redirect()->back();
     }
 }

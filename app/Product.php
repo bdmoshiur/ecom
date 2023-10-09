@@ -23,10 +23,12 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
     function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
     }
+
     function section()
     {
         return $this->belongsTo(Section::class, 'section_id');
@@ -41,6 +43,7 @@ class Product extends Model
     {
         return $this->hasMany(ProductsImage::class, 'product_id');
     }
+
     public static function productFilters()
     {
         // $productFilters['fabricArray'] = array('Coton', 'Polyester', 'Wool', 'Pure Cotton');
@@ -54,6 +57,7 @@ class Product extends Model
         $productFilters['fitArray'] = Fit::where('status',1)->pluck('name');
         $productFilters['patternArray'] = Pattern::where('status',1)->pluck('name');
         $productFilters['occasionArray'] = Occasion::where('status',1)->pluck('name');
+
         return $productFilters;
     }
 
@@ -78,6 +82,7 @@ class Product extends Model
         } else {
             $discounted_Price = 0;
         }
+
         return $discounted_Price;
     }
 
@@ -102,6 +107,7 @@ class Product extends Model
             $final_price = $proAttrPrice['price'];
             $discount = 0;
         }
+
         return ['product_price' =>$proAttrPrice['price'] ,'final_price' => $final_price, 'discount' =>$discount];
     }
 
@@ -145,7 +151,6 @@ class Product extends Model
         Cart::where('product_id', $product_id)->delete();
     }
 
-
     public static function productsCountForSubCategories($category_id) {
         $productCount = Product::where(['category_id' => $category_id, 'status'=> 1])->count();
 
@@ -163,6 +168,4 @@ class Product extends Model
 
         return $productsCount;
     }
-
-
 }

@@ -27,9 +27,7 @@ class AdminController extends Controller
     public function dashboard()
     {
         Session::put('page', "dashboard");
-
         // users
-
         $current_month_users = User::whereYear('created_at', Carbon::now()->year)
         ->whereMonth('created_at', Carbon::now()->month)
         ->count();
@@ -53,9 +51,7 @@ class AdminController extends Controller
            $before_3_month_users,
         ];
 
-
         //orders
-
         $current_month_orders = Order::whereYear('created_at', Carbon::now()->year)
         ->whereMonth('created_at', Carbon::now()->month)
         ->count();
@@ -99,8 +95,6 @@ class AdminController extends Controller
             'newsletterSubscribersCount' => $newsletterSubscribersCount,
             'wishlistsCount' => $wishlistsCount,
             'productsCount' => $productsCount
-
-
         ]);
     }
 
@@ -108,16 +102,15 @@ class AdminController extends Controller
     {
         Session::put('page', "settings");
         $adminDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first();
+
         return view('admin.admin_settings', compact('adminDetails'));
     }
 
     public function login(Request $request)
     {
         if ($request->isMethod('post')) {
+
             $data = $request->all();
-            //  echo '<pre>';
-            //  print_r($data);
-            //  die;
             $rules = [
                 'email' => 'required|email|max:255',
                 'password' => 'required',
@@ -134,21 +127,25 @@ class AdminController extends Controller
                 return redirect()->route('admin.dashboard');
             } else {
                 Session::flash('error_message', 'Email or Password Invalid !');
+
                 return redirect()->back();
             }
         }
+
         return view('admin.admin_login');
     }
 
     public function logout()
     {
         Auth::guard('admin')->logout();
+
         return redirect()->route('admin.admin');
     }
 
     public function checkCurrentPassword(Request $request)
     {
         $data = $request->all();
+
         if (Hash::check($data['current_password'], Auth::guard('admin')->user()->password)) {
             echo "true";
         } else {
@@ -160,7 +157,9 @@ class AdminController extends Controller
     {
         if ($request->isMethod('post')) {
             $data = $request->all();
+
             if (Hash::check($data['current_password'], Auth::guard('admin')->user()->password)) {
+
                 if ($data['new_password'] == $data['confirm_password']) {
                     Admin::where('id', Auth::guard('admin')->user()->id)->update(['password' => bcrypt($data['new_password'])]);
                     Session::flash('success_message', 'Password Has been Updated Successfully');
@@ -169,8 +168,10 @@ class AdminController extends Controller
                 }
             } else {
                 Session::flash('error_message', 'Your Current Password is Incorrect!');
+
                 return redirect()->back();
             }
+
             return redirect()->back();
         }
     }
@@ -178,6 +179,7 @@ class AdminController extends Controller
     public function updateAdminDetails(Request $request)
     {
         Session::put('page', "update-admin-details");
+
         if ($request->isMethod('post')) {
             $data = $request->all();
 
@@ -202,6 +204,7 @@ class AdminController extends Controller
 
             if ($request->hasFile('admin_image')) {
                 $image_tmp = $request->file('admin_image');
+
                 if ($image_tmp->isValid()) {
                     $extention = $image_tmp->getClientOriginalExtension();
                     $imageName = rand(111, 99999) . '.' . $extention;
@@ -219,21 +222,24 @@ class AdminController extends Controller
             ]);
 
             Session::flash('success_message', "Admin Details Updated SuccessFully");
+
             return redirect()->back();
         }
+
         return view('admin.admin_update_details');
     }
-
 
     public function adminsSubadmins() {
 
         if (Auth::guard('admin')->user()->type == 'subadmin' ){
             Session::flash('error_message', 'This feature is restricted!');
+
             return redirect()->route('admin.dashboard');
         }
 
         Session::put('page', "admins_subadmins");
         $admins = Admin::get();
+
         return view('admin.admins_subadmins.admins_subadmins',[
             'admins' => $admins,
         ]);
@@ -249,6 +255,7 @@ class AdminController extends Controller
                 $status = 1;
             }
             Admin::where('id', $data['admin_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'admin_id' => $data['admin_id']]);
         }
     }
@@ -257,6 +264,7 @@ class AdminController extends Controller
     {
         Admin::find($id)->delete();
         Session::flash('success_message', 'Admin / Subadmin Deleted Successfully');
+
         return redirect()->back();
     }
 
@@ -333,6 +341,7 @@ class AdminController extends Controller
             $admindata->image = $imageName;
             $admindata->name = $data['admin_name'];
             $admindata->mobile = $data['admin_mobile'];
+
             if($id == ''){
                 $admindata->email = $data['admin_email'];
                 $admindata->type = $data['admin_type'];
@@ -343,6 +352,7 @@ class AdminController extends Controller
             }
             $admindata->save();
             Session::flash('success_message', $message);
+
             return redirect()->route('admin.admins.subadmins');
         }
 
@@ -355,6 +365,7 @@ class AdminController extends Controller
     public function updateRole(Request $request, $id ) {
 
         Session::put('page', "admins_subadmins");
+
         if ($request->isMethod('post')) {
             $data = $request->all();
             unset($data['_token']);
@@ -390,6 +401,7 @@ class AdminController extends Controller
 
             $message = "Roles Update Successfully";
             Session::flash('success_message', $message);
+
             return redirect()->back();
         }
 
@@ -423,8 +435,5 @@ class AdminController extends Controller
             'title' => $title,
             'otherSetting' => $otherSetting,
         ]);
-
     }
-
-
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sms extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     public static function sendSms( $message, $mobile ) {
         /*Code for SMS Script Starts*/

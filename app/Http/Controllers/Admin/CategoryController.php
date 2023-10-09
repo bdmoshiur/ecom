@@ -16,9 +16,9 @@ class CategoryController extends Controller
     public function categories()
     {
         Session::put('page', "categories");
+
         $categories = Category::with(['section','parentcategory'])->get();
         $categories = json_decode(json_encode($categories));
-
         $categoryModuleCount = AdminRole::where(['admin_id'=> Auth::guard('admin')->user()->id, 'module' => 'categories'])->count();
 
         if(Auth::guard('admin')->user()->type == 'superadmin'){
@@ -45,11 +45,12 @@ class CategoryController extends Controller
             } else {
                 $status = 1;
             }
+
             Category::where('id', $data['category_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'category_id' => $data['category_id']]);
         }
     }
-
 
     public function addEditCategory(Request $request, $id = null)
     {
@@ -76,7 +77,6 @@ class CategoryController extends Controller
 
         if ($request->isMethod('post')) {
             $data = $request->all();
-
 
             $rules = [
                 'category_name' => 'required|regex:/^[\pL\s\-]+$/u',
@@ -109,10 +109,10 @@ class CategoryController extends Controller
                 $data['meta_keywords'] = "";
             }
 
-
             // Upload Category Image
             if ($request->hasFile('category_image')) {
                 $image_tmp = $request->file('category_image');
+
                 if ($image_tmp->isValid()) {
                     $extention = $image_tmp->getClientOriginalExtension();
                     $imageName = rand(111, 99999) . '.' . $extention;
@@ -121,8 +121,6 @@ class CategoryController extends Controller
                     $category->category_image = $imageName;
                 }
             }
-
-
 
             $category->parent_id = $data['parent_id'];
             $category->section_id = $data['section_id'];
@@ -135,7 +133,9 @@ class CategoryController extends Controller
             $category->meta_keywords = $data['meta_keywords'];
             $category->status = 1;
             $category->save();
+
             Session::flash('success_message', $message);
+
             return redirect()->route('admin.categories');
         }
 
@@ -144,7 +144,6 @@ class CategoryController extends Controller
 
         return view('admin.categories.add_edit_category', compact('title', 'getSections', 'categorydata', 'getCategories'));
     }
-
 
     public function appendCategoryLevel(Request $request)
     {
@@ -160,11 +159,13 @@ class CategoryController extends Controller
     public function deleteCategoryImage($id)
     {
         $category = Category::find($id);
+
         if (file_exists('images/category_images/' . $category->category_image)) {
             unlink('images/category_images/' . $category->category_image);
         }
         $category->category_image = "";
         $category->save();
+
         return redirect()->back()->with('success_message', 'Category Image Deleted Successfully');
     }
 
@@ -172,6 +173,7 @@ class CategoryController extends Controller
     {
         $deleteCategories = Category::find($id)->delete();
         Session::flash('success_message', 'Category Deleted Successfully');
+
         return redirect()->back();
     }
 }

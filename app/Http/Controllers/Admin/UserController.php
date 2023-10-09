@@ -22,6 +22,7 @@ class UserController extends Controller
     {
         Session::put('page', "users");
         $users = User::get();
+
         return view('admin.users.users',[
             'users' => $users,
         ]);
@@ -38,6 +39,7 @@ class UserController extends Controller
                 $status = 1;
             }
             User::where('id', $data['user_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'user_id' => $data['user_id']]);
         }
     }
@@ -66,6 +68,7 @@ class UserController extends Controller
            $before_2_month_users,
            $before_3_month_users,
         ];
+
         return view('admin.users.view_users_charts', [
             'usersCount' => $usersCount,
         ]);
@@ -79,12 +82,9 @@ class UserController extends Controller
         return view('admin.users.view_users_countries', [
             'getUsersCountries' => $getUsersCountries,
         ]);
-
     }
     public function exportUsers() {
 
         return Excel::download(new UsersExport, 'users.xlsx');
     }
-
-
 }

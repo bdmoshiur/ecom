@@ -35,6 +35,7 @@ class RatingController extends Controller
                 $status = 1;
             }
             Rating::where('id', $data['rating_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'rating_id' => $data['rating_id']]);
         }
     }

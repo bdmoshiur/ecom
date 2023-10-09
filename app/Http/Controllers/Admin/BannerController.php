@@ -14,6 +14,7 @@ class BannerController extends Controller
     {
         Session::put('page', "banners");
         $banners = Banner::get()->toArray();
+
         return view('admin.banners.banners',[
             'banners' => $banners,
         ]);
@@ -58,6 +59,7 @@ class BannerController extends Controller
              // Upload banner Image
              if ($request->hasFile('image')) {
                 $image_tmp = $request->file('image');
+
                 if ($image_tmp->isValid()) {
                     $image_name = $image_tmp->getClientOriginalName();
                     $extention = $image_tmp->getClientOriginalExtension();
@@ -70,8 +72,8 @@ class BannerController extends Controller
             $banner->save();
 
             Session::flash('success_message', $message);
-            return redirect()->route('admin.banners');
 
+            return redirect()->route('admin.banners');
         }
 
         return view('admin.banners.add_edit_banner',[
@@ -85,12 +87,14 @@ class BannerController extends Controller
     {
         if ($request->ajax()) {
             $data = $request->all();
+
             if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
             }
             Banner::where('id', $data['banner_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'banner_id' => $data['banner_id']]);
         }
     }
@@ -104,6 +108,7 @@ class BannerController extends Controller
         }
         Banner::find($id)->delete();
         Session::flash('success_message', 'Banner Deleted Successfully');
+
         return redirect()->back();
     }
 }

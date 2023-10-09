@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ShippingCharge extends Model
 {
     use HasFactory;
-
+    protected $guarded = [];
     public static function getShippingCharges($total_weight,  $country ) {
         $shippingDetails = ShippingCharge::where('country',$country)->first();
         if ($shippingDetails) {
@@ -16,9 +16,9 @@ class ShippingCharge extends Model
         }
 
         if (!$shippingDetails) {
+
             return 0;
         }
-
 
        if ($total_weight > 0) {
             if ($total_weight > 0 && $total_weight <= 500) {
