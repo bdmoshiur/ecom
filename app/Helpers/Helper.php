@@ -1,6 +1,9 @@
 <?php
 use App\Cart;
 use App\Wishlist;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
 
 function totalCartItems() {
     if(Auth::check()){
