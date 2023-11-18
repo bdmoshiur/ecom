@@ -31,7 +31,6 @@ $medias = Media::where('status',1)->get();
                 @foreach ($medias as $media)
                     <a target="_blank" href="<?php echo $media->link ?>"><img width="25" height="25" src="{{ asset('images/media_images/' . $media['image']) }}" title="{{ $media->name }}" alt="{{ $media->name }}"/></a>
                 @endforeach
-                {{-- <p class="pull-right"><a target="_blank" href="#">&copy; Moshiur Rahman</a></p> --}}
 			</div>
 		</div>
 	</div><!-- Container End -->
