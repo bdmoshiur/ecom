@@ -56,7 +56,7 @@ Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //SSLCOMMERZ END
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
+Route::group(['prefix' => 'admin'], function () {
 
     Route::match(['get', 'post'], '/', [AdminController::class,'login'])->name('admin.admin');
 
