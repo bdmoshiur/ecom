@@ -9,7 +9,7 @@
                 products are available </small></h3>
         <hr class="soft" />
         <p>
-            {{ $categoryDetails['catDetails']['description'] }}
+            {!! $categoryDetails['catDetails']['description'] !!}
         </p>
         <hr class="soft" />
         @if (!isset($_REQUEST['search']))

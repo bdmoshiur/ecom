@@ -43,7 +43,6 @@ class CurrencyController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
 
-
             $rules = [
                 'currency_code' => 'required|regex:/^[\pL\s\-]+$/u',
                 'exchange_rate' => 'required|integer',
@@ -56,14 +55,13 @@ class CurrencyController extends Controller
             ];
             $this->validate($request, $rules, $customMessage);
 
-
             $currency->currency_code = $data['currency_code'];
             $currency->exchange_rate = $data['exchange_rate'];
             $currency->save();
 
             Session::flash('success_message', $message);
-            return redirect()->route('admin.currencies');
 
+            return redirect()->route('admin.currencies');
         }
 
         return view('admin.currencies.add_edit_currencies',[
@@ -76,12 +74,14 @@ class CurrencyController extends Controller
     {
         if ($request->ajax()) {
             $data = $request->all();
+
             if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
             }
             Currency::where('id', $data['currency_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'currency_id' => $data['currency_id']]);
         }
     }
@@ -91,6 +91,7 @@ class CurrencyController extends Controller
         $currency = Currency::find($id);
         $currency->delete();
         Session::flash('success_message', 'Currency Deleted Successfully');
+
         return redirect()->back();
     }
 }

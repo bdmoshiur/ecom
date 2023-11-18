@@ -30,6 +30,7 @@ class NewsletterSubscriberController extends Controller
                 $status = 1;
             }
             NewsletterSubscriber::where('id', $data['subscriber_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'subscriber_id' => $data['subscriber_id']]);
         }
     }
@@ -38,10 +39,12 @@ class NewsletterSubscriberController extends Controller
     {
         $deleteSubscriber = NewsletterSubscriber::find($id)->delete();
         Session::flash('success_message', 'Subscriber Deleted Successfully');
+
         return redirect()->back();
     }
 
     public function exportNewslettermails() {
+
         return Excel::download(new SubscribersExport, 'subscribers.xlsx');
     }
 }

@@ -13,6 +13,7 @@ class FitController extends Controller
     {
         Session::put('page', "fit");
         $fits = Fit::get();
+
         return view('admin.fits.fits',[
             'fits' => $fits,
             ]);
@@ -22,12 +23,14 @@ class FitController extends Controller
     {
         if ($request->ajax()) {
             $data = $request->all();
+
             if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
             }
             Fit::where('id', $data['fit_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'fit_id' => $data['fit_id']]);
         }
     }
@@ -63,6 +66,7 @@ class FitController extends Controller
             $fit->save();
 
             Session::flash('success_message', $message);
+
             return redirect()->route('admin.fit');
 
         }
@@ -77,6 +81,7 @@ class FitController extends Controller
     {
         $deletefits = Fit::find($id)->delete();
         Session::flash('success_message', 'Fit Deleted Successfully');
+
         return redirect()->back();
     }
 }

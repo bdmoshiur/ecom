@@ -13,6 +13,7 @@ class BrandController extends Controller
     {
         Session::put('page', "brands");
         $brands = Brand::get();
+
         return view('admin.brands.brands',[
             'brands' => $brands,
             ]);
@@ -28,6 +29,7 @@ class BrandController extends Controller
                 $status = 1;
             }
             Brand::where('id', $data['brand_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'brand_id' => $data['brand_id']]);
         }
     }
@@ -35,6 +37,7 @@ class BrandController extends Controller
     public function addEditBrand( Request $request, $id = null)
     {
         Session::put('page', "brands");
+
         if ($id == "") {
             //Add Brand Functionality
             $title = "Add Brand";
@@ -63,8 +66,8 @@ class BrandController extends Controller
             $brand->save();
 
             Session::flash('success_message', $message);
-            return redirect()->route('admin.brands');
 
+            return redirect()->route('admin.brands');
         }
 
         return view('admin.brands.add_edit_brand',[
@@ -77,6 +80,7 @@ class BrandController extends Controller
     {
         $deleteBrands = Brand::find($id)->delete();
         Session::flash('success_message', 'Brand Deleted Successfully');
+
         return redirect()->back();
     }
 }

@@ -13,6 +13,7 @@ class CountryController extends Controller
     {
         Session::put('page', "countrys");
         $countrys = Country::get();
+
         return view('admin.countrys.countrys',[
             'countrys' => $countrys,
             ]);
@@ -28,6 +29,7 @@ class CountryController extends Controller
                 $status = 1;
             }
             Country::where('id', $data['country_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'country_id' => $data['country_id']]);
         }
     }
@@ -66,6 +68,7 @@ class CountryController extends Controller
             $country->save();
 
             Session::flash('success_message', $message);
+
             return redirect()->route('admin.country');
 
         }
@@ -80,6 +83,7 @@ class CountryController extends Controller
     {
         $deletecountrys = Country::find($id)->delete();
         Session::flash('success_message', 'Country Deleted Successfully');
+
         return redirect()->back();
     }
 }

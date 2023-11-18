@@ -495,6 +495,7 @@ class OrderssController extends Controller
 
 
     public function returnRequestUpdate(Request $request) {
+
         if ($request->isMethod('post')) {
             $data = $request->all();
 
@@ -516,7 +517,6 @@ class OrderssController extends Controller
             // User Deatails
             $userDetails = User::select('name','email')->where('id', $returnDetails['user_id'])->first()->toArray();
 
-
             //Send return status email
             $email       = $userDetails['email'];
             $return_status = $data['return_status'];
@@ -532,9 +532,9 @@ class OrderssController extends Controller
 
             $message = 'Return request has been '.$return_status. ' and email send to user';
             Session::put('success_message', $message);
+
             return redirect()->route('admin.return.requests');
         }
-
     }
 
     public function exchangeRequestUpdate(Request $request) {
@@ -575,13 +575,14 @@ class OrderssController extends Controller
 
             $message = 'Exchange request has been '.$exchange_status. ' and email send to user';
             Session::put('success_message', $message);
+
             return redirect()->route('admin.exchange.requests');
         }
     }
 
     public function exportOrders() {
+
         return Excel::download(new OrdersExport, 'orders.xlsx');
     }
-
 
 }

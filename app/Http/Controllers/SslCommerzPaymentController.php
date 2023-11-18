@@ -35,10 +35,8 @@ class SslCommerzPaymentController extends Controller
         }
     }
 
-
     public function payViaAjax(Request $request)
     {
-
         $cart_data = json_decode($request->input('cart_json'), true);
         # Here you have to receive all the order data to initate the payment.
         # Lets your oder trnsaction informations are saving in a table called "orders"
@@ -102,7 +100,6 @@ class SslCommerzPaymentController extends Controller
             print_r($payment_options);
             $payment_options = array();
         }
-
     }
 
     public function success(Request $request)
@@ -145,7 +142,6 @@ class SslCommerzPaymentController extends Controller
             echo "Invalid Transaction";
         }
 
-
     }
 
     public function fail(Request $request)
@@ -187,8 +183,6 @@ class SslCommerzPaymentController extends Controller
         } else {
             echo "Transaction is Invalid";
         }
-
-
     }
 
     public function ipn(Request $request)
@@ -233,5 +227,4 @@ class SslCommerzPaymentController extends Controller
             echo "Invalid Data";
         }
     }
-
 }

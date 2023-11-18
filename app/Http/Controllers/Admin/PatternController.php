@@ -13,6 +13,7 @@ class PatternController extends Controller
     {
         Session::put('page', "pattern");
         $patterns = Pattern::get();
+
         return view('admin.patterns.patterns',[
             'patterns' => $patterns,
             ]);
@@ -28,6 +29,7 @@ class PatternController extends Controller
                 $status = 1;
             }
             Pattern::where('id', $data['pattern_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'pattern_id' => $data['pattern_id']]);
         }
     }
@@ -35,6 +37,7 @@ class PatternController extends Controller
     public function addEditpattern( Request $request, $id = null)
     {
         Session::put('page', "pattern");
+
         if ($id == "") {
             //Add pattern Functionality
             $title = "Add Pattern";
@@ -63,6 +66,7 @@ class PatternController extends Controller
             $pattern->save();
 
             Session::flash('success_message', $message);
+
             return redirect()->route('admin.pattern');
 
         }
@@ -77,6 +81,7 @@ class PatternController extends Controller
     {
         $deletepatterns = Pattern::find($id)->delete();
         Session::flash('success_message', 'Pattern Deleted Successfully');
+
         return redirect()->back();
     }
 }

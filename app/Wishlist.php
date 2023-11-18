@@ -21,10 +21,12 @@ class Wishlist extends Model
         $userWishListItems =  Wishlist::with(['product' => function ($query) {
             $query->select('id', 'product_name', 'product_code', 'product_color','product_price', 'main_image');
         }])->where('user_id',Auth::user()->id)->orderBy('id','desc')->get()->toArray();
+
         return $userWishListItems;
     }
 
     public function product() {
+
         return $this->belongsTo(Product::class, 'product_id');
     }
 }

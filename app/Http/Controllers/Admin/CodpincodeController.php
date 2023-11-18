@@ -13,6 +13,7 @@ class CodpincodeController extends Controller
     {
         Session::put('page', "codpincode");
         $codpincodes = CodPincode::get();
+
         return view('admin.codpincodes.codpincodes',[
             'codpincodes' => $codpincodes,
             ]);
@@ -28,6 +29,7 @@ class CodpincodeController extends Controller
                 $status = 1;
             }
             CodPincode::where('id', $data['codpincode_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'codpincode_id' => $data['codpincode_id']]);
         }
     }
@@ -62,8 +64,8 @@ class CodpincodeController extends Controller
             $codpincode->save();
 
             Session::flash('success_message', $message);
-            return redirect()->route('admin.codpincode');
 
+            return redirect()->route('admin.codpincode');
         }
 
         return view('admin.codpincodes.add_edit_codpincode',[
@@ -76,6 +78,7 @@ class CodpincodeController extends Controller
     {
         $deletecodpincodes = CodPincode::find($id)->delete();
         Session::flash('success_message', 'Codpincode Deleted Successfully');
+
         return redirect()->back();
     }
 }

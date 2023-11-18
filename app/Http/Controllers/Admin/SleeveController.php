@@ -13,6 +13,7 @@ class SleeveController extends Controller
     {
         Session::put('page', "sleeve");
         $sleeves = Sleeve::get();
+
         return view('admin.sleeves.sleeves',[
             'sleeves' => $sleeves,
             ]);
@@ -22,12 +23,15 @@ class SleeveController extends Controller
     {
         if ($request->ajax()) {
             $data = $request->all();
+
             if ($data['status'] == "Active") {
                 $status = 0;
             } else {
                 $status = 1;
             }
+
             Sleeve::where('id', $data['sleeve_id'])->update(['status' => $status]);
+
             return response()->json(['status' => $status, 'sleeve_id' => $data['sleeve_id']]);
         }
     }
@@ -35,6 +39,7 @@ class SleeveController extends Controller
     public function addEditSleeve( Request $request, $id = null)
     {
         Session::put('page', "sleeve");
+
         if ($id == "") {
             //Add sleeve Functionality
             $title = "Add Sleeve";
@@ -63,6 +68,7 @@ class SleeveController extends Controller
             $sleeve->save();
 
             Session::flash('success_message', $message);
+
             return redirect()->route('admin.sleeve');
 
         }
@@ -77,6 +83,7 @@ class SleeveController extends Controller
     {
         $deletesleeves = Sleeve::find($id)->delete();
         Session::flash('success_message', 'Sleeve Deleted Successfully');
+
         return redirect()->back();
     }
 }

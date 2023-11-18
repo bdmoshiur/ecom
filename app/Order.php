@@ -9,16 +9,20 @@ use App\OrderProduct;
 class Order extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     public function orders_products() {
+
         return $this->hasMany(OrderProduct::class, 'order_id');
     }
 
     public function order_items() {
+
         return $this->hasMany(OrderProduct::class, 'order_id');
     }
 
     public static function pushOrder($order_id) {
+
         $orderDetails =  Order::with('order_items')->where('id', $order_id)->first()->toArray();
 
         $orderDetails['order_id'] = $orderDetails['id'];
@@ -57,6 +61,7 @@ class Order extends Model
             $orderDetails['order_items'][$key]['tax'] = '';
             $orderDetails['order_items'][$key]['hsn'] = '';
         }
+
         $orderDetails['shipping_charges'] = 0;
         $orderDetails['giftwrap_charges'] = 0;
         $orderDetails['transaction_charges'] = 0;
@@ -66,7 +71,6 @@ class Order extends Model
         $orderDetails['breadth'] = 1;
         $orderDetails['height'] = 1;
         $orderDetails['weight'] = 1;
-
 
         $orderDetails = json_encode($orderDetails);
 
@@ -104,9 +108,7 @@ class Order extends Model
         } else {
             echo "Failed to retrieve access token.";
         }
-
     }
-
 
     public static function getOrderStatus( $order_id ) {
         $getOrderStatus = Order::select('order_status')->where('id', $order_id)->first();

@@ -40,11 +40,14 @@ class Category extends Model
             $parentCategory = Category::select('category_name', 'url')->where('id', $catDetails['parent_id'])->first()->toArray();
             $breadcambs = '<a href="' . url($parentCategory['url']) . '">' . $parentCategory['category_name'] . '</a>&nbsp;<span class="divider">/</span>&nbsp;<a href="' . url($catDetails['url']) . '">' . $catDetails['category_name'] . '</a>';
         }
+
         $catIds = [];
         $catIds[] = $catDetails['id'];
+
         foreach ($catDetails['subcategories'] as $subCat) {
             $catIds[] = $subCat['id'];
         }
+
         return [
             'catIds' => $catIds,
             'catDetails' => $catDetails,

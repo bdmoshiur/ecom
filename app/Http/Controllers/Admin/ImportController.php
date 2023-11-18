@@ -10,6 +10,7 @@ use  DB;
 class ImportController extends Controller
 {
     public function addEditCodPincode(Request $request) {
+
         if ($request->isMethod('post')) {
             $data = $request->all();
 
@@ -24,6 +25,7 @@ class ImportController extends Controller
             }
 
             $file = public_path('/imports/pincodes/' . $filename);
+
             if (file_exists($file) && is_readable($file)) {
                 $pincodes = $this->csvToArray($file);
 
@@ -41,6 +43,7 @@ class ImportController extends Controller
 
             $message = "COD Pincode has been replace Successfully";
             Session::flash('success_message', $message);
+
             return redirect()->back();
             } else {
                 return redirect()->back()->with('error_message', 'File not found or not readable');
@@ -54,9 +57,11 @@ class ImportController extends Controller
     public function csvToArray($filename = '', $delimiter =',' ) {
 
         if (!file_exists($filename) || !is_readable($filename))
+
             return false;
             $header = NULL;
             $data = array();
+
             if (($handle = fopen($filename, 'r')) !== FALSE) {
                 while (($row = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
                     if (!$header)
@@ -66,7 +71,7 @@ class ImportController extends Controller
                 }
                 fclose($handle);
             }
+
         return $data;
     }
-
 }

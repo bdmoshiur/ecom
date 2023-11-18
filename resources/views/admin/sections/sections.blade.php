@@ -24,9 +24,20 @@
         <section class="content">
             <div class="row">
                 <div class="col-12">
+                    @if (Session::has('success_message'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert"
+                            style="margin-top: 10px">
+                            {{ Session::get('success_message') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Sections</h3>
+                            <a href="{{ route('admin.add.edit.sections') }}" class="btn btn-success btn-block"
+                            style="max-width:150px; float:right; display:inline-block;">Add Section</a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -35,7 +46,7 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Name</th>
-                                        <th>Status</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -53,6 +64,15 @@
                                                         id="section-{{ $section->id }}"
                                                         section_id="{{ $section->id }}"><i class="fas fa-toggle-off" aria-hidden="true" status="Inactive"></i></a>
                                                 @endif
+                                                &nbsp; &nbsp;
+                                                <a title="Edit section"
+                                                href="{{ route('admin.add.edit.sections', $section->id) }}"><i
+                                                    class="fas fa-edit"></i></a>
+                                                &nbsp; &nbsp;
+                                                <a title="Delete section" href="javascript:void(0)" class="confirmDelete"
+                                                    record="section" recordid="{{ $section->id }}"><i
+                                                        class="fas fa-trash"></i></a>
+
                                             </td>
                                         </tr>
                                     @endforeach

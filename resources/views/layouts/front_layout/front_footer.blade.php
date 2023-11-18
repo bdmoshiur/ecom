@@ -15,9 +15,6 @@ $medias = Media::where('status',1)->get();
 			</div>
 			<div class="span3">
 				<h5>INFORMATION</h5>
-				{{-- <a href="{{ route('cmspage.about-us') }}">ABOUT US</a --}}
-				{{-- <a href="">TERMS AND CONDITIONS</a> --}}
-				{{-- <a href="">FAQ</a>   --}}
                 <a href="{{ route('front.contactus') }}">CONTACT US</a>
                 @foreach ($cmsUrls as $url)
                     <a href="{{ route('cmspage.' . $url) }}">{{ strtoupper(str_replace('-', ' ', $url)) }}</a>
@@ -34,10 +31,8 @@ $medias = Media::where('status',1)->get();
                 @foreach ($medias as $media)
                     <a target="_blank" href="<?php echo $media->link ?>"><img width="25" height="25" src="{{ asset('images/media_images/' . $media['image']) }}" title="{{ $media->name }}" alt="{{ $media->name }}"/></a>
                 @endforeach
+                {{-- <p class="pull-right"><a target="_blank" href="#">&copy; Moshiur Rahman</a></p> --}}
 			</div>
-            <div class="span3">
-                <p class="pull-right"><a target="_blank" href="javascript:void(0)">&copy; Moshiur Rahman</a></p>
-            </div>
-        </div>
+		</div>
 	</div><!-- Container End -->
 </div>
