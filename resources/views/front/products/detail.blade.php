@@ -431,9 +431,11 @@
                                             $count = 1;
                                             while ( $count <= $rating['rating'] ) { ?>
                                                     <span>&#9733;</span>
-                                            <?php $count++; } ?>
+                                        <?php $count++; } ?>
                                         <p>{{ $rating['review'] }}</p>
-                                        <p>{{ $rating['user']['name'] }}</p>
+                                        @if (isset($rating['user']['name']))
+                                            <p>{{ $rating['user']['name'] }}</p>
+                                        @endif
                                         <p>{{ date('d-m-Y H:i:s', strtotime($rating['created_at'])) }}</p>
 
                                     </div>
