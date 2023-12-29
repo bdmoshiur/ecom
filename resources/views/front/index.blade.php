@@ -58,8 +58,10 @@ use App\Product;
                             </div>
                         @endforeach
                     </div>
-                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
-                    <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+                    @if ($featuredItemCount > 4)
+                    <a class="left carousel-control" href="#featured" data-slide="prev">‹</a>
+                    <a class="right carousel-control" href="#featured" data-slide="next">›</a>
+                    @endif
                 </div>
             </div>
         </div>
